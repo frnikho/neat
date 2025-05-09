@@ -1,0 +1,39 @@
+{
+  "name": "@modules/contact",
+  "version": "1.0.0",
+  "type": "module",
+  "exports": {
+    "./migrations/*": "./module/contact/migrations/*",
+    "./app": {
+      "import": "./dist/app/index.ts"
+    },
+    "./front": {
+      "import": "./dist/frontend/index.ts"
+    }
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^28.0.3",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rollup/plugin-typescript": "^12.1.2",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "bun-types": "latest",
+    "rollup": "^4.40.0",
+    "rollup-plugin-copy": "^3.5.0"
+  },
+  "peerDependencies": {
+    "@core": "workspace:*",
+    "elysia": "latest",
+    "drizzle-orm": "^0.42.0",
+    "drizzle-kit": "^0.31.0",
+    "pg": "^8.14.1",
+    "@paralleldrive/cuid2": "^2.2.2",
+    "typescript": "^5",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  }
+}

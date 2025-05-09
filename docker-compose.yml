@@ -1,0 +1,25 @@
+services:
+  cache:
+    image: valkey/valkey:8.1
+    container_name: neat_cache
+    restart: always
+    ports:
+      - '6379:6379'
+  db:
+    image: postgres:17
+    container_name: neat_db
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: neat_usr
+      POSTGRES_PASSWORD: neat_password
+      POSTGRES_DB: neat_db
+  monitoring:
+    image: grafana/otel-lgtm:latest
+    container_name: neat_monitoring
+    restart: always
+    ports:
+      - "3000:3000"
+      - "4317:4317"
+      - "4318:4318"

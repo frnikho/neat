@@ -1,0 +1,41 @@
+{
+  "name": "@neat/api",
+  "version": "1.0.50",
+  "main": "src/app.ts",
+  "scripts": {
+    "test": "bun test",
+    "dev": "bun run --watch src/app.ts"
+  },
+  "dependencies": {
+    "@core": "workspace:*",
+    "@elysiajs/opentelemetry": "^1.2.0",
+    "@modules/contact": "workspace:*",
+    "@opentelemetry/api": "^1.9.0",
+    "@opentelemetry/auto-instrumentations-node": "^0.57.1",
+    "@opentelemetry/exporter-trace-otlp-grpc": "^0.34.0",
+    "@opentelemetry/instrumentation": "^0.34.0",
+    "@opentelemetry/resources": "^1.8.0",
+    "@opentelemetry/sdk-trace-node": "^1.8.0",
+    "@paralleldrive/cuid2": "^2.2.2",
+    "@redis/json": "^1.0.7",
+    "drizzle-kit": "^0.31.0",
+    "drizzle-orm": "^0.42.0",
+    "drizzle-typebox": "^0.3.2",
+    "elysia": "latest",
+    "fp-ts": "^2.16.9",
+    "jose": "^6.0.10",
+    "kysely": "^0.28.0",
+    "neverthrow": "^8.2.0",
+    "pg": "^8.14.1",
+    "pg-escape": "^0.2.0",
+    "redis": "^4.7.0",
+    "umzug": "^3.8.2"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.11.13",
+    "@types/pg-escape": "^0.2.3",
+    "bun-types": "latest",
+    "drizzle-kit": "^0.31.0"
+  },
+  "module": "src/index.js"
+}
