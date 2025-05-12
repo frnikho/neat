@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "type": "module",
   "exports": {
-    "./app": {
-      "import": "./dist/src/index.ts"
-    }
+    "./server": "./dist/server/index.js",
+    "./client": "./dist/client/index.js"
   },
   "scripts": {
     "build": "rollup -c",
@@ -17,6 +16,9 @@
     "@rollup/plugin-typescript": "^12.1.2",
     "bun-types": "latest",
     "rollup": "^4.40.0"
+  },
+  "dependencies": {
+    "@ui/backoffice": "workspace:*"
   },
   "peerDependencies": {
     "elysia": "latest",

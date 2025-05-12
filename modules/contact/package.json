@@ -4,12 +4,8 @@
   "type": "module",
   "exports": {
     "./migrations/*": "./module/contact/migrations/*",
-    "./app": {
-      "import": "./dist/app/index.ts"
-    },
-    "./front": {
-      "import": "./dist/frontend/index.ts"
-    }
+    "./server": "./dist/server/index.js",
+    "./client": "./dist/client/index.js"
   },
   "scripts": {
     "build": "rollup -c",
@@ -34,6 +30,7 @@
     "@paralleldrive/cuid2": "^2.2.2",
     "typescript": "^5",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "lucide-react": "^0.510.0"
   }
 }

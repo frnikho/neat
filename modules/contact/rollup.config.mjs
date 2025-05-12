@@ -5,27 +5,25 @@ import copy from "rollup-plugin-copy";
 
 export default [
     {
-        input: 'front/index.ts',
+        input: 'client/index.ts',
         output: {
-            dir: 'dist/front',
+            dir: 'dist/client',
             format: 'esm',
             sourcemap: true,
-            preserveModules: true
         },
         external: ['react', 'react-dom'],
         plugins: [
             resolve(),
             commonjs(),
-            typescript({ tsconfig: './tsconfig.front.json' })
+            typescript({ tsconfig: './tsconfig.client.json' })
         ]
     },
     {
-        input: 'app/index.ts',
+        input: 'server/index.ts',
         output: {
-            dir: 'dist/app',
+            dir: 'dist/server',
             format: 'esm',
             sourcemap: true,
-            preserveModules: true
         },
         external: ['elysia'],
         plugins: [
@@ -39,7 +37,7 @@ export default [
             }),
             resolve(),
             commonjs(),
-            typescript({ tsconfig: './tsconfig.app.json' })
+            typescript({ tsconfig: './tsconfig.server.json' })
         ]
     }
 ]

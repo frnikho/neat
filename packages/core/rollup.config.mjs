@@ -4,9 +4,24 @@ import commonjs from '@rollup/plugin-commonjs';
 
 export default [
     {
-        input: 'src/index.ts',
+        input: 'client/index.ts',
         output: {
-            dir: 'dist/',
+            dir: 'dist/client',
+            format: 'esm',
+            sourcemap: true,
+            preserveModules: true
+        },
+        external: ['react', 'react-dom', '@core'],
+        plugins: [
+            resolve(),
+            commonjs(),
+            typescript({ tsconfig: './tsconfig.client.json' })
+        ]
+    },
+    {
+        input: 'server/index.ts',
+        output: {
+            dir: 'dist/server',
             format: 'esm',
             sourcemap: true,
             preserveModules: true
@@ -15,7 +30,7 @@ export default [
         plugins: [
             resolve(),
             commonjs(),
-            typescript({ tsconfig: './tsconfig.json' })
+            typescript({ tsconfig: './tsconfig.server.json' })
         ]
     }
 ]

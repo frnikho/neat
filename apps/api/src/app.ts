@@ -1,6 +1,6 @@
 import { Elysia } from "elysia";
 import { instrumentation } from "@core/instrumentation";
-import ContactApp, {api} from '@modules/contact/app';
+import ContactApp, {api} from '../../../modules/contact/server';
 import {startMigration, test} from "@core/migrate";
 import {createAuthCode} from "$auth/application/create-auth-code";
 import {authCodeRepo} from "$auth/infra/auth-code.repo";

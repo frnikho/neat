@@ -1,4 +1,4 @@
-import ContactModule from '@modules/contact/app'
+import ContactModule from '../../../../modules/contact/server'
 import {FileMigrationProvider, Kysely, Migrator, PostgresDialect} from 'kysely'
 import {Pool} from "pg";
 
