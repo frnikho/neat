@@ -54,20 +54,20 @@ export default function AppSidebarContent() {
             <SidebarGroup>
                 <SidebarGroupLabel>Application</SidebarGroupLabel>
                 <SidebarGroupContent>
+                    {/*<SidebarMenu>*/}
+                    {/*    {items.map((item) => (*/}
+                    {/*        <SidebarMenuItem key={item.title}>*/}
+                    {/*            <SidebarMenuButton isActive={isActive(item.url)} asChild>*/}
+                    {/*                <Link href={item.url}>*/}
+                    {/*                    <item.icon />*/}
+                    {/*                    <span>{item.title}</span>*/}
+                    {/*                </Link>*/}
+                    {/*            </SidebarMenuButton>*/}
+                    {/*        </SidebarMenuItem>*/}
+                    {/*    ))}*/}
+                    {/*</SidebarMenu>*/}
                     <SidebarMenu>
                         {getAllMenu()}
-                    </SidebarMenu>
-                    <SidebarMenu>
-                        {items.map((item) => (
-                            <SidebarMenuItem key={item.title}>
-                                <SidebarMenuButton isActive={isActive(item.url)} asChild>
-                                    <Link href={item.url}>
-                                        <item.icon />
-                                        <span>{item.title}</span>
-                                    </Link>
-                                </SidebarMenuButton>
-                            </SidebarMenuItem>
-                        ))}
                     </SidebarMenu>
                 </SidebarGroupContent>
             </SidebarGroup>

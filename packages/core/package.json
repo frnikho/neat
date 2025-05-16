@@ -17,9 +17,6 @@
     "bun-types": "latest",
     "rollup": "^4.40.0"
   },
-  "dependencies": {
-    "@ui/backoffice": "workspace:*"
-  },
   "peerDependencies": {
     "elysia": "latest",
     "drizzle-orm": "^0.42.0",

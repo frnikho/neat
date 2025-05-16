@@ -1,4 +1,11 @@
+'use client';
+
 import React from "react";
+import { GalleryVerticalEnd } from "lucide-react"
+import {Button, cn, Input, Label } from "@neat/ui";
+import {client} from "@lib/client";
+import {useForm} from "@tanstack/react-form";
+import * as v from "valibot";
 
 export default function Page() {
     return (
@@ -12,14 +19,58 @@ export default function Page() {
     )
 }
 
-import { GalleryVerticalEnd } from "lucide-react"
-import {Button, cn, Input, Label } from "@neat/ui";
-
+const LoginSchema = v.object({
+    email: v.pipe(v.string(), v.email()),
+    password: v.string(),
+});
 
 export function LoginForm({className, ...props}: React.ComponentPropsWithoutRef<"div">) {
+
+    const form = useForm({
+        defaultValues: {
+            email: '',
+            password: ''
+        },
+        validators: {
+            onChange: ({value}) => {
+                console.log(value);
+                console.log(v.safeParse(LoginSchema, value))
+                return 'abc'
+            },
+        },
+        onSubmit: ({value}) => {
+            alert(value);
+        }
+    })
+
+    const onClickLogin = async () => {
+        const {data} = await client.auth.login.post({email: '', password: ''});
+        console.log(data);
+    }
+
     return (
         <div className={cn("flex flex-col gap-6", className)} {...props}>
-            <form>
+            <form onSubmit={(e) => {
+                e.preventDefault();
+                return form.handleSubmit();
+            }}>
+                <form.Field name={"email"} validators={{
+                    onChange: ({value}) => {
+                        return 'a';
+                    }
+                }} children={(field) => (
+                    <>
+                        <Input name={field.name} value={field.state.value}
+                               onBlur={field.handleBlur}
+                               onChange={(e) => {
+                                   console.log(field.state.meta.isValid)
+                                   return field.handleChange(e.currentTarget.value);
+                               }} />
+                        {!field.state.meta.isValid && (
+                            <em>{field.state.meta.errors.join(',')}</em>
+                        )}
+                    </>
+                )}/>
                 <div className="flex flex-col gap-6">
                     <div className="flex flex-col items-center gap-2">
                         <a

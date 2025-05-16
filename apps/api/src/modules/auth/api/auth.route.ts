@@ -46,11 +46,11 @@ const refreshUserToken = ({cookie}: { cookie: AuthTokenCookie }) => {
 }
 
 const resetPassword = () => {
-
+  return {message: 'Password reseted'};
 }
 
 const deleteCurrentSession = () => {
-
+  return {message: 'Current session deleted'};
 }
 
 const deleteAllSession = () => {

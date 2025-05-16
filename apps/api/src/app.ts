@@ -1,6 +1,6 @@
 import { Elysia } from "elysia";
 import { instrumentation } from "@core/instrumentation";
-import ContactApp, {api} from '../../../modules/contact/server';
+// import ContactApp, {api} from '@modules/contact/server';
 import {startMigration, test} from "@core/migrate";
 import {createAuthCode} from "$auth/application/create-auth-code";
 import {authCodeRepo} from "$auth/infra/auth-code.repo";
@@ -9,8 +9,9 @@ import { core } from "./core";
 await startMigration();
 
 
-const modules = new Elysia()
-  .use(api);
+
+// const modules = new Elysia()
+//   .use(api);
 
 const app = new Elysia()
   .use(instrumentation())
@@ -18,7 +19,7 @@ const app = new Elysia()
     return JSON.stringify((error));
   })
   .use(core)
-  .use(modules)
+  // .use(modules)
   .get("/", async () => {
     console.log("hello");
     await test();

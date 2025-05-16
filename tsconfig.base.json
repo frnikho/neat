@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "$*": ["./apps/api/src/modules/*"],
+      "@core/*": ["./apps/api/src/core/*"],
+      "@modules/contact/app": ["./modules/contact/app"]
+    }
   }
 }
