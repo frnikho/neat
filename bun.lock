@@ -14,6 +14,7 @@
       "version": "1.0.50",
       "dependencies": {
         "@core": "workspace:*",
+        "@elysiajs/cors": "^1.3.3",
         "@elysiajs/opentelemetry": "^1.2.0",
         "@modules/contact": "workspace:*",
         "@opentelemetry/api": "^1.9.0",
@@ -51,6 +52,7 @@
         "@core": "workspace:*",
         "@modules/contact": "workspace:*",
         "@neat/api-client": "workspace:*",
+        "@neat/types": "workspace:*",
         "@neat/ui": "workspace:*",
         "@radix-ui/react-dialog": "^1.1.13",
         "@radix-ui/react-label": "^2.1.6",
@@ -97,7 +99,6 @@
         "drizzle-kit": "^0.31.0",
         "drizzle-orm": "^0.42.0",
         "elysia": "latest",
-        "lucide-react": "^0.510.0",
         "pg": "^8.14.1",
         "react": "^19.1.0",
         "react-dom": "^19.1.0",
@@ -137,6 +138,13 @@
         "typescript": "^5",
       },
     },
+    "packages/types": {
+      "name": "@neat/types",
+      "version": "1.0.0",
+      "peerDependencies": {
+        "valibot": "^1.1.0",
+      },
+    },
     "packages/ui": {
       "name": "@neat/ui",
       "version": "1.0.0",
@@ -146,6 +154,7 @@
         "@radix-ui/react-separator": "^1.1.6",
         "@radix-ui/react-slot": "^1.2.2",
         "@radix-ui/react-tooltip": "^1.2.6",
+        "@tanstack/react-form": "^1.11.1",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
         "lucide-react": "^0.509.0",
@@ -177,6 +186,8 @@
     "@core": ["@core@workspace:packages/core"],
 
     "@drizzle-team/brocli": ["@drizzle-team/brocli@0.10.2", "", {}, "sha512-z33Il7l5dKjUgGULTqBsQBQwckHh5AbIuxhdsIxDDiZAzBOrZO6q9ogcWC65kU382AfynTfgNumVcNIjuIua6w=="],
+
+    "@elysiajs/cors": ["@elysiajs/cors@1.3.3", "", { "peerDependencies": { "elysia": ">= 1.3.0" } }, "sha512-mYIU6PyMM6xIJuj7d27Vt0/wuzVKIEnFPjcvlkyd7t/m9xspAG37cwNjFxVOnyvY43oOd2I/oW2DB85utXpA2Q=="],
 
     "@elysiajs/eden": ["@elysiajs/eden@1.3.2", "", { "peerDependencies": { "elysia": ">= 1.3.0" } }, "sha512-0bCU5DO7J7hQfS2y3O3399GtoxMWRDMgQNMTHOnf70/F2nF8SwGHvzwh3+wO62Ko5FMF7EYqTN9Csw/g/Q7qwg=="],
 
@@ -311,6 +322,8 @@
     "@neat/api-client": ["@neat/api-client@workspace:packages/api-client"],
 
     "@neat/front": ["@neat/front@workspace:apps/front"],
+
+    "@neat/types": ["@neat/types@workspace:packages/types"],
 
     "@neat/ui": ["@neat/ui@workspace:packages/ui"],
 

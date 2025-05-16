@@ -40,12 +40,18 @@ function Button({
   variant,
   size,
   asChild = false,
+  loading = false,
   ...props
 }: React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
+    loading?: boolean
     asChild?: boolean
   }) {
   const Comp = asChild ? Slot : "button"
+
+  if (loading) {
+    return 'loading'
+  }
 
   return (
     <Comp

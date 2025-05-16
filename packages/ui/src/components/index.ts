@@ -6,3 +6,4 @@ export * from './separator';
 export * from './sidebar';
 export * from './skeleton';
 export * from './tooltip';
+export * from './tanstack-form';
