@@ -14,8 +14,8 @@ type AuthTokenCookie = {
 
 const loginUser = ({body, cookie}: { body: AuthLoginRequest, cookie: AuthTokenCookie}) => {
   return response(login(body), ({user, accessToken, refreshToken}) => {
-    cookie.access_token.set({value: accessToken, secure: true, httpOnly: true});
-    cookie.refresh_token.set({value: refreshToken, secure: true, httpOnly: true});
+    cookie.access_token.set({value: accessToken, secure: false, httpOnly: false, path: '/', sameSite: false});
+    cookie.refresh_token.set({value: refreshToken, secure: false, httpOnly: false, path: '/', sameSite: false});
     return {
       id: user.id,
       email: user.email,

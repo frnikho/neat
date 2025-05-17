@@ -1,7 +1,10 @@
 import * as v from "valibot";
 
 type LoginSchemaTranslation = {
-    email: string;
+    email: {
+        required: string;
+        invalid: string;
+    }
     password: {
         minLength: string;
         uppercase: string;
@@ -11,11 +14,20 @@ type LoginSchemaTranslation = {
     };
 }
 
+export type LoginSchema = {
+    email: string;
+    password: string;
+}
+
 export const loginSchema = (translation?: LoginSchemaTranslation) => v.object({
-    email: v.pipe(v.string(), v.nonEmpty(), v.email(translation?.email || 'Invalid email')),
+    email: v.pipe(
+        v.string(),
+        v.nonEmpty(translation?.email.required || 'L\'adresse e-mail est requise'),
+        v.email(translation?.email.invalid || 'L\'adresse e-mail est invalide'),
+    ),
     password: v.pipe(
         v.string(),
-        v.nonEmpty(),
+        v.nonEmpty('Le mot de passe est requis'),
         v.minLength(8, translation?.password.minLength || 'Password must be at least 8 characters long'),
         v.regex(/[A-Z]/, translation?.password.uppercase || 'Le mot de passe doit contenir au moins une lettre majuscule'),
         v.regex(/[a-z]/, translation?.password.lowercase || 'Le mot de passe doit contenir au moins une lettre minuscule'),

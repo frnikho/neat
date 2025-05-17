@@ -1,12 +1,14 @@
 import {ReactNode} from 'react';
 import '@styles/backoffice.css'
-import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import Provider from "@app/auth/provider";
 
 export default function Layout({children}: Readonly<{ children: ReactNode }>) {
     return (
         <html>
         <body>
-            {children}
+            <Provider>
+                {children}
+            </Provider>
         </body>
         </html>
     );

@@ -19,3 +19,14 @@ export const validate = <TSchema extends BaseSchema<unknown, unknown, BaseIssue<
     }
 
 }
+
+export const validateField = <TSchema extends BaseSchema<unknown, unknown, BaseIssue<unknown>>>(schema: TSchema, value: any, field: string) => {
+    const result = v.safeParse(schema, value);
+    if (result.issues) {
+        const fieldIssue = result.issues.find((issue) => issue.path?.at(0)?.key === field);
+        if (fieldIssue) {
+            return fieldIssue.message;
+        }
+    }
+    return null;
+}

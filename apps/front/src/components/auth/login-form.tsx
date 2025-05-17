@@ -1,15 +1,20 @@
 'use client';
 
-import {Button, cn, Input, useAppForm} from "@neat/ui";
+import {Button, Input, useAppForm} from "@neat/ui";
 import {GalleryVerticalEnd} from "lucide-react";
 import React, {FormEvent, useCallback} from "react";
 
-import {validate} from "@lib/validation";
+import {validate, validateField} from "@lib/validation";
 import {loginSchema} from "@neat/types";
-import {client} from "@lib/client";
 import {useLoading} from "@hooks/loading";
 
-export default function LoginForm() {
+import { toast } from "sonner"
+
+type Props = {
+    redirect?: string;
+}
+
+export default function LoginForm({redirect}: Props) {
 
     const {loading, execute} = useLoading();
 
@@ -22,13 +27,26 @@ export default function LoginForm() {
             onSubmit: ({value}) => validate(loginSchema(), value),
         },
         onSubmit: async ({value}) => (
-            execute(client.auth.login.post(value), (res) => {
+            execute(_login(value), (res) => {
                 console.log(res);
+                if (res.error) {
+                    return toast('Une erreur est survenue', {description: res.error});
+                }
+                return toast('Connexion réussie', {description: res.message});
             }, (err) => {
                 console.log(err);
             })
         )
     });
+
+    const _login = async (value: typeof form.state.values) => {
+        const res = await fetch('/api/auth/login', {
+            method: 'POST',
+            body: JSON.stringify(value),
+            credentials: 'include'
+        });
+        return await res.json();
+    }
 
     const handleSubmit = useCallback((e: FormEvent) => {
         e.preventDefault();
@@ -55,7 +73,7 @@ export default function LoginForm() {
                     </div>
                 </div>
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                    <form.AppField name={"email"} children={(field) => (
+                    <form.AppField validators={{onBlur: () => validateField(loginSchema(), form.state.values, 'email')}} name={"email"} children={(field) => (
                         <field.FormItem>
                             <field.FormLabel>Email</field.FormLabel>
                             <field.FormControl>
@@ -68,7 +86,7 @@ export default function LoginForm() {
                             <field.FormMessage/>
                         </field.FormItem>
                     )}/>
-                    <form.AppField name={"password"} children={(field) => (
+                    <form.AppField validators={{onBlur: () => validateField(loginSchema(), form.state.values, 'password')}} name={"password"} children={(field) => (
                         <field.FormItem>
                             <field.FormLabel>Mot de passe</field.FormLabel>
                             <field.FormControl>
