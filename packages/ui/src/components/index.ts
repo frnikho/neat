@@ -7,3 +7,4 @@ export * from './sidebar';
 export * from './skeleton';
 export * from './tooltip';
 export * from './tanstack-form';
+export * from './spinner';
