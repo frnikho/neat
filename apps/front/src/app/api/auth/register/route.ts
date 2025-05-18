@@ -7,11 +7,11 @@ export async function POST(req: Request) {
 
     const body = await req.json();
 
-    const {result, ok} = await resultify(() => client.auth.login.post(body));
+    const {result, ok} = await resultify(() => client.auth.register.post(body));
     if (!ok) {
         return NextResponse.json({
             error: true,
-            message: 'Une erreur est survenue lors de la connexion',
+            message: 'Une erreur est survenue lors de l\'inscription',
         })
     }
     if (result.error) {

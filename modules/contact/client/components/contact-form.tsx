@@ -8,9 +8,10 @@ export type Props = {
 }
 
 export function ContactForm() {
+
     return (
         <div>
-            <Button>Hello World from ContactForm</Button>
+            <Button>{'hello'}</Button>
         </div>
     )
 }

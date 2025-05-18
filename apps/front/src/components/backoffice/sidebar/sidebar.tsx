@@ -1,3 +1,5 @@
+'use client';
+
 import {Sidebar} from "@neat/ui";
 import SidebarContentApp from './sidebar-content';
 import SidebarFooterApp from "./sidebar-footer";

@@ -6,7 +6,9 @@
     "module": "ESNext",
     "target": "ESNext",
     "declaration": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true
   },
   "include": ["client"]
 }
