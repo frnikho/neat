@@ -4,11 +4,12 @@ import {Button, Input, useAppForm} from "@neat/ui";
 import {GalleryVerticalEnd} from "lucide-react";
 import React, {FormEvent, useCallback} from "react";
 
-import {validate, validateField} from "@lib/validation";
+import {validate, validateField} from "@/lib/validation";
 import {loginSchema} from "@neat/types";
-import {useLoading} from "@hooks/loading";
+import {useLoading} from "@/hooks/loading";
 
 import { toast } from "sonner"
+import { useRouter } from "next/navigation";
 
 type Props = {
     redirect?: string;
@@ -17,6 +18,7 @@ type Props = {
 export default function LoginForm({redirect}: Props) {
 
     const {loading, execute} = useLoading();
+    const router = useRouter();
 
     const form = useAppForm({
         defaultValues: {
@@ -28,11 +30,11 @@ export default function LoginForm({redirect}: Props) {
         },
         onSubmit: async ({value}) => (
             execute(_login(value), (res) => {
-                console.log(res);
                 if (res.error) {
                     return toast('Une erreur est survenue', {description: res.error});
                 }
-                return toast('Connexion réussie', {description: res.message});
+                toast('Connexion réussie', {description: res.message});
+                router.push(redirect ?? '/admin');
             }, (err) => {
                 console.log(err);
             })

@@ -20,7 +20,7 @@
     ],
     "paths": {
       "$app": ["./app.ts"],
-      "@*": ["./src/*"],
+      "@/*": ["./src/*"],
       "@styles/*": ["./styles/*"],
       "@modules/contact/front/*": ["../../modules/contact/front/*"],
       "@server/*": ["./src/server/*"],

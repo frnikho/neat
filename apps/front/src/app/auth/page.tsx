@@ -1,6 +1,5 @@
 import React from "react";
-import LoginForm from "@components/auth/login-form";
-import {cookies} from "next/headers";
+import LoginForm from "@/components/auth/login-form";
 
 type Params = {
     redirect?: string;

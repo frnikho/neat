@@ -1,8 +1,10 @@
-import {SidebarProvider, SidebarTrigger} from "@neat/ui";
+'use client';
+
+import {SidebarProvider, SidebarTrigger} from "@neat/ui/components/sidebar.js";
 import { ReactNode } from "react";
 import SidebarApp from "./sidebar";
 
-export default async function SidebarLayout({ children }: { children: ReactNode }) {
+export default function SidebarLayout({ children }: { children: ReactNode }) {
 
     return (
         <SidebarProvider>
