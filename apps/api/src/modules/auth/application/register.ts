@@ -1,4 +1,3 @@
-import {AuthRegisterRequest} from "$auth/api/auth.request";
 import {err, ok, ResultAsync} from "neverthrow";
 import {apiError, ApiError, ApiErrorCode} from "@core/exceptions/api.exception";
 import {db} from "@core/db";
@@ -13,6 +12,7 @@ import tokenRepo from "$auth/infra/token.repo";
 import createUser from "$user/application/create-user";
 import { User } from "$user/domain/entity/user.entity";
 import userRepo from "$user/infra/repo/user.repo";
+import {AuthRegisterRequest} from "$auth/api/auth.request";
 
 export type Output = {
   user: User;

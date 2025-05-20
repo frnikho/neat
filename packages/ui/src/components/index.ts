@@ -9,3 +9,13 @@ export * from './tooltip';
 export * from './tanstack-form';
 export * from './spinner';
 export * from './sonner';
+export * from './dropdown-menu';
+export * from './tabs';
+export * from './switch';
+export * from './select';
+export * from './popover';
+export * from './dialog';
+export * from './avatar';
+export * from './card';
+
+export * from './ui';

@@ -28,3 +28,7 @@ export const mapPermissionOption = (row: Option<PermissionDb>): Option<Permissio
   }
   return some(mapPermission(row.value))
 }
+
+export const mapPermissions = (rows: PermissionDb[]): Permission[] => {
+  return rows.map((r) => mapPermission(r));
+}

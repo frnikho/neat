@@ -1,3 +1,5 @@
+import {t} from "elysia";
+
 export type Pagination = {
   page: number;
   limit: number;
@@ -17,3 +19,5 @@ export const extractFromQuery = (params: Record<string, string>): Pagination => 
     limit,
   }
 }
+
+export const Id = t.String({minLength: 12, maxLength: 12});

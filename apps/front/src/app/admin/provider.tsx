@@ -2,6 +2,7 @@
 
 import {ReactNode} from "react";
 import { SidebarProvider } from "@neat/ui/components/sidebar.js";
+import { UserContext } from "@/contexts/user";
 
 type Props = {
     children: ReactNode,
@@ -15,8 +16,10 @@ type Props = {
 
 export default function Provider({ children, user }: Props) {
     return (
-        <SidebarProvider>
-            {children}
-        </SidebarProvider>
+        <UserContext.Provider value={user}>
+            <SidebarProvider>
+                {children}
+            </SidebarProvider>
+        </UserContext.Provider>
     )
 }

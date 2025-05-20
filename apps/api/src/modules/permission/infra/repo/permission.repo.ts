@@ -4,7 +4,7 @@ import {traceRepository} from "@core/instrumentation";
 import {eq} from "drizzle-orm";
 import {oneOreResultOption, oneOrThrow} from "@core/type";
 import {permission} from "$permission/infra/schema/permission.schema";
-import {mapPermission, mapPermissionOption} from "$permission/infra/permission.infra";
+import {mapPermission, mapPermissionOption, mapPermissions} from "$permission/infra/permission.infra";
 
 const permissionRepo = (client: DbPool = db): PermissionInterface => ({
   findById: (id) => {
@@ -58,6 +58,11 @@ const permissionRepo = (client: DbPool = db): PermissionInterface => ({
     return op(client.select().from(permission).where(eq(permission.name, name)))
       .andThen(oneOreResultOption)
       .map(mapPermissionOption)
+  },
+
+  list: (page, limit) => {
+    return op(client.select().from(permission).limit(limit).offset((page - 1) * limit))
+        .map(mapPermissions)
   }
 
 });
@@ -77,5 +82,8 @@ export default traceRepository(permissionRepo(), {
   },
   update: {
     name: 'repo.permission/update',
+  },
+  list: {
+    name: 'repo.permission/list',
   }
 })

@@ -18,7 +18,7 @@ export type RoleInterface = {
   delete: (id: string) => Result<void>;
   softDelete: (id: string, deletedBy?: string) => Result<void>;
 
-  addPermission: (roleId: string, permissionId: string) => Result<void>;
+  addPermissions: (roleId: string, permissionId: string[]) => Result<void>;
   removePermission: (roleId: string, permissionId: string) => Result<void>;
   getPermissions: (roleId: string) => Result<Permission[]>;
 }

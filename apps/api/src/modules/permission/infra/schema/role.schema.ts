@@ -1,5 +1,5 @@
 import * as p from 'drizzle-orm/pg-core'
-import {InferInsertModel, InferSelectModel} from "drizzle-orm";
+import {InferInsertModel, InferSelectModel, sql} from "drizzle-orm";
 import {uid} from "@core/db";
 import {user} from "$user/infra/schema/user.schema";
 
@@ -9,11 +9,11 @@ export const role = p.pgTable('role', {
   description: p.text(),
   isActive: p.boolean('is_active').default(true).notNull(),
   createdAt: p.timestamp('created_at').defaultNow().notNull(),
-  createdBy: uid('created_by').references(() => user.id, {onDelete: 'set null'}).default('null'),
+  createdBy: uid('created_by').references(() => user.id, {onDelete: 'set null'}).default(sql`NULL`),
   updatedAt: p.timestamp('updated_at'),
-  updatedBy: uid('updated_by').references(() => user.id, {onDelete: 'set null'}).default('null'),
+  updatedBy: uid('updated_by').references(() => user.id, {onDelete: 'set null'}).default(sql`NULL`),
   deletedAt: p.timestamp('deleted_at'),
-  deletedBy: uid('deleted_by').references(() => user.id, {onDelete: 'set null'}).default('null'),
+  deletedBy: uid('deleted_by').references(() => user.id, {onDelete: 'set null'}).default(sql`NULL`),
 })
 
 export type Role = InferSelectModel<typeof role>;

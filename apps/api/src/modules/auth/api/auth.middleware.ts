@@ -27,8 +27,10 @@ export default new Elysia().derive({as: 'scoped'}, ({headers, cookie}) => {
 
   return result().match(
     (user) => ({
-      user,
-      accessToken: cookie['access_token'].value!,
+      auth: {
+        user,
+        accessToken: cookie['access_token'].value!,
+      }
     }),
     (error) => {
       throw error;

@@ -10,12 +10,14 @@ import {permission} from "$permission/infra/schema/permission.schema";
 import {mapPermission} from "$permission/infra/permission.infra";
 import {none, some} from "fp-ts/Option";
 
-const roleRepo = (client: DbPool = db): RoleInterface => ({
+const roleRepo = (client: DbPool): RoleInterface => ({
   create: (body) => {
     return op(client.insert(role).values({
       name: body.name,
       description: body.description,
-      createdBy: body.createdBy
+      createdBy: body.createdBy,
+      updatedBy: null,
+      deletedBy: null,
     }).returning())
       .andThen(oneOrThrow)
       .map(mapRole)
@@ -63,11 +65,11 @@ const roleRepo = (client: DbPool = db): RoleInterface => ({
       .map(() => undefined)
   },
 
-  addPermission: (roleId, permissionId) => {
-    return op(client.insert(role_permission).values({
+  addPermissions: (roleId, permissionId) => {
+    return op(client.insert(role_permission).values(permissionId.map((p) => ({
       roleId,
-      permissionId
-    }).returning())
+      permissionId: p
+    }))).returning())
       .andThen(oneOrThrow)
       .map(() => undefined)
   },
@@ -102,7 +104,7 @@ const roleRepo = (client: DbPool = db): RoleInterface => ({
   }
 });
 
-export default traceRepository(roleRepo(), {
+export default (client: DbPool) => traceRepository(roleRepo(client), {
   create: {
     name: 'repo.role/create',
   },
@@ -121,8 +123,8 @@ export default traceRepository(roleRepo(), {
   softDelete: {
     name: 'repo.role/softDelete',
   },
-  addPermission: {
-    name: 'repo.role/addPermission',
+  addPermissions: {
+    name: 'repo.role/addPermissions',
   },
   removePermission: {
     name: 'repo.role/removePermission',

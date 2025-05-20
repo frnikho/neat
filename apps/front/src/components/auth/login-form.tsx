@@ -26,7 +26,7 @@ export default function LoginForm({redirect}: Props) {
             password: ''
         },
         validators: {
-            onSubmit: ({value}) => validate(loginSchema(), value),
+            onSubmit: ({value}) => validate(loginSchema, value),
         },
         onSubmit: async ({value}) => (
             execute(_login(value), (res) => {
@@ -75,7 +75,7 @@ export default function LoginForm({redirect}: Props) {
                     </div>
                 </div>
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                    <form.AppField validators={{onBlur: () => validateField(loginSchema(), form.state.values, 'email')}} name={"email"} children={(field) => (
+                    <form.AppField validators={{onBlur: () => validateField(loginSchema, form.state.values, 'email')}} name={"email"} children={(field) => (
                         <field.FormItem>
                             <field.FormLabel>Email</field.FormLabel>
                             <field.FormControl>
@@ -88,7 +88,7 @@ export default function LoginForm({redirect}: Props) {
                             <field.FormMessage/>
                         </field.FormItem>
                     )}/>
-                    <form.AppField validators={{onBlur: () => validateField(loginSchema(), form.state.values, 'password')}} name={"password"} children={(field) => (
+                    <form.AppField validators={{onBlur: () => validateField(loginSchema, form.state.values, 'password')}} name={"password"} children={(field) => (
                         <field.FormItem>
                             <field.FormLabel>Mot de passe</field.FormLabel>
                             <field.FormControl>

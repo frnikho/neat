@@ -3,6 +3,8 @@ import {Button} from '@core/client/components';
 import {Contact2, Phone, User2Icon} from "lucide-react";
 import SettingsForm from '../pages/settings-form';
 
+import { m } from "../../locales/messages.js";
+
 export type Props = {
     app: string;
 }
@@ -11,7 +13,7 @@ export function ContactForm() {
 
     return (
         <div>
-            <Button>{'hello'}</Button>
+            <Button>{m.example_message({username: 'ContextForm'})}</Button>
         </div>
     )
 }

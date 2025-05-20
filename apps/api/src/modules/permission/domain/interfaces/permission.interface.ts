@@ -8,6 +8,7 @@ type Result<T> = ResultAsync<T, DbException>;
 export type PermissionInterface = {
   findById: (id: string) => Result<Option<Permission>>;
   findByApiName: (name: string) => Result<Option<Permission>>;
+  list: (page: number, limit: number) => Result<Permission[]>;
   create: (body: CreatePermission) => Result<Permission>;
   update: (id: string, body: UpdatePermission) => Result<Permission>;
   delete: (id: string) => Result<void>;

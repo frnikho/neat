@@ -7,9 +7,9 @@ CREATE TABLE "permission" (
 	"attributes" jsonb,
 	"createdAt" timestamp DEFAULT now() NOT NULL,
 	"updatedAt" timestamp,
-	"updatedBy" varchar DEFAULT 'null',
+	"updatedBy" varchar DEFAULT NULL,
 	"deletedAt" timestamp,
-	"deletedBy" varchar DEFAULT 'null'
+	"deletedBy" varchar DEFAULT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "role_permission" (
@@ -24,11 +24,11 @@ CREATE TABLE "role" (
 	"description" text,
 	"is_active" boolean DEFAULT true,
 	"created_at" timestamp DEFAULT now() NOT NULL,
-	"created_by" varchar DEFAULT 'null',
+	"created_by" varchar DEFAULT NULL,
 	"updated_at" timestamp,
-	"updated_by" varchar DEFAULT 'null',
+	"updated_by" varchar DEFAULT NULL,
 	"deleted_at" timestamp,
-	"deleted_by" varchar DEFAULT 'null'
+	"deleted_by" varchar DEFAULT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "user_role" (

@@ -7,8 +7,6 @@ import SidebarHeaderApp from "./sidebar-header";
 
 export default function SidebarApp() {
 
-    // load data from server
-
     return (
         <Sidebar>
             <SidebarHeaderApp/>

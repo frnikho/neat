@@ -1,37 +1,37 @@
 import * as v from "valibot";
 
-type LoginSchemaTranslation = {
-    email: {
-        required: string;
-        invalid: string;
-    }
-    password: {
-        minLength: string;
-        uppercase: string;
-        lowercase: string;
-        number: string;
-        special: string;
-    };
-}
+const email =  v.pipe(
+    v.string(),
+    v.nonEmpty(),
+    v.email(),
+    v.maxLength(255),
+);
 
-export type LoginSchema = {
-    email: string;
-    password: string;
-}
+const password = v.pipe(
+    v.string(),
+    v.nonEmpty(),
+    v.minLength(8),
+    v.regex(/[A-Z]/),
+    v.regex(/[a-z]/),
+    v.regex(/[0-9]/),
+    v.regex(/[^A-Za-z0-9]/)
+)
 
-export const loginSchema = (translation?: LoginSchemaTranslation) => v.object({
-    email: v.pipe(
+export const loginSchema = v.object({
+    email,
+    password,
+});
+
+export const registerSchema = v.object({
+    code: v.string(),
+    firstname: v.pipe(
         v.string(),
-        v.nonEmpty(translation?.email.required || 'L\'adresse e-mail est requise'),
-        v.email(translation?.email.invalid || 'L\'adresse e-mail est invalide'),
+        v.minLength(2),
+        v.maxLength(128),
     ),
-    password: v.pipe(
+    lastname: v.pipe(
         v.string(),
-        v.nonEmpty('Le mot de passe est requis'),
-        v.minLength(8, translation?.password.minLength || 'Password must be at least 8 characters long'),
-        v.regex(/[A-Z]/, translation?.password.uppercase || 'Le mot de passe doit contenir au moins une lettre majuscule'),
-        v.regex(/[a-z]/, translation?.password.lowercase || 'Le mot de passe doit contenir au moins une lettre minuscule'),
-        v.regex(/[0-9]/, translation?.password.number || 'Le mot de passe doit contenir au moins un chiffre'),
-        v.regex(/[^A-Za-z0-9]/, translation?.password.special || 'Le mot de passe doit contenir au moins un caractère spécial')
+        v.minLength(2),
+        v.maxLength(128),
     ),
 });
