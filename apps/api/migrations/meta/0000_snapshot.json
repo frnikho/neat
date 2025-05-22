@@ -1,5 +1,5 @@
 {
-  "id": "b43de3c2-1c44-4c82-97d7-8763e458e09f",
+  "id": "9e08dff8-ad74-4b9a-9eae-7d7d65e74870",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -44,48 +44,52 @@
           "primaryKey": false,
           "notNull": false
         },
-        "createdAt": {
-          "name": "createdAt",
+        "created_at": {
+          "name": "created_at",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
         },
-        "updatedAt": {
-          "name": "updatedAt",
+        "created_by": {
+          "name": "created_by",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false
         },
-        "updatedBy": {
-          "name": "updatedBy",
+        "updated_by": {
+          "name": "updated_by",
           "type": "varchar",
           "primaryKey": false,
-          "notNull": false,
-          "default": "'null'"
+          "notNull": false
         },
-        "deletedAt": {
-          "name": "deletedAt",
+        "deleted_at": {
+          "name": "deleted_at",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false
         },
-        "deletedBy": {
-          "name": "deletedBy",
+        "deleted_by": {
+          "name": "deleted_by",
           "type": "varchar",
           "primaryKey": false,
-          "notNull": false,
-          "default": "'null'"
+          "notNull": false
         }
       },
       "indexes": {},
       "foreignKeys": {
-        "permission_updatedBy_user_id_fk": {
-          "name": "permission_updatedBy_user_id_fk",
+        "permission_created_by_user_id_fk": {
+          "name": "permission_created_by_user_id_fk",
           "tableFrom": "permission",
           "tableTo": "user",
           "columnsFrom": [
-            "updatedBy"
+            "created_by"
           ],
           "columnsTo": [
             "id"
@@ -93,12 +97,25 @@
           "onDelete": "set null",
           "onUpdate": "no action"
         },
-        "permission_deletedBy_user_id_fk": {
-          "name": "permission_deletedBy_user_id_fk",
+        "permission_updated_by_user_id_fk": {
+          "name": "permission_updated_by_user_id_fk",
           "tableFrom": "permission",
           "tableTo": "user",
           "columnsFrom": [
-            "deletedBy"
+            "updated_by"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "permission_deleted_by_user_id_fk": {
+          "name": "permission_deleted_by_user_id_fk",
+          "tableFrom": "permission",
+          "tableTo": "user",
+          "columnsFrom": [
+            "deleted_by"
           ],
           "columnsTo": [
             "id"
@@ -199,7 +216,7 @@
           "name": "is_active",
           "type": "boolean",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "default": true
         },
         "created_at": {
@@ -213,8 +230,7 @@
           "name": "created_by",
           "type": "varchar",
           "primaryKey": false,
-          "notNull": false,
-          "default": "'null'"
+          "notNull": false
         },
         "updated_at": {
           "name": "updated_at",
@@ -226,8 +242,7 @@
           "name": "updated_by",
           "type": "varchar",
           "primaryKey": false,
-          "notNull": false,
-          "default": "'null'"
+          "notNull": false
         },
         "deleted_at": {
           "name": "deleted_at",
@@ -239,8 +254,7 @@
           "name": "deleted_by",
           "type": "varchar",
           "primaryKey": false,
-          "notNull": false,
-          "default": "'null'"
+          "notNull": false
         }
       },
       "indexes": {},
@@ -347,6 +361,117 @@
         }
       },
       "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.settings": {
+      "name": "settings",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "key": {
+          "name": "key",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "value": {
+          "name": "value",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_by": {
+          "name": "updated_by",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "NULL"
+        },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "deleted_by": {
+          "name": "deleted_by",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "NULL"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "settings_updated_by_user_id_fk": {
+          "name": "settings_updated_by_user_id_fk",
+          "tableFrom": "settings",
+          "tableTo": "user",
+          "columnsFrom": [
+            "updated_by"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "settings_deleted_by_user_id_fk": {
+          "name": "settings_deleted_by_user_id_fk",
+          "tableFrom": "settings",
+          "tableTo": "user",
+          "columnsFrom": [
+            "deleted_by"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "settings_key_unique": {
+          "name": "settings_key_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "key"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false

@@ -16,6 +16,6 @@ export class DbException extends Error implements DbExceptionShape {
   }
 
   toApiError(): ApiError {
-    return new ApiError(ApiErrorCode.INTERNAL_ERROR, this.message, this.details);
+    return new ApiError(ApiErrorCode.BAD_REQUEST, this.message, this.details);
   }
 }

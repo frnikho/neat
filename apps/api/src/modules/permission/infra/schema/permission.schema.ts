@@ -10,12 +10,12 @@ export const permission = p.pgTable('permission', {
   resource: p.varchar({length: 255}).notNull(),
   action: p.varchar({length: 255}).notNull(),
   attributes: p.jsonb(),
-  createdAt: p.timestamp().defaultNow().notNull(),
-  createdBy: uid().references(() => user.id, {onDelete: 'set null'}).default('null'),
-  updatedAt: p.timestamp(),
-  updatedBy: uid().references(() => user.id, {onDelete: 'set null'}).default('null'),
-  deletedAt: p.timestamp(),
-  deletedBy: uid().references(() => user.id, {onDelete: 'set null'}).default('null'),
+  createdAt: p.timestamp('created_at').defaultNow().notNull(),
+  createdBy: uid('created_by').references(() => user.id, {onDelete: 'set null'}),
+  updatedAt: p.timestamp('updated_at'),
+  updatedBy: uid('updated_by').references(() => user.id, {onDelete: 'set null'}),
+  deletedAt: p.timestamp('deleted_at'),
+  deletedBy: uid('deleted_by').references(() => user.id, {onDelete: 'set null'}),
 })
 
 export type Permission = InferSelectModel<typeof permission>;

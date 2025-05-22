@@ -5,8 +5,15 @@ import {eq} from "drizzle-orm";
 import {oneOreResultOption, oneOrThrow} from "@core/type";
 import {permission} from "$permission/infra/schema/permission.schema";
 import {mapPermission, mapPermissionOption, mapPermissions} from "$permission/infra/permission.infra";
+import {inArray} from "drizzle-orm/sql/expressions/conditions";
 
 const permissionRepo = (client: DbPool = db): PermissionInterface => ({
+
+  findByIds: (ids) => {
+    return op(client.select().from(permission).where(inArray(permission.id, ids)))
+      .map(mapPermissions)
+  },
+
   findById: (id) => {
     return op(db.select().from(permission).where(eq(permission.id, id)))
       .andThen(oneOreResultOption)

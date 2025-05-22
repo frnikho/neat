@@ -1,9 +1,9 @@
 import {RoleInterface} from "$permission/domain/interfaces/role.interface";
-import {db, DbPool, op} from "@core/db";
+import {DbPool, op} from "@core/db";
 import {role} from "$permission/infra/schema/role.schema";
 import {notEmpty, oneOreResultOption, oneOrThrow} from "@core/type";
 import {mapRole, mapRoleOption} from "$permission/infra/role.infra";
-import {and, eq} from "drizzle-orm";
+import {and, eq, isNull} from "drizzle-orm";
 import {traceRepository} from "@core/instrumentation";
 import {role_permission} from "$permission/infra/schema/role-permission.schema";
 import {permission} from "$permission/infra/schema/permission.schema";
@@ -24,34 +24,47 @@ const roleRepo = (client: DbPool): RoleInterface => ({
   },
 
   findById: (id) => {
-    return op(client.select().from(role).where(eq(role.id, id)))
+    return op(client.select().from(role).where(and(
+        eq(role.id, id),
+        isNull(role.deletedAt)
+    )))
       .andThen(oneOreResultOption)
       .map(mapRoleOption)
   },
 
   list: (page = 1, limit = 10) => {
-    return op(client.select().from(role).limit(limit).offset((page - 1) * limit))
+    return op(client.select().from(role).limit(limit).offset((page - 1) * limit).where(isNull(role.deletedAt)))
       .map((a) => a.map(mapRole))
   },
 
   delete: (id) => {
-    return op(client.delete(role).where(eq(role.id, id)).returning())
+    return op(client.delete(role).where(and(
+        eq(role.id, id),
+        isNull(role.deletedAt)
+    )).returning())
       .andThen(oneOrThrow)
-      .map(() => undefined)
+      .map(mapRole)
   },
 
   update: (id, body) => {
     return op(client.update(role).set({
       name: body.name,
       description: body.description,
-      updatedBy: body.updatedBy
-    }).where(eq(role.id, id)).returning())
+      updatedBy: body.updatedBy,
+      updatedAt: new Date(),
+    }).where(and(
+        eq(role.id, id),
+        isNull(role.deletedAt)
+    )).returning())
       .andThen(oneOrThrow)
       .map(mapRole)
   },
 
   findByName: (name) => {
-    return op(client.select().from(role).where(eq(role.name, name)))
+    return op(client.select().from(role).where(and(
+        eq(role.name, name),
+        isNull(role.deletedAt)
+    )))
       .andThen(oneOreResultOption)
       .map(mapRoleOption)
   },
@@ -60,9 +73,12 @@ const roleRepo = (client: DbPool): RoleInterface => ({
     return op(client.update(role).set({
       deletedAt: new Date(),
       deletedBy
-    }).where(eq(role.id, id)).returning())
+    }).where(and(
+        eq(role.id, id),
+        isNull(role.deletedAt)
+    )).returning())
       .andThen(oneOrThrow)
-      .map(() => undefined)
+      .map(mapRole)
   },
 
   addPermissions: (roleId, permissionId) => {
@@ -90,7 +106,10 @@ const roleRepo = (client: DbPool): RoleInterface => ({
       .from(role)
       .leftJoin(role_permission, eq(role_permission.roleId, role.id))
       .leftJoin(permission, eq(role_permission.permissionId, permission.id))
-      .where(eq(role.id, id))
+      .where(and(
+          eq(role.id, id),
+          isNull(role.deletedAt)
+      ))
     ).map((a) => {
       if (a.length === 0) {
         return none
