@@ -21,11 +21,11 @@ const removeUserRole = ({roleId, userId}: Input): ResultAsync<Output, ApiError> 
     const user = userRepo.findUserById(db, userId)
         .andThen((u) => optionToResult(u, apiError(ApiErrorCode.BAD_REQUEST, 'User not found')));
 
-    const role = roleRepo.findById(roleId)
+    const role = roleRepo(db).findById(roleId)
         .andThen((u) => optionToResult(u, apiError(ApiErrorCode.BAD_REQUEST, 'Role not found')));
 
     const result = ResultAsync.combine([user, role]).andThen(([user, role]) => {
-        return userRoleRepo.remove(user.id, role.id)
+        return userRoleRepo(db).remove(user.id, role.id)
     })
 
     return handle(result);

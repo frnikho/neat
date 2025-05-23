@@ -19,7 +19,7 @@ const listUserRole = ({userId}: Input): ResultAsync<Output, ApiError> => {
 
     const result = userRepo.findUserById(db, userId)
         .andThen((u) => optionToResult(u, apiError(ApiErrorCode.BAD_REQUEST, 'User not found')))
-        .andThen((u) => userRoleRepo.list(u.id));
+        .andThen((u) => userRoleRepo(db).list(u.id));
 
     return handle(result);
 }

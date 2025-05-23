@@ -6,6 +6,7 @@ import refreshToken from "$auth/application/refresh-token";
 import authMiddleware, {AuthContext} from "$auth/api/auth.middleware";
 import info from "$auth/application/info";
 import {AuthLoginRequest, AuthRegisterRequest, AuthRequest} from "$auth/api/auth.request";
+import {AuthResponse} from "$auth/api/auth.response";
 
 type AuthTokenCookie = {
     access_token: Cookie<string | undefined>;
@@ -73,10 +74,11 @@ const getAuthenticatedUserInfo = ({auth}: {auth: AuthContext}) => {
 
 export default new Elysia()
     .model(AuthRequest)
+    .model(AuthResponse)
     .group('/auth', (app) =>
         app
-            .post('/login', loginUser, {body: 'auth.login'})
-            .post('/register', registerUser, {body: 'auth.register'})
+            .post('/login', loginUser, {body: 'auth.request.login', cookie: 'auth.cookie.login', response: {200: 'auth.response.login'}})
+            .post('/register', registerUser, {body: 'auth.request.register'})
             .post('/refresh', refreshUserToken)
             .delete('/session', deleteCurrentSession)
             .delete('/sessions', deleteAllSession)

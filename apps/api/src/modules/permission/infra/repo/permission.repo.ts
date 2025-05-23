@@ -74,7 +74,7 @@ const permissionRepo = (client: DbPool = db): PermissionInterface => ({
 
 });
 
-export default traceRepository(permissionRepo(), {
+export default (client: DbPool) => traceRepository(permissionRepo(client), {
   create: {
     name: 'repo.permission/create',
   },

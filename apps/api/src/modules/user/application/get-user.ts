@@ -1,20 +1,18 @@
 import {db, DbPool} from "@core/db";
 import {optionToResult} from "@core/type";
 import {apiError, ApiErrorCode} from "@core/exceptions/api.exception";
-import {UserInterface} from "$user/domain/interface/user.interface";
 import {_trace} from "@core/instrumentation";
+import userRepo from "$user/infra/repo/user.repo";
 
-type UserRepo = UserInterface<DbPool>;
-
-const getUserFromId = (repo: UserRepo, id: string) =>{
-  return repo.findUserById(db, id)
+const getUserFromId = (id: string, repo = userRepo(db)) =>{
+  return repo.findUserById(id)
     .andThen((user) =>
       optionToResult(user, apiError(ApiErrorCode.NOT_FOUND, `User with id ${id} not found`))
     )
 }
 
-const getUserFromEmail = (repo: UserRepo, email: string) => {
-  return repo.findUserByEmail(db, email)
+const getUserFromEmail = (email: string, repo = userRepo(db)) => {
+  return repo.findUserByEmail(email)
     .andThen((user) =>
       optionToResult(user, apiError(ApiErrorCode.NOT_FOUND, `User with email ${email} not found`))
     )

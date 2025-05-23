@@ -8,7 +8,7 @@ import roleRepo from "$permission/infra/repo/role.repo";
 import {db, opTx} from "@core/db";
 import {AuthContext} from "$auth/api/auth.middleware";
 import {handle, optionToResult} from "@core/type";
-import permissionRepo from "$permission/infra/repo/permission.repo";
+import {checkPermission} from "$permission/infra/role.service";
 
 type Input = {
     auth: AuthContext;
@@ -32,7 +32,7 @@ const _createRole = ({auth, body}: Input): ResultAsync<Output, ApiError> => {
         const role = createdRole.value;
 
         if (body.permissions) {
-            const addedPerms = await checkPermission(body.permissions).andThen((perm) =>
+            const addedPerms = await checkPermission(tx, body.permissions).andThen((perm) =>
                 repo.addPermissions(role.id, perm.map((p) => p.id))
             );
 
@@ -57,17 +57,6 @@ const _createRole = ({auth, body}: Input): ResultAsync<Output, ApiError> => {
     return handle(result);
 }
 
-const checkPermission = (perms: string[]) => {
-    return permissionRepo.findByIds(perms)
-        .andThen((permissions) => {
-            const foundIds = new Set(permissions.map((p) => p.id));
-            const missing = perms!.filter((id) => !foundIds.has(id));
-            if (missing.length > 0) {
-                return err(apiError(ApiErrorCode.BAD_REQUEST, 'Some permissions not found: ' + missing.join(',')));
-            }
 
-            return ok(permissions);
-        })
-}
 
 export default _trace(_createRole, 'app.permission/create-role');

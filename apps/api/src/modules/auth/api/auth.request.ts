@@ -21,6 +21,6 @@ export const authRegisterRequest = t.Object({
 export type AuthRegisterRequest = Static<typeof authRegisterRequest>;
 
 export const AuthRequest = {
-  'auth.login': authLoginRequest,
-  'auth.register': authRegisterRequest,
+  'auth.request.login': authLoginRequest,
+  'auth.request.register': authRegisterRequest,
 }

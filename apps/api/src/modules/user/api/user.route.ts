@@ -1,37 +1,35 @@
 import {Elysia} from "elysia";
 import authMiddleware from "$auth/api/auth.middleware";
-import {extractFromQuery} from "@core/request";
+import {extractFromQuery, RequestModels} from "@core/request";
 
 const _findById = () => {
-  console.log('abc');
+    console.log('abc');
 }
 
-const list = ({query, params}: {query: Record<any, any>, params: {userId: string}}) => {
-  console.log(query);
-  const pagination = extractFromQuery(query);
-  console.log(pagination);
+const _list = ({query, params}: { query: Record<any, any>, params: { userId: string } }) => {
+    const pagination = extractFromQuery(query);
 }
 
-const create = () => {
-
-}
-
-const removeUser = () => {
+const _create = () => {
 
 }
 
-const updateUser = () => {
+const _delete = () => {
+
+}
+
+const _update = () => {
 
 }
 
 export default new Elysia()
-  .group('/users', (app) =>
-    app
-      .use(authMiddleware)
-      .get('/', list)
-      .get('/:userId', _findById)
-      .post('/', create)
-      .delete('/:userId', removeUser)
-      .patch('/:userId', updateUser)
-
-);
+    .model(RequestModels)
+    .group('/users', (app) =>
+        app
+            .use(authMiddleware)
+            .get('/', _list, {query: 'pagination'})
+            .get('/:userId', _findById)
+            .post('/', _create)
+            .delete('/:userId', _delete)
+            .patch('/:userId', _update)
+    );

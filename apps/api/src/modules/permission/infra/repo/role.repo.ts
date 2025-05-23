@@ -2,13 +2,14 @@ import {RoleInterface} from "$permission/domain/interfaces/role.interface";
 import {DbPool, op} from "@core/db";
 import {role} from "$permission/infra/schema/role.schema";
 import {notEmpty, oneOreResultOption, oneOrThrow} from "@core/type";
-import {mapRole, mapRoleOption} from "$permission/infra/role.infra";
+import {mapRole, mapRoleOption, mapRoles} from "$permission/infra/role.infra";
 import {and, eq, isNull} from "drizzle-orm";
 import {traceRepository} from "@core/instrumentation";
 import {role_permission} from "$permission/infra/schema/role-permission.schema";
 import {permission} from "$permission/infra/schema/permission.schema";
 import {mapPermission} from "$permission/infra/permission.infra";
 import {none, some} from "fp-ts/Option";
+import {inArray} from "drizzle-orm/sql/expressions/conditions";
 
 const roleRepo = (client: DbPool): RoleInterface => ({
   create: (body) => {
@@ -35,6 +36,14 @@ const roleRepo = (client: DbPool): RoleInterface => ({
   list: (page = 1, limit = 10) => {
     return op(client.select().from(role).limit(limit).offset((page - 1) * limit).where(isNull(role.deletedAt)))
       .map((a) => a.map(mapRole))
+  },
+
+  deletes: (ids) => {
+    return op(client.delete(role).where(and(
+        isNull(role.deletedAt),
+        inArray(role.id, ids)
+    )).returning())
+      .map(mapRoles)
   },
 
   delete: (id) => {
@@ -95,8 +104,8 @@ const roleRepo = (client: DbPool): RoleInterface => ({
       .map((a) => a.map((b) => mapPermission(b.permission)))
   },
 
-  removePermission: (id, permissionId) => {
-    return op(client.delete(role_permission).where(and(eq(role_permission.roleId, id), eq(role_permission.permissionId, permissionId))).returning())
+  removePermissions: (id, permissionIds) => {
+    return op(client.delete(role_permission).where(and(eq(role_permission.roleId, id), inArray(role_permission.permissionId, permissionIds))).returning())
       .andThen(oneOrThrow)
       .map(() => undefined)
   },
@@ -128,10 +137,10 @@ export default (client: DbPool) => traceRepository(roleRepo(client), {
     name: 'repo.role/create',
   },
   findById: {
-    name: 'repo.role/findById',
+    name: 'repo.role/find-by-id',
   },
   findByName: {
-    name: 'repo.role/findPermissionByName',
+    name: 'repo.role/find-permission-by-name',
   },
   update: {
     name: 'repo.role/update',
@@ -140,15 +149,15 @@ export default (client: DbPool) => traceRepository(roleRepo(client), {
     name: 'repo.role/delete',
   },
   softDelete: {
-    name: 'repo.role/softDelete',
+    name: 'repo.role/soft-delete',
   },
   addPermissions: {
-    name: 'repo.role/addPermissions',
+    name: 'repo.role/add-permissions',
   },
-  removePermission: {
-    name: 'repo.role/removePermission',
+  removePermissions: {
+    name: 'repo.role/remove-permissions',
   },
   getPermissions: {
-    name: 'repo.role/getPermissions',
+    name: 'repo.role/get-permissions',
   }
 });

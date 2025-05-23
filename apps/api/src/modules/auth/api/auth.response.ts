@@ -7,6 +7,11 @@ const authLoginResponse = t.Object({
     lastname: t.String(),
 });
 
+const authLoginCookieResponse = t.Object({
+    access_token: t.Optional(t.String()),
+    refresh_token: t.Optional(t.String()),
+});
+
 export type AuthLoginResponse = Static<typeof authLoginResponse>;
 
 const authRegisterResponse = t.Object({
@@ -19,6 +24,7 @@ const authRegisterResponse = t.Object({
 export type AuthRegisterResponse = Static<typeof authRegisterResponse>;
 
 export const AuthResponse = {
-    auth_response_login: authLoginResponse,
-    auth_response_register: authRegisterResponse,
+    'auth.response.login': authLoginResponse,
+    'auth.response.register': authRegisterResponse,
+    'auth.cookie.login': authLoginCookieResponse,
 }

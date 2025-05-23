@@ -26,3 +26,7 @@ export const mapRoleOption = (row: Option<RoleDb>): Option<Role> => {
   }
   return some(mapRole(row.value))
 }
+
+export const mapRoles = (rows: RoleDb[]): Role[] => {
+  return rows.map(mapRole)
+}

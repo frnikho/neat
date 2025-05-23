@@ -22,7 +22,7 @@ const login = (input: AuthLoginRequest): ResultAsync<Output, ApiError> => {
   const client = redisClient();
   const sessionId = createId();
 
-  const user = userRepo.findUserByEmail(db, input.email)
+  const user = userRepo(db).findUserByEmail(input.email)
     .andThen((e) => optionToResult(e, apiError(ApiErrorCode.BAD_REQUEST, "User not found")))
     .andThen((user) => {
       return verifyPassword({password: input.password, hashedPassword: user.password}).andThen((valid) => {

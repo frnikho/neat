@@ -28,7 +28,7 @@ const userRoleRepo = (client: DbPool = db): UserRoleInterface => ({
   }
 });
 
-export default traceRepository(userRoleRepo(), {
+export default (db: DbPool) => traceRepository(userRoleRepo(db), {
   add: {
     name: 'repo.user-role/add',
   },

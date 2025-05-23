@@ -27,3 +27,7 @@ export const mapUserOption = (row: Option<UserDb>): Option<User> => {
   }
   return some(mapUser(row.value))
 }
+
+export const mapUsers = (rows: UserDb[]): User[] => {
+  return rows.map(mapUser);
+}

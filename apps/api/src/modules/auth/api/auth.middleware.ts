@@ -21,7 +21,7 @@ export default new Elysia().derive({as: 'scoped'}, ({headers, cookie}) => {
     }
 
     return verifyToken(token.value)
-      .andThen(({payload}) => userRepo.findUserById(db, payload.userId).mapErr(e => e.toApiError()))
+      .andThen(({payload}) => userRepo(db).findUserById(payload.userId).mapErr(e => e.toApiError()))
       .andThen((usr) => optionToResult(usr, apiError(ApiErrorCode.UNAUTHORIZED, "User not logged !")))
   }, 'api.auth/auth-middleware');
 

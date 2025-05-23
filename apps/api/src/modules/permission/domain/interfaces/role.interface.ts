@@ -16,9 +16,10 @@ export type RoleInterface = {
   create: (body: CreateRole) => Result<Role>;
   update: (id: string, body: UpdateRole) => Result<Role>;
   delete: (id: string) => Result<Role>;
+  deletes: (ids: string[]) => Result<Role[]>;
   softDelete: (id: string, deletedBy?: string) => Result<Role>;
 
   addPermissions: (roleId: string, permissionId: string[]) => Result<void>;
-  removePermission: (roleId: string, permissionId: string) => Result<void>;
+  removePermissions: (roleId: string, permissionId: string[]) => Result<void>;
   getPermissions: (roleId: string) => Result<Permission[]>;
 }
