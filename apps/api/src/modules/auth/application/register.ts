@@ -23,7 +23,7 @@ export type Output = {
 const register = (input: AuthRegisterRequest): ResultAsync<Output, ApiError> => {
   const client = redisClient();
 
-  const createdUser = userRepo.findUserByEmail(db, input.email)
+  const createdUser = userRepo(db).findUserByEmail(input.email)
     .andThen((user) => {
       if (isSome(user)) {
         return err(apiError(ApiErrorCode.BAD_REQUEST, 'User already exists'));

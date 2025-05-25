@@ -32,7 +32,7 @@ const _listUserRole = (ctx: AuthContext & UserParams) => {
 }
 
 export default new Elysia()
-    .group('/users/:userId/roles', (app) =>
+    .group('/user/:userId/roles', (app) =>
         app
             .use(authMiddleware)
             .get('/', _listUserRole)

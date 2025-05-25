@@ -1,35 +1,48 @@
 import {Elysia} from "elysia";
-import authMiddleware from "$auth/api/auth.middleware";
-import {extractFromQuery, RequestModels} from "@core/request";
+import authMiddleware, {AuthContext} from "$auth/api/auth.middleware";
+import {extractFromQuery, PaginationQuery, RequestModels} from "@core/request";
+import {response} from "@core/response";
+import {findById} from "$user/application/get-user";
+import listUser from "$user/application/list-user";
+import {userResponse, UserResponse, usersResponse} from "$user/api/user.response";
+import deleteUser from "$user/application/delete-user";
+import {UpdateUserRequest, UserRequest} from "$user/api/user.request";
+import updateUser from "$user/application/update-user";
 
-const _findById = () => {
-    console.log('abc');
+type UserParams = {
+    params: { userId: string };
 }
 
-const _list = ({query, params}: { query: Record<any, any>, params: { userId: string } }) => {
-    const pagination = extractFromQuery(query);
+const _get = ({params}: {auth: AuthContext} & UserParams) => {
+    return response(findById(params.userId), userResponse);
+}
+
+const _list = ({query, auth}: { query: PaginationQuery, auth: AuthContext }) => {
+    return response(listUser({pag: extractFromQuery(query), auth}), usersResponse);
 }
 
 const _create = () => {
 
 }
 
-const _delete = () => {
-
+const _delete = ({params, auth}: {auth: AuthContext} & UserParams) => {
+    return response(deleteUser({auth, userId: params.userId}), userResponse);
 }
 
-const _update = () => {
-
+const _update = ({params, body, auth}: {body: UpdateUserRequest, auth: AuthContext} & UserParams) => {
+    return response(updateUser({auth, userId: params.userId, body}), userResponse);
 }
 
 export default new Elysia()
+    .model(UserRequest)
+    .model(UserResponse)
     .model(RequestModels)
-    .group('/users', (app) =>
+    .group('/user', (app) =>
         app
             .use(authMiddleware)
-            .get('/', _list, {query: 'pagination'})
-            .get('/:userId', _findById)
-            .post('/', _create)
-            .delete('/:userId', _delete)
-            .patch('/:userId', _update)
+            .post('/', _create, {detail: {tags: ['User']}})
+            .get('/:userId', _get, {response: {200: 'user.response.get'}, detail: {tags: ['User']}})
+            .delete('/:userId', _delete, {response: {200: 'user.response.delete'}, detail: {tags: ['User']}})
+            .patch('/:userId', _update, {body: 'user.request.update', response: {200: 'user.response.update'}, detail: {tags: ['User']}})
+            .get('/', _list, {response: 'user.response.list', query: 'pagination', detail: {tags: ['User']}})
     );

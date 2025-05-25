@@ -1,20 +1,20 @@
 import {Static, t} from 'elysia';
 
-const authLoginResponse = t.Object({
+export const authLoginResponse = t.Object({
     id: t.String(),
     email: t.String(),
     firstname: t.String(),
     lastname: t.String(),
 });
 
-const authLoginCookieResponse = t.Object({
+export const authLoginCookieResponse = t.Object({
     access_token: t.Optional(t.String()),
     refresh_token: t.Optional(t.String()),
 });
 
 export type AuthLoginResponse = Static<typeof authLoginResponse>;
 
-const authRegisterResponse = t.Object({
+export const authRegisterResponse = t.Object({
     id: t.String(),
     email: t.String(),
     firstname: t.String(),

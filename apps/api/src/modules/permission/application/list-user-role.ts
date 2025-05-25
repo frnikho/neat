@@ -17,7 +17,7 @@ type Output = Role[];
 
 const listUserRole = ({userId}: Input): ResultAsync<Output, ApiError> => {
 
-    const result = userRepo.findUserById(db, userId)
+    const result = userRepo(db).findUserById(userId)
         .andThen((u) => optionToResult(u, apiError(ApiErrorCode.BAD_REQUEST, 'User not found')))
         .andThen((u) => userRoleRepo(db).list(u.id));
 

@@ -21,6 +21,11 @@ const userRepository = (db: DbPool): UserInterface => ({
             .map(mapUserOption)
     },
 
+    list: (page, limit) => {
+        return op(db.select().from(user).limit(limit).offset((page - 1) * limit))
+            .map(mapUsers)
+    },
+
     create(body) {
         return op(db.insert(user).values({
             firstname: body.firstname,

@@ -16,7 +16,9 @@ type Input = {
 type Output = Role[];
 
 const listRole = ({pag}: Input): ResultAsync<Output, ApiError> => {
-    return handle(roleRepo(db).list(pag.page, pag.limit));
+    const result = roleRepo(db).list(pag.page, pag.limit);
+
+    return handle(result)
 }
 
 export default _trace(listRole, 'app.permission/list-role');

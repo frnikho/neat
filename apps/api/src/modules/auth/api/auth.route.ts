@@ -1,12 +1,13 @@
 import {Cookie, Elysia} from "elysia";
 import register from "$auth/application/register";
 import login from "$auth/application/login";
-import {response} from "@core/response";
+import {rawResponse, response} from "@core/response";
 import refreshToken from "$auth/application/refresh-token";
 import authMiddleware, {AuthContext} from "$auth/api/auth.middleware";
 import info from "$auth/application/info";
 import {AuthLoginRequest, AuthRegisterRequest, AuthRequest} from "$auth/api/auth.request";
-import {AuthResponse} from "$auth/api/auth.response";
+import {authLoginCookieResponse, AuthResponse} from "$auth/api/auth.response";
+import {userResponse} from "$user/api/user.response";
 
 type AuthTokenCookie = {
     access_token: Cookie<string | undefined>;
@@ -14,7 +15,7 @@ type AuthTokenCookie = {
 }
 
 const loginUser = ({body, cookie}: { body: AuthLoginRequest, cookie: AuthTokenCookie }) => {
-    return response(login(body), ({user, accessToken, refreshToken}) => {
+    return rawResponse(login(body), ({user, accessToken, refreshToken}) => {
         cookie.access_token.set({value: accessToken, secure: true, httpOnly: true, path: '/', sameSite: true});
         cookie.refresh_token.set({value: refreshToken, secure: true, httpOnly: true, path: '/', sameSite: true});
         return {
@@ -27,7 +28,7 @@ const loginUser = ({body, cookie}: { body: AuthLoginRequest, cookie: AuthTokenCo
 }
 
 const registerUser = ({body, cookie}: { body: AuthRegisterRequest, cookie: AuthTokenCookie }) => {
-    return response(register(body), ({user, accessToken, refreshToken}) => {
+    return rawResponse(register(body), ({user, accessToken, refreshToken}) => {
         cookie.access_token.set({value: accessToken, secure: true, httpOnly: true});
         cookie.refresh_token.set({value: refreshToken, secure: true, httpOnly: true});
         return {
@@ -43,7 +44,7 @@ const refreshUserToken = ({cookie}: { cookie: AuthTokenCookie }) => {
     return response(refreshToken({
         refreshToken: cookie.refresh_token.value,
         accessToken: cookie.access_token.value
-    }), (result) => {
+    }), authLoginCookieResponse, (result) => {
         cookie.access_token.set({value: result.accessToken, secure: true, httpOnly: true});
         cookie.refresh_token.set({value: result.refreshToken, secure: true, httpOnly: true});
     });
@@ -62,14 +63,7 @@ const deleteAllSession = () => {
 }
 
 const getAuthenticatedUserInfo = ({auth}: {auth: AuthContext}) => {
-    return response(info({loggedUser: auth.user, accessToken: auth.accessToken}), ({user}) => {
-        return {
-            id: user.id,
-            email: user.email,
-            firstname: user.firstname,
-            lastname: user.lastname,
-        }
-    })
+    return response(info({loggedUser: auth.user, accessToken: auth.accessToken}), userResponse, (user) => user)
 }
 
 export default new Elysia()

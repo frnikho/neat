@@ -18,6 +18,7 @@ const app = new Elysia()
     .use(swagger())
     .use(cors())
     .onError(({error}) => {
+        console.log(error);
         return JSON.stringify((error));
     })
     .use(core)

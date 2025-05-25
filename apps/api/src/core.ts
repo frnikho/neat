@@ -8,7 +8,7 @@ export const core = new Elysia({
         name: 'core',
     })
         .use(authRoute)
-        .use(userRoute)
         .use(roleRoute)
+        .use(userRoute)
         .use(userRoleRoute)
 ;

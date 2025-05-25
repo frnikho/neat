@@ -18,7 +18,7 @@ type Output = void;
 
 const removeUserRole = ({roleId, userId}: Input): ResultAsync<Output, ApiError> => {
 
-    const user = userRepo.findUserById(db, userId)
+    const user = userRepo(db).findUserById(userId)
         .andThen((u) => optionToResult(u, apiError(ApiErrorCode.BAD_REQUEST, 'User not found')));
 
     const role = roleRepo(db).findById(roleId)
