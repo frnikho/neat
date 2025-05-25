@@ -23,3 +23,13 @@ services:
       - "3000:3000"
       - "4317:4317"
       - "4318:4318"
+  bugsink:
+    image: bugsink/bugsink:latest
+    container_name: neat_bugsink
+    restart: always
+    ports:
+      - "9000:9000"
+    environment:
+      SECRET_KEY: QToKz8lBDnzBPr5uoVHargQ1xjekWzEs0F6IYc7O0M1PJIaFWQ
+      CREATE_SUPERUSER: admin:admin
+      PORT: 9000

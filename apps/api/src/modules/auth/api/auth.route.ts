@@ -71,15 +71,15 @@ export default new Elysia()
     .model(AuthResponse)
     .group('/auth', (app) =>
         app
-            .post('/login', loginUser, {body: 'auth.request.login', cookie: 'auth.cookie.login', response: {200: 'auth.response.login'}})
-            .post('/register', registerUser, {body: 'auth.request.register'})
-            .post('/refresh', refreshUserToken)
-            .delete('/session', deleteCurrentSession)
-            .delete('/sessions', deleteAllSession)
-            .post('/reset-password', resetPassword)
+            .post('/login', loginUser, {body: 'auth.request.login', cookie: 'auth.cookie.login', response: {200: 'auth.response.login'}, detail: {tags: ['Authentification']}})
+            .post('/register', registerUser, {body: 'auth.request.register', detail: {tags: ['Authentification']}})
+            .post('/refresh', refreshUserToken, {detail: {tags: ['Authentification']}})
+            .delete('/session', deleteCurrentSession, {detail: {tags: ['Authentification']}})
+            .delete('/sessions', deleteAllSession, {detail: {tags: ['Authentification']}})
+            .post('/reset-password', resetPassword, {detail: {tags: ['Authentification']}})
             .guard({}, app =>
                 app
                     .use(authMiddleware)
-                    .get('/me', getAuthenticatedUserInfo)
+                    .get('/me', getAuthenticatedUserInfo, {detail: {tags: ['Authentification']}})
             )
     );

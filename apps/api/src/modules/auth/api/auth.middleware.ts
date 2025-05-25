@@ -6,9 +6,11 @@ import userRepo from "$user/infra/repo/user.repo";
 import {optionToResult} from "@core/type";
 import {apiError, ApiErrorCode} from "@core/exceptions";
 import {_trace} from "@core/instrumentation";
+import {Permission} from "$permission/domain/entity/permission.entity";
 
 export type AuthContext = {
   user: User,
+  permissions: Permission[],
   accessToken: string,
 }
 
@@ -29,6 +31,7 @@ export default new Elysia().derive({as: 'scoped'}, ({headers, cookie}) => {
     (user) => ({
       auth: {
         user,
+        permissions: [],
         accessToken: cookie['access_token'].value!,
       }
     }),

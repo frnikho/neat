@@ -6,6 +6,7 @@ import {authCodeRepo} from "$auth/infra/auth-code.repo";
 import {core} from "./core";
 import {cors} from '@elysiajs/cors'
 import swagger from "@elysiajs/swagger";
+import {sentry} from "elysiajs-sentry";
 
 await startMigration();
 
@@ -14,6 +15,7 @@ await startMigration();
 //   .use(api);
 
 const app = new Elysia()
+    .use(sentry({sendDefaultPii: true, dsn: 'http://99ecd3eb673941e9867e15e84b26aff6@localhost:9000/1'}))
     .use(instrumentation())
     .use(swagger())
     .use(cors())
@@ -23,9 +25,10 @@ const app = new Elysia()
     })
     .use(core)
     // .use(modules)
-    .get("/", async () => {
+    .get("/", async ({Sentry}) => {
         console.log("hello");
         await test();
+        Sentry.captureMessage("Hello World from Elysia");
         return "Hello Elysia"
     })
     .listen(4000, (srv) => {

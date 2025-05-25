@@ -24,3 +24,7 @@ export type UpdateRole = {
   isActive?: boolean;
   updatedBy?: string;
 }
+
+export type RoleWithPermissions = Role & {
+
+}

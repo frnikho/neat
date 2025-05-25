@@ -69,5 +69,5 @@ export default new Elysia()
             .delete('/:id', _deleteRole, {response: 'role.response.delete', detail: {tags: ['Role']}})
             .get('/:id', _getRole, {response: 'role.response.get', detail: {tags: ['Role']}})
             .patch('/:id', _updateRole, {body: 'role.request.update', response: 'role.response.update', detail: {tags: ['Role']}})
-            .get('/:id/permission', listPermission)
+            .get('/:id/permission', listPermission, {detail: {tags: ['Role']}})
     );

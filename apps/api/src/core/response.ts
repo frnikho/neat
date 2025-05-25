@@ -2,7 +2,7 @@ import {Result, ResultAsync} from "neverthrow";
 import {ApiError} from "@core/exceptions";
 import {andThrow} from "@core/type";
 import {Value} from "@sinclair/typebox/value";
-import {TSchema} from "elysia";
+import {TSchema, t} from "elysia";
 
 export const rawResponse = <T, Z>(res: ResultAsync<T, ApiError>, handler: (data: T) => Z) => {
     return res.match(
@@ -39,3 +39,5 @@ export const responseAsync = <T, Z>(res: ResultAsync<T, ApiError>, handler: (dat
         andThrow
     )
 }
+
+export const EmptyResponse = t.Void();
