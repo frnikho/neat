@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@core": "workspace:*",
+    "@neat/core": "workspace:*",
     "@modules/contact": "workspace:*",
     "@neat/api-client": "workspace:*",
     "@neat/types": "workspace:*",

@@ -8,5 +8,5 @@
     "declaration": true,
     "esModuleInterop": true
   },
-  "include": ["client"]
+  "include": ["client", "hybrid"]
 }

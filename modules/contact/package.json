@@ -25,7 +25,7 @@
     "@inlang/cli": "^3.0.0"
   },
   "peerDependencies": {
-    "@core": "workspace:*",
+    "@neat/core": "workspace:*",
     "elysia": "latest",
     "drizzle-orm": "^0.42.0",
     "drizzle-kit": "^0.31.0",

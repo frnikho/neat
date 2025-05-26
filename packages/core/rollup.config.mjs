@@ -32,5 +32,19 @@ export default [
             commonjs(),
             typescript({ tsconfig: './tsconfig.server.json' })
         ]
+    },
+    {
+        input: 'hybrid/index.ts',
+        output: {
+            dir: 'dist/hybrid',
+            format: 'esm',
+            sourcemap: true,
+            preserveModules: true
+        },
+        plugins: [
+            resolve(),
+            commonjs(),
+            typescript({ tsconfig: './tsconfig.hybrid.json' })
+        ]
     }
 ]

@@ -1,10 +1,11 @@
 {
-  "name": "@core",
+  "name": "@neat/core",
   "version": "1.0.0",
   "type": "module",
   "exports": {
     "./server": "./dist/server/index.js",
-    "./client": "./dist/client/index.js"
+    "./client": "./dist/client/index.js",
+    "./hybrid": "./dist/hybrid/index.js"
   },
   "scripts": {
     "build": "rollup -c",

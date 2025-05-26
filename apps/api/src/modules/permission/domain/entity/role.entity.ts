@@ -1,3 +1,5 @@
+import {Permission} from "$permission/domain/entity/permission.entity";
+
 export type Role = {
   id: string;
   name: string;
@@ -25,6 +27,7 @@ export type UpdateRole = {
   updatedBy?: string;
 }
 
-export type RoleWithPermissions = Role & {
-
+export type RoleWithPermissions = {
+  role: Role;
+  permissions: Permission[];
 }

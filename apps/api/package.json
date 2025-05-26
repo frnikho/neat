@@ -8,7 +8,7 @@
     "dev": "bun run --watch src/app.ts"
   },
   "dependencies": {
-    "@core": "workspace:*",
+    "@neat/core": "workspace:*",
     "@elysiajs/cors": "^1.3.3",
     "@elysiajs/opentelemetry": "^1.2.0",
     "@elysiajs/swagger": "^1.3.0",

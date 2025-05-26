@@ -2,9 +2,6 @@ import permissionRepo from "$permission/infra/repo/permission.repo";
 import {err, ok} from "neverthrow";
 import {apiError, ApiErrorCode} from "@core/exceptions";
 import {DbPool} from "@core/db";
-import userRepo from "$user/infra/repo/user.repo";
-import {roleResponse} from "$permission/api/role.response";
-import roleRepo from "$permission/infra/repo/role.repo";
 
 export const checkPermission = (db: DbPool, perms: string[]) => {
     return permissionRepo(db).findByIds(perms)
@@ -17,8 +14,4 @@ export const checkPermission = (db: DbPool, perms: string[]) => {
 
             return ok(permissions);
         })
-}
-
-export const findRoleAndPermissions = (db: DbPool, userId: string) => {
-
 }
