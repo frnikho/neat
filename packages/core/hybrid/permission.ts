@@ -1,5 +1,4 @@
 export type Perm = {
-    name: string;
     object: string;
     action: string;
     description?: string;
@@ -9,15 +8,15 @@ export type Perm = {
 type PermissionKey<T extends Perm> = `${T['object']}.${T['action']}`;
 
 // Type pour extraire toutes les clés de permission d'un tuple de permissions
-type ExtractPermissionKeys<T extends readonly Perm[]> = T extends readonly [infer First, ...infer Rest]
+type ExtractPermissionKeys<T extends Perm[]> = T extends [infer First, ...infer Rest]
     ? First extends Perm
-        ? Rest extends readonly Perm[]
+        ? Rest extends Perm[]
             ? PermissionKey<First> | ExtractPermissionKeys<Rest>
             : PermissionKey<First>
         : never
     : never;
 
-class PermissionRegistry<TPermissions extends readonly Perm[] = []> {
+export class PermissionRegistry<TPermissions extends Perm[] = []> {
     permissions: TPermissions;
 
     constructor(permissions: TPermissions = [] as any) {
@@ -27,20 +26,20 @@ class PermissionRegistry<TPermissions extends readonly Perm[] = []> {
     // Méthode pour enregistrer une nouvelle permission
     registerPermission<const T extends Perm>(
         permission: T
-    ): PermissionRegistry<readonly [...TPermissions, T]> {
+    ): PermissionRegistry<[...TPermissions, T]> {
         const newPermissions = [...this.permissions, permission] as const;
-        return new PermissionRegistry(newPermissions as readonly [...TPermissions, T]);
+        return new PermissionRegistry(newPermissions as [...TPermissions, T]);
     }
 
     // Méthode pour fusionner avec un autre registry
-    merge<const TOtherPermissions extends readonly Perm[]>(
+    merge<const TOtherPermissions extends Perm[]>(
         otherRegistry: PermissionRegistry<TOtherPermissions>
-    ): PermissionRegistry<readonly [...TPermissions, ...TOtherPermissions]> {
+    ): PermissionRegistry<[...TPermissions, ...TOtherPermissions]> {
         const combinedPermissions = [
             ...this.permissions,
             ...otherRegistry.getPermissions()
         ] as const;
-        return new PermissionRegistry(combinedPermissions as readonly [...TPermissions, ...TOtherPermissions]);
+        return new PermissionRegistry(combinedPermissions as [...TPermissions, ...TOtherPermissions]);
     }
 
     // Méthode pour vérifier une permission avec autocomplétion
@@ -133,6 +132,14 @@ class PermissionRegistry<TPermissions extends readonly Perm[] = []> {
             actionCounts: Object.fromEntries(actionCounts)
         };
     }
+
+    static mergeMultiple<T extends PermissionRegistry<Perm[]>[]>(
+        ...registries: T
+    ): PermissionRegistry<Perm[]> {
+        const allPermissions = registries.flatMap(registry => registry.getPermissions());
+        return new PermissionRegistry(allPermissions as Perm[]);
+    }
+
 }
 
 // Factory function pour créer un registry vide
@@ -141,7 +148,7 @@ export function createPermissionRegistry(): PermissionRegistry<[]> {
 }
 
 // Factory function pour créer un registry avec des permissions initiales
-export function createPermissionRegistryWith<const T extends readonly Perm[]>(
+export function createPermissionRegistryWith<const T extends Perm[]>(
     permissions: T
 ): PermissionRegistry<T> {
     return new PermissionRegistry(permissions);
@@ -218,28 +225,25 @@ const adminRegistry = createPermissionRegistry()
 
 const corePermissions = [
     {
-        name: 'Read user info',
         object: 'user',
         action: 'read',
         description: 'Read user information'
     },
     {
-        name: 'Write user info',
         object: 'user',
         action: 'write',
         description: 'Write user information'
     },
     {
-        name: 'Manage users',
         object: 'user',
         action: '*',
         description: 'Manage all user-related actions'
     },
-] as const satisfies readonly Perm[];
+] as const satisfies Perm[];
 
 const corePermissionRegistry = createPermissionRegistryWith(corePermissions);
 
-corePermissionRegistry.checkPermission('user.*');
+corePermissionRegistry.checkPermission('user.write');
 
 // Registry complet avec toutes les permissions
 const fullRegistry = combinedRegistry.merge(adminRegistry);

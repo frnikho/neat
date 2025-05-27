@@ -33,6 +33,9 @@ export const api = new Elysia()
 }*/
 
 export default defineModule({
+    name: 'Contact',
+    api_name: 'contact',
+    version: '1.0.0',
     events: [{object: 'contact', action: 'create', name: 'contact.create'}],
     permissions: [{
         object: 'contact',

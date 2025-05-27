@@ -20,13 +20,12 @@ const app = new Elysia()
     .onError(({error}) => {
         return JSON.stringify((error));
     })
-    .use(core)
-    .get("/", async ({Sentry}) => {
+/*    .get("/", async ({Sentry}) => {
         console.log("hello");
         await test();
         Sentry.captureMessage("Hello World from Elysia");
         return "Hello Elysia"
-    })
+    })*/
     .use(modules.map((m) => m.api))
     .listen(4000, (srv) => {
         console.log(`🦊 Elysia is running at ${srv.hostname}:${srv.port}`);
