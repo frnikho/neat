@@ -11,6 +11,7 @@ export type PermissionInterface = {
   findByApiName: (name: string) => Result<Option<Permission>>;
   list: (page: number, limit: number) => Result<Permission[]>;
   create: (body: CreatePermission) => Result<Permission>;
+  creates: (bodies: CreatePermission[]) => Result<Permission[]>;
   update: (id: string, body: UpdatePermission) => Result<Permission>;
   delete: (id: string) => Result<void>;
   softDelete: (id: string, deletedBy?: string) => Result<void>;

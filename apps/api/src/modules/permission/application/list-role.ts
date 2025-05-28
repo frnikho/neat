@@ -17,7 +17,6 @@ type Output = Role[];
 
 const listRole = ({pag}: Input): ResultAsync<Output, ApiError> => {
     const result = roleRepo(db).list(pag.page, pag.limit);
-
     return handle(result)
 }
 

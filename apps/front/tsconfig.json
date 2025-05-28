@@ -22,8 +22,7 @@
       "$app": ["./app.ts"],
       "@/*": ["./src/*"],
       "@styles/*": ["./styles/*"],
-      "@modules/contact/front/*": ["../../modules/contact/front/*"],
-      "@server/*": ["./src/server/*"],
+      "@server/*": ["./src/server/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

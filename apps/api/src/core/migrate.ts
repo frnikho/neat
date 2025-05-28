@@ -1,4 +1,4 @@
-import ContactModule from '../../../../modules/contact/server'
+import ContactModule from '@modules/contact/server'
 import {FileMigrationProvider, Kysely, Migrator, PostgresDialect} from 'kysely'
 import {Pool} from "pg";
 
@@ -24,7 +24,7 @@ export const migrate = async () => {
     provider: new FileMigrationProvider({
       fs,
       path,
-      migrationFolder: ContactModule.schema,
+      migrationFolder: ContactModule.schema!,
     }),
   });
 

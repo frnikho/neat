@@ -11,7 +11,7 @@ import {RoleWithPermissions} from "$permission/domain/entity/role.entity";
 
 export type AuthContext = {
     user: User,
-    roles: RoleWithPermissions,
+    roles: RoleWithPermissions[],
     accessToken: string,
 }
 

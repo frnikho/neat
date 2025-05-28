@@ -4,8 +4,9 @@
     "resolveJsonModule": true,
     "paths": {
       "$*": ["./apps/api/src/modules/*"],
+      "@neat/core/server": ["./packages/core/server"],
+      "@/*": ["./apps/api/src/*"],
       "@core/*": ["./apps/api/src/core/*"],
-      "@modules/contact/app": ["./modules/contact/app"],
       "@neat/types/*": ["./packages/types/src/*"],
     }
   }

@@ -1,4 +1,4 @@
-import {t} from 'elysia';
+import {Static, t} from 'elysia';
 
 export const roleResponse = t.Object({
     id: t.String(),
@@ -12,6 +12,8 @@ export const roleResponse = t.Object({
 });
 
 export const rolesResponse = t.Array(roleResponse);
+
+export type RolesResponse = Static<typeof rolesResponse>;
 
 export const permissionResponse = t.Object({
     id: t.String(),
@@ -27,7 +29,7 @@ export const roleWithPermissionsResponse = t.Object({
 export const RoleResponse = {
     'role.response.create': roleWithPermissionsResponse,
     'role.response.get': roleWithPermissionsResponse,
-    'role.response.list': t.Array(roleResponse),
+    'role.response.list': rolesResponse,
     'role.response.delete': roleResponse,
     'role.response.update': roleWithPermissionsResponse,
 }

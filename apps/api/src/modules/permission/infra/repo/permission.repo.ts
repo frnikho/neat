@@ -40,10 +40,26 @@ const permissionRepo = (client: DbPool = db): PermissionInterface => ({
       resource: body.resource,
       action: body.action,
       attributes: body.attributes,
-      createdBy: body.createdBy
+      createdBy: body.createdBy,
+      updatedBy: null,
+      deletedBy: null,
     }).returning())
       .andThen(oneOrThrow)
       .map(mapPermission)
+  },
+
+  creates: (bodies) => {
+    return op(client.insert(permission).values(bodies.map(body => ({
+      name: body.name,
+      description: body.description,
+      resource: body.resource,
+      action: body.action,
+      attributes: body.attributes,
+      createdBy: body.createdBy,
+      updatedBy: null,
+      deletedBy: null,
+    }))).returning())
+      .map(mapPermissions)
   },
 
   delete: (id) => {

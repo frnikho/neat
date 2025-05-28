@@ -7,7 +7,13 @@ import getRole from "$permission/application/get-role";
 import listRole from "$permission/application/list-role";
 import {extractFromQuery, PaginationQuery, RequestModels} from "@core/request";
 import deleteRole from "$permission/application/delete-role";
-import {roleResponse, RoleResponse, rolesResponse, roleWithPermissionsResponse} from "$permission/api/role.response";
+import {
+    roleResponse,
+    RoleResponse,
+    RolesResponse,
+    rolesResponse,
+    roleWithPermissionsResponse
+} from "$permission/api/role.response";
 import updateRole from "$permission/application/update-role";
 
 type RoleParams = {
@@ -38,36 +44,24 @@ const _getRole = ({params, auth}: RoleParams & {auth: AuthContext}) => {
     });
 }
 
-const _listRole = ({auth, query}: { auth: AuthContext, query: PaginationQuery }) => {
-    return response(listRole({auth, pag: extractFromQuery(query)}), rolesResponse, (roles) => {
-        return roles;
-    });
+const _listRole = ({auth, query}: { auth: AuthContext, query: PaginationQuery }): Promise<RolesResponse> => {
+    return response(listRole({auth, pag: extractFromQuery(query)}), rolesResponse);
 }
 
 const _updateRole = ({auth, body, params}: {auth: AuthContext, body: UpdateRoleRequest} & RoleParams) => {
-    return response(updateRole({auth, body, roleId: params.id}), roleWithPermissionsResponse, ({role, permissions}) => {
-        return {
-            role,
-            permissions,
-        };
-    });
-}
-
-const listPermission = () => {
-
+    return response(updateRole({auth, body, roleId: params.id}), roleWithPermissionsResponse);
 }
 
 export default new Elysia()
     .model(RoleRequest)
     .model(RoleResponse)
     .model(RequestModels)
+    .use(authMiddleware)
     .group('/role', (app) =>
         app
-            .use(authMiddleware)
-            .get('/', _listRole, {query: 'pagination', response: 'role.response.list', detail: {tags: ['Role']}})
+            .get('/', _listRole, {query: 'pagination', response: {200: 'role.response.list'}, detail: {tags: ['Role']}})
             .post('/', _createRole, {body: 'role.request.create', response: 'role.response.create', detail: {tags: ['Role']}})
             .delete('/:id', _deleteRole, {response: 'role.response.delete', detail: {tags: ['Role']}})
             .get('/:id', _getRole, {response: 'role.response.get', detail: {tags: ['Role']}})
             .patch('/:id', _updateRole, {body: 'role.request.update', response: 'role.response.update', detail: {tags: ['Role']}})
-            .get('/:id/permission', listPermission, {detail: {tags: ['Role']}})
     );

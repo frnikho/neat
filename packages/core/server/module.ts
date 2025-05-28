@@ -1,18 +1,18 @@
-import {Perm, NEvent} from '../hybrid';
-import {AnyElysia} from "elysia";
+import {Permission, NEvent, Settings} from '../hybrid';
 
-type Module<P extends Perm[], E extends NEvent[]> = {
+type Module<P extends Permission[], E extends NEvent[], S extends Settings[]> = {
     name: string,
     api_name: string,
     version: string,
     description?: string,
     author?: string[] | string,
     repo?: string,
-    permissions: P
+    schema?: string,
+    permissions?: P,
     events?: E,
-    api: AnyElysia
+    settings?: S,
 }
 
-export function defineModule<const P extends Perm[], const E extends NEvent[]>(module: Module<P, E>) {
+export function defineModule<const P extends Permission[], const E extends NEvent[], const S extends Settings[]>(module: Module<P, E, S>) {
     return module;
 }

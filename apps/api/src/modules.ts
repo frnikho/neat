@@ -1,25 +1,8 @@
-import contact from "@modules/contact/server";
-import authModule from "$auth/auth.module";
-import userModule from "$user/user.module";
-import permissionModule from "$permission/permission.module";
-import {createPermissionRegistry, createPermissionRegistryWith, Perm, PermissionRegistry} from "packages/core/hybrid";
-
-createPermissionRegistryWith([{
-    object: 'a',
-    action: 'd',
-    description: 'a'
-}]).checkPermission('a.d') // GOOD
-
-createPermissionRegistryWith(userModule.permissions).checkPermission('user.*')
-
-type ExtractPermissionKey<T extends readonly { object: string; action: string }[]> =
-    T[number] extends { object: infer O; action: infer A }
-        ? O extends string
-            ? A extends string
-                ? `${O}.${A}`
-                : never
-            : never
-        : never;
+import contact, {api as moduleApi} from "@modules/contact/server";
+import authModule, {api as authApi} from "$auth/auth.module";
+import userModule, {api as userApi} from "$user/user.module";
+import permissionModule, {api as permissionApi} from "$permission/permission.module";
+import {Elysia} from "elysia";
 
 export const modules = [
     authModule,
@@ -28,19 +11,8 @@ export const modules = [
     contact
 ];
 
-const allPermissions = modules.map((m) => m.permissions).flat();
-
-console.log(allPermissions);
-
-const checkPermissions = () => {
-
-}
-
-/*let allPermissions = createPermissionRegistry();
-const a = modules.map((m) => createPermissionRegistryWith(m.permissions));
-
-const m = a.at(0)!;
-
-const permissionRegistry = modules.map((m) => createPermissionRegistryWith(m.permissions));
-
-const b= createPermissionRegistryWith(r);*/
+export const apiModules = new Elysia()
+    .use(authApi)
+    .use(permissionApi)
+    .use(userApi)
+    .use(moduleApi)

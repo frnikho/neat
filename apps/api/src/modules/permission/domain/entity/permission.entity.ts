@@ -19,7 +19,7 @@ export type CreatePermission<T = object> = {
   resource: string;
   action: string;
   attributes?: T;
-  createdBy?: string;
+  createdBy: string | null;
 }
 
 export type UpdatePermission<T = object> = {
@@ -28,5 +28,5 @@ export type UpdatePermission<T = object> = {
   resource?: string;
   action?: string;
   attributes?: T;
-  updatedBy?: string;
+  updatedBy: string | null;
 }

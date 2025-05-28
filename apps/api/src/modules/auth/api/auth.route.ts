@@ -63,7 +63,7 @@ const deleteAllSession = () => {
 }
 
 const getAuthenticatedUserInfo = ({auth}: {auth: AuthContext}) => {
-    return response(info({loggedUser: auth.user, accessToken: auth.accessToken}), userResponse, (user) => user)
+    return response(info({loggedUser: auth.user, accessToken: auth.accessToken}), userResponse)
 }
 
 export default new Elysia()
