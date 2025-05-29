@@ -11,8 +11,9 @@
     "@neat/core": "workspace:*"
   },
   "devDependencies": {
-    "@types/bun": "^1.2.12",
-    "bun-types": "latest"
+    "@types/bun": "catalog:",
+    "@typescript/native-preview": "catalog:",
+    "bun-types": "catalog:"
   },
   "dependencies": {
     "@elysiajs/eden": "^1.3.2",

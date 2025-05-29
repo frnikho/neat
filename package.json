@@ -12,15 +12,21 @@
     "@types/set-cookie-parser": "^2.4.10",
     "prettier": "^3.5.3",
     "turbo": "^2.5.3",
-    "typescript": "5.8.2"
+    "typescript": "5.8.3"
   },
   "engines": {
     "node": ">=18"
   },
-  "packageManager": "bun@1.2.9",
-  "workspaces": [
-    "apps/*",
-    "packages/*",
-    "modules/*"
-  ]
-}
+  "packageManager": "bun@1.2.15",
+  "workspaces": {
+    "packages": [
+      "apps/*",
+      "packages/*",
+      "modules/*"
+    ],
+    "catalog": {
+      "@typescript/native-preview": "^7.0.0-dev.20250529.1",
+      "bun-types": "latest",
+      "@types/bun": "^1.2.15"
+    }
+  }}
