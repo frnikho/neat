@@ -1,4 +1,4 @@
-import {ClientModule} from "@core/client";
+import {ClientModule} from "@neat/core/client";
 import {ContactForm, ContactFormAsync, ContactSettings, formMenu, formMenu2} from "./components";
 
 export const ClientContactModule: ClientModule = {

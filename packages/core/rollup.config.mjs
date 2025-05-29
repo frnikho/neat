@@ -15,7 +15,8 @@ export default [
             dir: 'dist/client',
             format: 'esm',
             sourcemap: true,
-            preserveModules: true
+            preserveModules: true,
+            preserveModulesRoot: 'client'
         },
         external: ['react', 'react-dom', '@core'],
         plugins: [

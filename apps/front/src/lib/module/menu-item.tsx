@@ -3,7 +3,7 @@
 import {usePathname} from "next/navigation";
 import Link from "next/link";
 import {SidebarMenuButton, SidebarMenuItem } from "@neat/ui";
-import {MenuItem} from '@core/client/'
+import {MenuItem} from '@neat/core/client'
 
 export default function SettingsMenuItem({item, prefix}: {item: MenuItem, prefix?: string}) {
 

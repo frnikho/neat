@@ -6,7 +6,11 @@
     "module": "ESNext",
     "target": "ESNext",
     "declaration": true,
-    "esModuleInterop": true
+    "emitDeclarationOnly": false,
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "declarationMap": true,
+    "moduleResolution": "node"
   },
-  "include": ["client", "hybrid"]
+  "include": ["client"]
 }

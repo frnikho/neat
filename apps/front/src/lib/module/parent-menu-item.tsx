@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import SettingsMenuItem from "@/lib/module/menu-item";
-import { ParentMenuItem } from "@core/client";
+import { ParentMenuItem } from "@neat/core/client";
 import {SidebarMenuButton, SidebarMenuItem, SidebarMenuSub } from "@neat/ui";
 import {usePathname} from "next/navigation";
 

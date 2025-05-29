@@ -1,5 +1,5 @@
-import {MenuItem, ParentMenuItem} from '@core/client';
-import {Button} from '@core/client/components';
+import {MenuItem, ParentMenuItem} from '@neat/core/client';
+import {Button} from '@neat/core/client';
 import {Contact2, Phone, User2Icon} from "lucide-react";
 import SettingsForm from '../pages/settings-form';
 

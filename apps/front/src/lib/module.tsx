@@ -1,5 +1,5 @@
 import { modules } from "$app"
-import {isMenuItem, isParentMenuItem, isReactElement} from "@core/client";
+import {isMenuItem, isParentMenuItem, isReactElement} from "@neat/core/client";
 import {ReactNode} from "react";
 import SettingsMenuItem from "@/lib/module/menu-item";
 import SettingsParentMenuItem from "@/lib/module/parent-menu-item";
