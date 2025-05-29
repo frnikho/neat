@@ -21,24 +21,23 @@ describe('auth info', () => {
     const result = await info({
       loggedUser: mockUser,
       accessToken: 'mock-token'
-    }).match(
-      (success) => success,
-      (error) => error
-    )
+    });
 
-    expect(result).toEqual({
-      user: {
-        id: mockUser.id,
-        email: mockUser.email,
-        firstname: mockUser.firstname,
-        lastname: mockUser.lastname,
-        createdAt: mockUser.createdAt,
-        updatedAt: mockUser.updatedAt,
-        deletedAt: mockUser.deletedAt,
-        createdBy: mockUser.createdBy,
-        updatedBy: mockUser.updatedBy,
-        deletedBy: mockUser.deletedBy
-      }
-    })
+    expect(result.isErr()).toBe(false);
+
+    if (result.isOk()) {
+      expect(result.value).toEqual({
+          id: mockUser.id,
+          email: mockUser.email,
+          firstname: mockUser.firstname,
+          lastname: mockUser.lastname,
+          createdAt: mockUser.createdAt,
+          updatedAt: mockUser.updatedAt,
+          deletedAt: mockUser.deletedAt,
+          createdBy: mockUser.createdBy,
+          updatedBy: mockUser.updatedBy,
+          deletedBy: mockUser.deletedBy
+      })
+    }
   })
 })

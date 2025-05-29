@@ -1,7 +1,5 @@
 import {ClientModule} from "@core/client";
-import {ContactForm, ContactFormAsync, ContactSettings, formMenu, formMenu2, formMenu3} from "./components";
-
-export * from './components'
+import {ContactForm, ContactFormAsync, ContactSettings, formMenu, formMenu2} from "./components";
 
 export const ClientContactModule: ClientModule = {
     name: 'contact',
@@ -9,7 +7,7 @@ export const ClientContactModule: ClientModule = {
     components: {
         'a': [ContactForm, ContactSettings, ContactFormAsync]
     },
-    servers: [ContactFormAsync],
+    servers: [],
     menu: [
         {
             group: 'basic',
@@ -17,3 +15,5 @@ export const ClientContactModule: ClientModule = {
         }
     ]
 }
+
+export * from './components'

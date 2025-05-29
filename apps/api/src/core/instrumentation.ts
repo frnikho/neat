@@ -7,7 +7,6 @@ import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentation
 import {context, trace} from "@opentelemetry/api";
 import {ok, ResultAsync} from "neverthrow";
 import {AppException} from "@core/exceptions";
-import {string} from "fp-ts";
 import { PgInstrumentation } from '@opentelemetry/instrumentation-pg';
 
 export const instrumentation = () => {
@@ -17,9 +16,9 @@ export const instrumentation = () => {
       'service.version': '1.0.0',
     }),
     instrumentations: [new PgInstrumentation()],
-    spanProcessors: [new BatchSpanProcessor(new OTLPTraceExporter({
+    spanProcessors: [/*new BatchSpanProcessor(new OTLPTraceExporter({
       url: 'http://localhost:4317',
-    }), {scheduledDelayMillis: 1000})]
+    }), {scheduledDelayMillis: 1000})*/]
   })
 }
 

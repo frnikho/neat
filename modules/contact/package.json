@@ -4,8 +4,8 @@
   "type": "module",
   "exports": {
     "./migrations/*": "./module/contact/migrations/*",
-    "./server": "./dist/server/index.js",
-    "./client": "./dist/client/index.js"
+    "./server": "./server/index.ts",
+    "./client": "./client/index.ts"
   },
   "scripts": {
     "build": "paraglide-js compile --project ./project.inlang --outdir ./locales && rollup -c",
@@ -13,16 +13,18 @@
     "machine-translate": "inlang machine translate --project project.inlang"
   },
   "devDependencies": {
+    "@inlang/cli": "^3.0.0",
+    "@inlang/paraglide-js": "2.0.12",
     "@rollup/plugin-commonjs": "^28.0.3",
     "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^12.1.2",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "bun-types": "latest",
     "rollup": "^4.40.0",
     "rollup-plugin-copy": "^3.5.0",
-    "@inlang/paraglide-js": "2.0.12",
-    "@inlang/cli": "^3.0.0"
+    "rollup-plugin-preserve-directives": "^0.4.0"
   },
   "peerDependencies": {
     "@neat/core": "workspace:*",

@@ -1,4 +1,6 @@
-import {Static, t} from 'elysia';
+import {Static, t, TypeSystemPolicy} from 'elysia';
+
+TypeSystemPolicy.ExactOptionalPropertyTypes = true
 
 export const createRoleRequest = t.Object({
     name: t.String({maxLength: 256}),

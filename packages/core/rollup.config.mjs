@@ -1,9 +1,15 @@
 import typescript from '@rollup/plugin-typescript';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
+import preserveDirectives from "rollup-plugin-preserve-directives";
 
 export default [
     {
+        onwarn(warning, warn) {
+            if (warning.code !== 'MODULE_LEVEL_DIRECTIVE') {
+                warn(warning);
+            }
+        },
         input: 'client/index.ts',
         output: {
             dir: 'dist/client',
@@ -13,6 +19,7 @@ export default [
         },
         external: ['react', 'react-dom', '@core'],
         plugins: [
+            preserveDirectives({suppressPreserveModulesWarning: true}),
             resolve(),
             commonjs(),
             typescript({ tsconfig: './tsconfig.client.json' })

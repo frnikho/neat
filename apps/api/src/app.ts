@@ -1,11 +1,10 @@
-import {Elysia} from "elysia";
+import {Elysia, TypeSystemPolicy} from "elysia";
 import {instrumentation} from "@core/instrumentation";
 import {startMigration} from "@core/migrate";
 import {createAuthCode} from "$auth/application/create-auth-code";
 import {authCodeRepo} from "$auth/infra/auth-code.repo";
 import {cors} from '@elysiajs/cors'
 import swagger from "@elysiajs/swagger";
-import {sentry} from "elysiajs-sentry";
 import {apiModules, modules} from "./modules";
 import {insertModulePermissions} from "$module/infra/module.service";
 
@@ -17,7 +16,6 @@ console.log(permissions.isOk() && permissions.value);
 
 const app = new Elysia()
     .state({modules: modules})
-    .use(sentry({sendDefaultPii: true, dsn: 'http://99ecd3eb673941e9867e15e84b26aff6@localhost:9000/1'}))
     .use(instrumentation())
     .use(swagger())
     .use(cors())

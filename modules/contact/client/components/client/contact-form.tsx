@@ -1,9 +1,9 @@
 import {MenuItem, ParentMenuItem} from '@core/client';
 import {Button} from '@core/client/components';
 import {Contact2, Phone, User2Icon} from "lucide-react";
-import SettingsForm from '../pages/settings-form';
+import SettingsForm from '../../pages/settings-form';
 
-import { m } from "../../locales/messages.js";
+import { m } from "../../../locales/messages.js";
 
 export type Props = {
     app: string;

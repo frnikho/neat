@@ -11,10 +11,10 @@ export const defaultPagination: Pagination = {
 }
 
 
-const pagination = t.Optional(t.Object({
+const pagination = t.Object({
   page: t.Optional(t.Number({minimum: 1, maximum: 200})),
   limit: t.Optional(t.Number({minimum: 1, maximum: 200})),
-}));
+});
 
 export type PaginationQuery = Static<typeof pagination>;
 

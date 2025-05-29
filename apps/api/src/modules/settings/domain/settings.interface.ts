@@ -1,4 +1,4 @@
-import {Settings} from "$settings/domain/settings.entity.ts";
+import {Settings} from "$settings/domain/settings.entity";
 import {ResultAsync} from "neverthrow";
 import {DbException} from "@core/exceptions";
 import {Option} from "fp-ts/Option";

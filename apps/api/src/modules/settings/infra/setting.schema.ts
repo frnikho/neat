@@ -1,7 +1,7 @@
 import {AnyPgColumn, jsonb, pgTable, timestamp, varchar} from "drizzle-orm/pg-core";
-import {uid} from "@core/db.ts";
+import {uid} from "@core/db";
 import {sql} from "drizzle-orm";
-import {user} from "$user/infra/schema/user.schema.ts";
+import {user} from "$user/infra/schema/user.schema";
 
 export const settings = pgTable('settings', {
     id: uid().primaryKey(),

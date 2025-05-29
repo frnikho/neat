@@ -9,9 +9,9 @@ const _findById = () => {
 }
 
 const _list = () => {
-  response(listModule(), (result) => ({
+  /*response(listModule(), (result) => ({
 
-  }))
+  }))*/
 }
 
 const _reload = () => {

@@ -1,8 +1,8 @@
-import { getAllPermissions } from "packages/core/hybrid";
 import {modules} from "@/modules";
 import {db} from "@core/db";
 import permissionRepo from "$permission/infra/repo/permission.repo";
 import {okAsync} from "neverthrow";
+import {Permission, getAllPermissions} from "@neat/core/hybrid";
 
 export const insertModulePermissions = (createdBy: string | null = null) => {
     const repo = permissionRepo(db);
@@ -11,8 +11,8 @@ export const insertModulePermissions = (createdBy: string | null = null) => {
 
     return repo.list(1, 100000).andThen((permissions) => {
         const permToCreated = modulesPermissions
-            .filter((mp) => !permissions.find((p) => `${mp.resource}.${mp.action}` === `${p.resource}.${p.action}`))
-            .map((p) => ({
+            .filter((mp: Permission) => !permissions.find((p) => `${mp.resource}.${mp.action}` === `${p.resource}.${p.action}`))
+            .map((p: Permission) => ({
                 ...p,
                 createdBy,
             }));
