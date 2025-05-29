@@ -1,6 +1,8 @@
 # Neat Project
 
-A modern, clean architecture backend API built with Elysia, PostgreSQL, and Redis.
+A modern, clean architecture backend API built with Elysia and NextJS.
+
+
 
 ## Features
 
