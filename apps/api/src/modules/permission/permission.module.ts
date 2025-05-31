@@ -2,6 +2,7 @@ import { defineModule } from "@neat/core/server";
 import {Elysia} from "elysia";
 import userRoleRoute from "$permission/api/user-role.route";
 import roleRoute from "$permission/api/role.route";
+import {withPermissions} from "$permission/api/role.handler";
 
 export const api = new Elysia()
     .use(roleRoute)
@@ -47,5 +48,5 @@ export default defineModule({
             action: 'delete.all',
             name: 'Delete any role account'
         }
-    ]
+    ] as const
 });

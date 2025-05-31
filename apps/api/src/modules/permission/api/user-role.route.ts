@@ -5,6 +5,7 @@ import listUserRole from "$permission/application/list-user-role";
 import removeUserRole from "$permission/application/remove-user-role";
 import addUserRole from "$permission/application/add-user-role";
 import {rolesResponse} from "$permission/api/role.response";
+import {hasPermission, withPermissions} from "$permission/api/role.handler";
 
 type UserParams = {
     params: { userId: string };
@@ -30,7 +31,7 @@ export default new Elysia()
     .group('/user/:userId/roles', (app) =>
         app
             .use(authMiddleware)
-            .get('/', _listUserRole, {tags: ['User', 'Role']})
+            .get('/', _listUserRole, {tags: ['User', 'Role'], ...withPermissions('role.read.all')})
             .delete('/:roleId', _removeUserRole, {tags: ['User', 'Role']})
             .post('/:roleId', _addUserRole, {tags: ['User', 'Role']})
     );

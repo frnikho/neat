@@ -9,7 +9,7 @@ export const modules = [
     userModule,
     permissionModule,
     contact
-];
+] as const;
 
 export const apiModules = new Elysia()
     .use(authApi)

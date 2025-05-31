@@ -6,6 +6,10 @@ export type Permission = {
     attributes?: object;
 };
 
+export type PermissionKeysFromArray<T extends readonly Permission[]> = {
+    [K in keyof T]: T[K] extends Permission ? `${T[K]['resource']}.${T[K]['action']}` : never;
+}[number];
+
 export const getPermission = <T extends readonly Permission[]>(permissions: T, key: `${T[number]["resource"]}.${T[number]["action"]}`) => {
     return permissions.find(m => `${m.resource}.${m.action}` === key)!;
 }

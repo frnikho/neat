@@ -1,6 +1,6 @@
 import {Permission, NEvent, Settings} from '../hybrid';
 
-type Module<P extends Permission[], E extends NEvent[], S extends Settings[]> = {
+export type Module<P extends Permission[], E extends NEvent[], S extends Settings[]> = {
     name: string,
     api_name: string,
     version: string,

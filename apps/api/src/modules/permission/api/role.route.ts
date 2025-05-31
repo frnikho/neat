@@ -59,7 +59,9 @@ export default new Elysia()
     .use(authMiddleware)
     .group('/role', (app) =>
         app
-            .get('/', _listRole, {query: 'pagination', response: {200: 'role.response.list'}, detail: {tags: ['Role']}})
+            .get('/', _listRole, {query: 'pagination', response: {200: 'role.response.list'}, detail: {tags: ['Role']}, beforeHandle: ({auth}) => {
+                    console.log('beforeHandle');
+                }})
             .post('/', _createRole, {body: 'role.request.create', response: 'role.response.create', detail: {tags: ['Role']}})
             .delete('/:id', _deleteRole, {response: 'role.response.delete', detail: {tags: ['Role']}})
             .get('/:id', _getRole, {response: 'role.response.get', detail: {tags: ['Role']}})
