@@ -27,11 +27,11 @@ export default async function Layout({children}: Readonly<{ children: ReactNode 
     }
 
     return (
-        <html>
+        <html lang={"en"} suppressHydrationWarning>
         <body>
         <Provider user={user}>
             <SidebarApp/>
-            <main>{children}</main>
+            <main className={"p-4"}>{children}</main>
         </Provider>
         </body>
         </html>

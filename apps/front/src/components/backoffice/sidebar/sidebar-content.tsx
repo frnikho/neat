@@ -1,16 +1,12 @@
 'use client';
 
 import { SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu,
-    SidebarMenuButton, SidebarMenuItem,
-    SidebarMenuSub,
-    SidebarMenuSubButton,
-    SidebarMenuSubItem} from "@neat/ui";
-import { Calendar, Check, Home, Inbox, Search, Settings } from "lucide-react"
+    SidebarMenuButton, SidebarMenuItem} from "@neat/ui";
+import {Home, NewspaperIcon, Search, Settings, Users} from "lucide-react"
 import Link from "next/link";
 
 import { usePathname } from 'next/navigation'
-import {modules} from "$app";
-import {getAllGroups, getAllMenu} from "@/lib/module";
+import {getAllMenu} from "@/lib/module";
 
 const items = [
     {
@@ -19,19 +15,14 @@ const items = [
         icon: Home,
     },
     {
-        title: "Inbox",
-        url: "/admin/inbox",
-        icon: Inbox,
+        title: "Users",
+        url: "/admin/users",
+        icon: Users,
     },
     {
-        title: "Calendar",
-        url: "/admin/calendar",
-        icon: Calendar,
-    },
-    {
-        title: "Search",
-        url: "/admin/search",
-        icon: Search,
+        title: "Roles",
+        url: "/admin/roles",
+        icon: NewspaperIcon,
     },
     {
         title: "Settings",
@@ -54,18 +45,18 @@ export default function AppSidebarContent() {
             <SidebarGroup>
                 <SidebarGroupLabel>Application</SidebarGroupLabel>
                 <SidebarGroupContent>
-                    {/*<SidebarMenu>*/}
-                    {/*    {items.map((item) => (*/}
-                    {/*        <SidebarMenuItem key={item.title}>*/}
-                    {/*            <SidebarMenuButton isActive={isActive(item.url)} asChild>*/}
-                    {/*                <Link href={item.url}>*/}
-                    {/*                    <item.icon />*/}
-                    {/*                    <span>{item.title}</span>*/}
-                    {/*                </Link>*/}
-                    {/*            </SidebarMenuButton>*/}
-                    {/*        </SidebarMenuItem>*/}
-                    {/*    ))}*/}
-                    {/*</SidebarMenu>*/}
+                    <SidebarMenu>
+                        {items.map((item) => (
+                            <SidebarMenuItem key={item.title}>
+                                <SidebarMenuButton isActive={isActive(item.url)} asChild>
+                                    <Link href={item.url}>
+                                        <item.icon />
+                                        <span>{item.title}</span>
+                                    </Link>
+                                </SidebarMenuButton>
+                            </SidebarMenuItem>
+                        ))}
+                    </SidebarMenu>
                     <SidebarMenu>
                         {getAllMenu()}
                     </SidebarMenu>

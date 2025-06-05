@@ -12,6 +12,7 @@ import {
     SidebarMenuButton,
 } from "@neat/ui";
 import {useUser} from "@/contexts/user";
+import ThemeToggle from "../theme-toggle";
 
 export default function SidebarFooterApp() {
 
@@ -41,6 +42,9 @@ export default function SidebarFooterApp() {
                     <DropdownMenuItem>Billing</DropdownMenuItem>
                     <DropdownMenuItem>Team</DropdownMenuItem>
                     <DropdownMenuItem>Subscription</DropdownMenuItem>
+                    <DropdownMenuItem>
+                        <ThemeToggle/>
+                    </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
         </SidebarFooter>
