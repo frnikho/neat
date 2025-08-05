@@ -11,13 +11,14 @@
     "strict": true,
     "skipLibCheck": true,
     "paths": {
-      "@api/*": ["src/api/*"],
-      "@application/*": ["src/application/*"],
-      "@entity/*": ["src/domain/entity/*"],
-      "@interface/*": ["src/domain/interface/*"],
-      "@service/*": ["src/infra/service/*"],
-      "@repo/*": ["src/infra/repo/*"],
-      "@schema/*": ["src/infra/schema/*"],
+      "@api/*": ["./src/api/*"],
+      "@application/*": ["./src/application/*"],
+      "@entity/*": ["./src/domain/entity/*"],
+      "@infra/*": ["./src/infra/*"],
+      "@interface/*": ["./src/domain/interface/*"],
+      "@service/*": ["./src/infra/service/*"],
+      "@repo/*": ["./src/infra/repo/*"],
+      "@schema/*": ["./src/infra/schema/*"],
     }
   },
   "include": [

@@ -1,11 +1,31 @@
+import {eq} from "drizzle-orm";
+import {inArray} from "drizzle-orm/sql/expressions/conditions";
+import {fromNullable, isNone, none, some} from "fp-ts/Option";
 import {NodePgDatabase} from "drizzle-orm/node-postgres";
+import {UserInterface} from "@interface/user.interface";
+import {op} from "@infra/utils/db.utils";
+import {mapUserOption, mapUsersToEntities, mapUserToEntity, user} from "@schema/user.schema";
+import {oneOreResultOption, oneOrThrow} from "@infra/utils/type.utils";
+import {file, mapFileMetadataOption} from "@schema/file.schema";
+import {DbException} from "@infra/exception/db.exception";
 
-const userRepository = (db: NodePgDatabase): UserInterface => ({
+export default (db: NodePgDatabase): UserInterface => ({
 
     findUserById(id) {
         return op(db.select().from(user).where(eq(user.id, id)))
             .andThen(oneOreResultOption)
             .map(mapUserOption)
+    },
+
+    findUserByIdWithProfilePicture: (id) => {
+        return op(db.select().from(user).where(eq(user.id, id)).leftJoin(file, eq(user.profilePictureFile, file.id)))
+            .andThen(oneOreResultOption)
+            .map((result) => {
+                if (isNone(result)) {
+                    return none;
+                }
+                return some([mapUserToEntity(result.value.user), mapFileMetadataOption(fromNullable(result.value.file))])
+            })
     },
 
     findUserByEmail(email) {
@@ -15,8 +35,12 @@ const userRepository = (db: NodePgDatabase): UserInterface => ({
     },
 
     list: (page, limit) => {
-        return op(db.select().from(user).limit(limit).offset((page - 1) * limit))
-            .map(mapUsers)
+        return op(db.select().from(user).leftJoin(file, eq(user.profilePictureFile, file.id)).limit(limit).offset((page - 1) * limit))
+            .map((e) => {
+                return e.map((row) => {
+                    return [mapUserToEntity(row.user), mapFileMetadataOption(fromNullable(row.file))];
+                })
+            })
     },
 
     create(body) {
@@ -25,21 +49,22 @@ const userRepository = (db: NodePgDatabase): UserInterface => ({
             lastname: body.lastname,
             password: body.password,
             email: body.email,
-            createdBy: body.createdBy
+            createdBy: body.createdBy,
+            profilePictureUpdatedBy: null,
         }).returning())
-            .andThen(oneOrThrow)
-            .map(mapUser)
+            .andThen((r) => oneOrThrow(r, new DbException('Failed to create user')))
+            .map(mapUserToEntity)
     },
 
     deletes: (ids) => {
-        return op(db.delete(user).where(inArray(user.id, ids)).returning()).map(mapUsers)
+        return op(db.delete(user).where(inArray(user.id, ids)).returning()).map(mapUsersToEntities)
     },
 
     softDeletes: (ids, deletedBy) => {
         return op(db.update(user).set({
             deletedAt: new Date(),
             deletedBy
-        }).where(inArray(user.id, ids)).returning()).map(mapUsers)
+        }).where(inArray(user.id, ids)).returning()).map(mapUsersToEntities)
     },
 
     update: (id, body) => {
@@ -47,37 +72,30 @@ const userRepository = (db: NodePgDatabase): UserInterface => ({
             firstname: body.firstname,
             lastname: body.lastname,
             email: body.email,
-            updatedBy: body.updatedBy
+            updatedBy: body.updatedBy,
         }).where(eq(user.id, id)).returning())
-            .andThen(oneOrThrow)
-            .map(mapUser)
-    }
-})
+            .andThen((r) => oneOrThrow(r, new DbException('Failed to update user')))
+            .map(mapUserToEntity)
+    },
 
-export default (db: DbPool) => traceRepository(userRepository(db), {
-    create: {
-        name: 'repo.user/create',
-        config: {
-            obfuscation: ['password'],
-            skipParams: [0],
-        }
+    updateProfilePicture: (id, body) => {
+        return op(db.update(user).set({
+            profilePictureFile: body.profilePictureFile,
+            profilePictureUpdatedBy: body.profilePictureUpdatedBy,
+            profilePictureUpdatedAt: new Date(),
+        }).where(eq(user.id, id)).returning())
+            .andThen((r) => oneOrThrow(r, new DbException('Failed to update profile picture')))
+            .map(mapUserToEntity)
     },
-    findUserByEmail: {
-        name: 'repo.user/findUserByEmail',
-        config: {
-            skipParams: [0],
-        }
-    },
-    findUserById: {
-        name: 'repo.user/findUserById',
-    },
-    update: {
-        name: 'repo.user/update'
-    },
-    deletes: {
-        name: 'repo.user/deletes'
-    },
-    softDeletes: {
-        name: 'repo.user/softDeletes'
+
+    deleteProfilePicture: (id, deletedBy) => {
+        return op(db.update(user).set({
+            profilePictureFile: null,
+            profilePictureUpdatedBy: deletedBy,
+            profilePictureUpdatedAt: new Date(),
+        }).where(eq(user.id, id)).returning())
+            .andThen((r) => oneOrThrow(r, new DbException('Failed to delete profile picture')))
+            .map(mapUserToEntity)
     }
+
 })

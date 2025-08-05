@@ -3,7 +3,10 @@ export type User = {
     email: string;
     firstname: string;
     lastname: string;
-    password: string;
+    password?: string;
+    profilePictureFile?: string;
+    profilePictureUpdatedBy?: string;
+    profilePictureUpdatedAt?: Date;
     createdAt: Date;
     createdBy?: string,
     updatedAt?: Date;
@@ -27,4 +30,9 @@ export type UpdateUser = {
     firstname?: string;
     lastname?: string;
     updatedBy?: string;
+}
+
+export type UpdateUserProfilePicture = {
+    profilePictureFile?: string;
+    profilePictureUpdatedBy?: string;
 }
