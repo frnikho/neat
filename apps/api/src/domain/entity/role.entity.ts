@@ -3,8 +3,10 @@ import {Permission} from "@entity/permission.entity";
 export type Role = {
     id: string;
     name: string;
-    description?: string;
+    description: string;
     isActive: boolean;
+    isBuiltIn: boolean;
+    isDefault: boolean;
     createdAt: Date;
     createdBy?: string;
     updatedAt?: Date;
@@ -15,7 +17,9 @@ export type Role = {
 
 export type CreateRole = {
     name: string;
-    description?: string;
+    description: string;
+    isBuiltIn?: boolean;
+    isDefault?: boolean;
     isActive?: boolean;
     createdBy?: string;
 }

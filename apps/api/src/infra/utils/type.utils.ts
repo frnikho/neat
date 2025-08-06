@@ -1,4 +1,4 @@
-import {isNone, none, Option, some} from "fp-ts/Option";
+import {isNone, isSome, none, Option, some} from "fp-ts/Option";
 import {err, ok, Result} from "neverthrow";
 
 export const mapOption = <R, E>(row: Option<R>, fn: (value: R) => E): Option<E> => {
@@ -34,6 +34,10 @@ export const oneOreResultOption = <T, Z extends Error>(res: T[], entityName = 'E
     return ok(some(res[0]));
 }
 
-/*export const optionToResult = <T, Z>(option: Option<T>, error: Z): Result<T, Z> => {
+export const optionToResult = <T, Z>(option: Option<T>, error: Z): Result<T, Z> => {
     return isSome(option) ? ok(option.value) : err(error);
-};*/
+};
+
+export const notEmpty = <TValue>(value: TValue | null | undefined): value is TValue => {
+    return value !== null && value !== undefined;
+}

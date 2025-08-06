@@ -1,9 +1,9 @@
-export interface S3ExceptionShape {
+export interface CacheExceptionShape {
     message: string;
     details?: Record<string, unknown>;
 }
 
-export class S3Exception extends Error implements S3ExceptionShape {
+export class CacheException extends Error implements CacheExceptionShape {
     message: string;
     details?: Record<string, unknown>;
 

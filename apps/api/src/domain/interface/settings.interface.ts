@@ -1,12 +1,14 @@
 import {ResultAsync} from "neverthrow";
 import {Option} from "fp-ts/Option";
 import {DbException} from "@infra/exception/db.exception";
-import {Settings} from "@entity/settings.entity";
+import {CreateSettings, Settings, UpdateSettings} from "@entity/settings.entity";
+import {SettingsKey, SettingsValue} from "@service/settings.service";
 
-type Result<T> = ResultAsync<Settings<T>, DbException>;
+type Result<T> = ResultAsync<T, DbException>;
 
 export type SettingsInterface = {
-    create: <T>(body: any) => Promise<Result<T>>;
-    update: <T>(key: string, body: any) => Promise<Result<T>>;
-    findByKey: <T>(key: string, body: any) => Promise<Option<Result<T>>>;
+    create: <T = object>(body: CreateSettings<T>) => Result<Settings<T>>;
+    update: <T = object>(key: string, body: UpdateSettings<T>) => Result<Settings<T>>;
+    find: <K extends SettingsKey>(key: K) => Result<Settings<SettingsValue<K>>>;
+    list: (page?: number, limit?: number) => Result<Settings<object>[]>;
 }

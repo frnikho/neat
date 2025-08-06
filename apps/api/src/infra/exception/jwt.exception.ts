@@ -1,9 +1,9 @@
-export interface S3ExceptionShape {
+export interface JwtExceptionShape {
     message: string;
     details?: Record<string, unknown>;
 }
 
-export class S3Exception extends Error implements S3ExceptionShape {
+export class JwtException extends Error implements JwtExceptionShape {
     message: string;
     details?: Record<string, unknown>;
 

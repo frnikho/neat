@@ -7,7 +7,7 @@ import {op} from "@infra/utils/db.utils";
 import {oneOreResultOption, oneOrThrow} from "@infra/utils/type.utils";
 import {DbException} from "@infra/exception/db.exception";
 
-const permissionRepo = (client: NodePgDatabase): PermissionInterface => ({
+export default (client: NodePgDatabase): PermissionInterface => ({
 
     findByIds: (ids) => {
         return op(client.select().from(permission).where(inArray(permission.id, ids)))
@@ -89,25 +89,3 @@ const permissionRepo = (client: NodePgDatabase): PermissionInterface => ({
     }
 
 });
-
-/*
-export default (client: NodePgDatabase) => traceRepository(permissionRepo(client), {
-    create: {
-        name: 'repo.permission/create',
-    },
-    findById: {
-        name: 'repo.permission/findPermissionByName',
-    },
-    findByApiName: {
-        name: 'repo.permission/findPermissionById',
-    },
-    delete: {
-        name: 'repo.permission/delete',
-    },
-    update: {
-        name: 'repo.permission/update',
-    },
-    list: {
-        name: 'repo.permission/list',
-    }
-})*/

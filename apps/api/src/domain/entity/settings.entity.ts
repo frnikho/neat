@@ -1,7 +1,9 @@
-export type Settings<T = object> = {
+export type Settings<T> = {
     id: string;
     name: string;
     description?: string;
+    key: string;
+    value: T;
     isSystem: boolean;
     createdAt: Date;
     createdBy?: string;
@@ -11,14 +13,14 @@ export type Settings<T = object> = {
     deletedBy?: string;
 }
 
-export type CreateSettings<T = object> = {
+export type CreateSettings<T> = {
     name: string;
     key: string;
     value: T;
     description?: string;
 }
 
-export type UpdateSettings<T = object> = {
+export type UpdateSettings<T> = {
     name?: string;
     key?: string;
     value?: T;
