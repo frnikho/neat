@@ -29,7 +29,7 @@ export default (client: NodePgDatabase): SettingsInterface => ({
             .map(mapSettingsList);
     },
 
-    update: <T>(key: string, body: UpdateSettings<T>) => {
+    update: <K extends SettingsKey, T = object>(key: K, body: UpdateSettings<T>) => {
         return op(client.update(settings)
             .set({
                 ...body,
