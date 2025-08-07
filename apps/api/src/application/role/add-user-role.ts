@@ -3,7 +3,7 @@ import userRepo from "@infra/repo/user.repo";
 import {db} from "@infra/service/db.service";
 import roleRepo from "@infra/repo/role.repo";
 import userRoleRepo from "@infra/repo/user-role.repo";
-import {ApiError, apiErrorCodeToStatus} from "@api/api.exception";
+import {apiErrorCodeToStatus} from "@api/api.exception";
 import {optionToResult} from "@infra/utils/type.utils";
 import { AuthContext } from "@entity/auth-context.entity";
 import {appException} from "@application/app.exception";
