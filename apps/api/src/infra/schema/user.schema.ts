@@ -12,15 +12,15 @@ export const user = pgTable('user', {
     email: varchar().notNull().unique(),
     firstname: varchar({length: 255}).notNull(),
     lastname: varchar({length: 255}).notNull(),
-    profilePictureFile: varchar('profile_picture_file').references((): AnyPgColumn => file.id, {onDelete: 'set null'}).default(sql`NULL`),
+    profilePictureFile: varchar('profile_picture_file').references((): AnyPgColumn => file.id, {onDelete: 'set null'}),
     profilePictureUpdatedAt: timestamp('profile_picture_updated_at'),
-    profilePictureUpdatedBy: varchar('profile_picture_updated_by').references((): AnyPgColumn => user.id, {onDelete: 'set null'}).default(sql`NULL`),
+    profilePictureUpdatedBy: varchar('profile_picture_updated_by').references((): AnyPgColumn => user.id, {onDelete: 'set null'}),
     createdAt: timestamp('created_at').defaultNow().notNull(),
-    createdBy: varchar('created_by').references((): AnyPgColumn => user.id, {onDelete: 'set null'}).default(sql`NULL`),
+    createdBy: varchar('created_by').references((): AnyPgColumn => user.id, {onDelete: 'set null'}),
     updatedAt: timestamp('updated_at'),
-    updatedBy: varchar('updated_by').references((): AnyPgColumn => user.id, {onDelete: 'set null'}).default(sql`NULL`),
+    updatedBy: varchar('updated_by').references((): AnyPgColumn => user.id, {onDelete: 'set null'}),
     deletedAt: timestamp('deleted_at'),
-    deletedBy: varchar('deleted_by').references((): AnyPgColumn => user.id, {onDelete: 'set null'}).default(sql`NULL`),
+    deletedBy: varchar('deleted_by').references((): AnyPgColumn => user.id, {onDelete: 'set null'}),
 })
 
 type User = InferSelectModel<typeof user>;

@@ -18,7 +18,7 @@
       "@interface/*": ["./src/domain/interface/*"],
       "@service/*": ["./src/infra/service/*"],
       "@repo/*": ["./src/infra/repo/*"],
-      "@schema/*": ["./src/infra/schema/*"],
+      "@schema/*": ["./src/infra/schema/*"]
     }
   },
   "include": [
