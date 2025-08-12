@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from '@tanstack/react-router';
 /*import appCss from "@styles/dashboard.css?url"
 import '@styles/dashboard.css';*/
 
@@ -7,7 +7,7 @@ export const Route = createFileRoute('/editor')({
     meta: [
       {
         title: 'Editor',
-      }
+      },
     ],
     links: [
       /*{
@@ -17,8 +17,8 @@ export const Route = createFileRoute('/editor')({
     ],
   }),
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
-  return <div>Hello "/editor"!</div>
+  return <div>Hello "/editor"!</div>;
 }

@@ -1,12 +1,10 @@
-"use client"
-
-import { ChevronRight, type LucideIcon } from "lucide-react"
+'use client';
 
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@app/components/ui/collapsible"
+} from '@app/components/ui/collapsible';
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -17,28 +15,29 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-} from "@app/components/ui/sidebar"
+} from '@app/components/ui/sidebar';
+import { ChevronRight, type LucideIcon } from 'lucide-react';
 
 export function NavMain({
   items,
 }: {
   items: {
-    title: string
-    url: string
-    icon: LucideIcon
-    isActive?: boolean
+    title: string;
+    url: string;
+    icon: LucideIcon;
+    isActive?: boolean;
     items?: {
-      title: string
-      url: string
-    }[]
-  }[]
+      title: string;
+      url: string;
+    }[];
+  }[];
 }) {
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Platform</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
-          <Collapsible key={item.title} asChild defaultOpen={item.isActive}>
+          <Collapsible asChild defaultOpen={item.isActive ?? false} key={item.title}>
             <SidebarMenuItem>
               <SidebarMenuButton asChild tooltip={item.title}>
                 <a href={item.url}>
@@ -74,5 +73,5 @@ export function NavMain({
         ))}
       </SidebarMenu>
     </SidebarGroup>
-  )
+  );
 }

@@ -20,6 +20,6 @@ services:
     container_name: neat_monitoring
     restart: always
     ports:
-      - "3000:3000"
+      - "3030:3000"
       - "4317:4317"
       - "4318:4318"

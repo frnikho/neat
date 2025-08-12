@@ -7,12 +7,27 @@ export const defaultSettings = [
             user: {
                 name: 'user',
                 endpoint: 'http://localhost:9000/user',
-            }
+            },
+        },
+    },
+    {
+        name: 'Company Settings',
+        description: 'Manage company information',
+        key: 'company',
+        value: {
+            title: 'My Application',
+            description: 'This is a sample application.',
+            slogan: 'Empowering Your Business',
+            logoUrl: 'https://example.com/logo.png',
+            version: '1.0.0',
         }
     }
 ] as const;
 
-type DefaultSettings = typeof defaultSettings[number]; // Union des éléments
+type DefaultSettings = (typeof defaultSettings)[number]; // Union des éléments
 
 export type SettingsKey = DefaultSettings['key'];
-export type SettingsValue<K extends SettingsKey> = Extract<DefaultSettings, { key: K }>['value'];
+export type SettingsValue<K extends SettingsKey> = Extract<
+    DefaultSettings,
+    { key: K }
+>['value'];

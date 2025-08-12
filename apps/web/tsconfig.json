@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "exactOptionalPropertyTypes": true,
     "jsx": "react-jsx",
     "moduleResolution": "Bundler",
     "module": "ESNext",
@@ -15,5 +16,5 @@
       "@styles/*": ["./src/styles/*"],
       "@assets/*": ["./src/assets/*"]
     }
-  },
+  }
 }
