@@ -1,5 +1,5 @@
-import { RedisClient } from 'bun';
+import { RedisClient } from "bun";
 
 export const redisClient = (): RedisClient => {
-  return new RedisClient(process.env.REDIS_URL);
+	return new RedisClient(process.env.REDIS_URL);
 };

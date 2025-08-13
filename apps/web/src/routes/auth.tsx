@@ -1,30 +1,29 @@
-import { createFileRoute, Outlet, Scripts } from '@tanstack/react-router';
-import '@styles/dashboard.css';
-import { Toaster } from '@app/components/ui/sonner';
+import { createFileRoute, Outlet, Scripts } from "@tanstack/react-router";
+import { Toaster } from "@app/components/ui/sonner";
 
-export const Route = createFileRoute('/auth')({
-  component: RouteComponent,
-  head: () => ({
-    meta: [
-      {
-        title: 'Dashboard',
-      },
-    ],
-    /*links: [
+export const Route = createFileRoute("/auth")({
+	component: RouteComponent,
+	head: () => ({
+		meta: [
+			{
+				title: "Dashboard",
+			},
+		],
+		/*links: [
             {
                 rel: "stylesheet",
                 href: appCss,
             },
         ],*/
-  }),
+	}),
 });
 
 function RouteComponent() {
-  return (
-    <>
-      <Outlet />
-      <Scripts />
-      <Toaster richColors />
-    </>
-  );
+	return (
+		<>
+			<Outlet />
+			<Scripts />
+			<Toaster richColors />
+		</>
+	);
 }

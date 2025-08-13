@@ -1,26 +1,21 @@
-import type { PublicUser, User } from '@entity/user.entity';
-import { okAsync, type ResultAsync } from 'neverthrow';
-import {RoleWithPermissions} from "@entity/role.entity";
-import {db} from "@service/db.service";
-import userRoleRepo from "@repo/user-role.repo";
-import {user} from "@schema/user.schema";
+import type { PublicUser } from "@entity/user.entity";
+import { okAsync, type ResultAsync } from "neverthrow";
+import { RoleWithPermissions } from "@entity/role.entity";
+import { AuthContext } from "@entity/auth-context.entity";
 
 type Input = {
-  loggedUser: User;
-  accessToken: string;
+	auth: AuthContext;
 };
 
 type Output = {
-    user: PublicUser;
-    roles: RoleWithPermissions[];
+	user: PublicUser;
+	roles: RoleWithPermissions[];
 };
 
-export default (input: Input): ResultAsync<Output, Error> => {
-  const { loggedUser } = input;
-
-  return userRoleRepo(db).findRoleAndPermissions(loggedUser.id).map((roles) => ({
-      user: loggedUser,
-      roles,
-  }))
-
+export default ({ auth }: Input): ResultAsync<Output, Error> => {
+	const { user, roles } = auth;
+	return okAsync({
+		user,
+		roles,
+	});
 };

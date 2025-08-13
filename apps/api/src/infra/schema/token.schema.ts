@@ -1,6 +1,6 @@
-import type { JWTPayload } from 'jose';
+import type { JWTPayload } from "jose";
 
 export type Token = {
-  sessionId: string;
-  userId: string;
+	sessionId: string;
+	userId: string;
 } & JWTPayload;

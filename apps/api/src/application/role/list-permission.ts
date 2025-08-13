@@ -1,15 +1,15 @@
-import type { Pagination } from '@entity/pagination.entity';
-import type { Permission } from '@entity/permission.entity';
-import permissionRepo from '@infra/repo/permission.repo';
-import { db } from '@infra/service/db.service';
-import type { ResultAsync } from 'neverthrow';
+import type { Pagination } from "@entity/pagination.entity";
+import type { Permission } from "@entity/permission.entity";
+import permissionRepo from "@infra/repo/permission.repo";
+import { db } from "@infra/service/db.service";
+import type { ResultAsync } from "neverthrow";
 
 type Input = {
-  pag: Pagination;
+	pag: Pagination;
 };
 
 type Output = Permission[];
 
 export default ({ pag }: Input): ResultAsync<Output, Error> => {
-  return permissionRepo(db).list(pag.page, pag.limit);
+	return permissionRepo(db).list(pag.page, pag.limit);
 };

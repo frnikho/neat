@@ -1,27 +1,27 @@
 {
-  "compilerOptions": {
-    "rootDir": "./src",
-    "outDir": "./dist",
-    "target": "ES2021",
-    "module": "ES2022",
-    "moduleResolution": "node",
-    "types": ["bun-types"],
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "skipLibCheck": true,
-    "declaration": true,
-    "emitDeclarationOnly": false,
-    "paths": {
-      "@api/*": ["./src/api/*"],
-      "@application/*": ["./src/application/*"],
-      "@entity/*": ["./src/domain/entity/*"],
-      "@infra/*": ["./src/infra/*"],
-      "@interface/*": ["./src/domain/interface/*"],
-      "@service/*": ["./src/infra/service/*"],
-      "@repo/*": ["./src/infra/repo/*"],
-      "@schema/*": ["./src/infra/schema/*"]
-    }
-  },
-  "include": ["./src"]
+	"compilerOptions": {
+		"rootDir": "./src",
+		"outDir": "./dist",
+		"target": "ES2021",
+		"module": "ES2022",
+		"moduleResolution": "node",
+		"types": ["bun-types"],
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"strict": true,
+		"skipLibCheck": true,
+		"declaration": true,
+		"emitDeclarationOnly": false,
+		"paths": {
+			"@api/*": ["./src/api/*"],
+			"@application/*": ["./src/application/*"],
+			"@entity/*": ["./src/domain/entity/*"],
+			"@infra/*": ["./src/infra/*"],
+			"@interface/*": ["./src/domain/interface/*"],
+			"@service/*": ["./src/infra/service/*"],
+			"@repo/*": ["./src/infra/repo/*"],
+			"@schema/*": ["./src/infra/schema/*"]
+		}
+	},
+	"include": ["./src"]
 }
