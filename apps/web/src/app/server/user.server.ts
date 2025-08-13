@@ -5,7 +5,7 @@ import { getWebRequest } from "@tanstack/start-server-core";
 import { match, P } from "ts-pattern";
 
 export const getAuthUserFromServer = createServerFn({ method: "GET" }).handler(() => {
-	const { headers, url } = getWebRequest();
+	const { headers } = getWebRequest();
 	return apiClient.auth.me
 		.get({ fetch: { headers } })
 		.then(async ({ data, error }) => {

@@ -20,6 +20,7 @@ import { Route as PublicAboutRouteImport } from './routes/_public/about'
 import { Route as DashboardSettingsIndexRouteImport } from './routes/dashboard/settings/index'
 import { Route as DashboardSettingsUserRouteImport } from './routes/dashboard/settings/user'
 import { Route as DashboardSettingsSandboxRouteImport } from './routes/dashboard/settings/sandbox'
+import { Route as DashboardSettingsRoleRouteImport } from './routes/dashboard/settings/role'
 
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
@@ -76,6 +77,11 @@ const DashboardSettingsSandboxRoute =
     path: '/settings/sandbox',
     getParentRoute: () => DashboardRoute,
   } as any)
+const DashboardSettingsRoleRoute = DashboardSettingsRoleRouteImport.update({
+  id: '/settings/role',
+  path: '/settings/role',
+  getParentRoute: () => DashboardRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/auth': typeof AuthRouteWithChildren
@@ -85,6 +91,7 @@ export interface FileRoutesByFullPath {
   '/auth/register': typeof AuthRegisterRoute
   '/dashboard/account': typeof DashboardAccountRoute
   '/': typeof PublicIndexRoute
+  '/dashboard/settings/role': typeof DashboardSettingsRoleRoute
   '/dashboard/settings/sandbox': typeof DashboardSettingsSandboxRoute
   '/dashboard/settings/user': typeof DashboardSettingsUserRoute
   '/dashboard/settings': typeof DashboardSettingsIndexRoute
@@ -97,6 +104,7 @@ export interface FileRoutesByTo {
   '/auth/register': typeof AuthRegisterRoute
   '/dashboard/account': typeof DashboardAccountRoute
   '/': typeof PublicIndexRoute
+  '/dashboard/settings/role': typeof DashboardSettingsRoleRoute
   '/dashboard/settings/sandbox': typeof DashboardSettingsSandboxRoute
   '/dashboard/settings/user': typeof DashboardSettingsUserRoute
   '/dashboard/settings': typeof DashboardSettingsIndexRoute
@@ -111,6 +119,7 @@ export interface FileRoutesById {
   '/auth/register': typeof AuthRegisterRoute
   '/dashboard/account': typeof DashboardAccountRoute
   '/_public/': typeof PublicIndexRoute
+  '/dashboard/settings/role': typeof DashboardSettingsRoleRoute
   '/dashboard/settings/sandbox': typeof DashboardSettingsSandboxRoute
   '/dashboard/settings/user': typeof DashboardSettingsUserRoute
   '/dashboard/settings/': typeof DashboardSettingsIndexRoute
@@ -125,6 +134,7 @@ export interface FileRouteTypes {
     | '/auth/register'
     | '/dashboard/account'
     | '/'
+    | '/dashboard/settings/role'
     | '/dashboard/settings/sandbox'
     | '/dashboard/settings/user'
     | '/dashboard/settings'
@@ -137,6 +147,7 @@ export interface FileRouteTypes {
     | '/auth/register'
     | '/dashboard/account'
     | '/'
+    | '/dashboard/settings/role'
     | '/dashboard/settings/sandbox'
     | '/dashboard/settings/user'
     | '/dashboard/settings'
@@ -150,6 +161,7 @@ export interface FileRouteTypes {
     | '/auth/register'
     | '/dashboard/account'
     | '/_public/'
+    | '/dashboard/settings/role'
     | '/dashboard/settings/sandbox'
     | '/dashboard/settings/user'
     | '/dashboard/settings/'
@@ -240,6 +252,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardSettingsSandboxRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/settings/role': {
+      id: '/dashboard/settings/role'
+      path: '/settings/role'
+      fullPath: '/dashboard/settings/role'
+      preLoaderRoute: typeof DashboardSettingsRoleRouteImport
+      parentRoute: typeof DashboardRoute
+    }
   }
 }
 
@@ -270,6 +289,7 @@ const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 interface DashboardRouteChildren {
   DashboardAccountRoute: typeof DashboardAccountRoute
+  DashboardSettingsRoleRoute: typeof DashboardSettingsRoleRoute
   DashboardSettingsSandboxRoute: typeof DashboardSettingsSandboxRoute
   DashboardSettingsUserRoute: typeof DashboardSettingsUserRoute
   DashboardSettingsIndexRoute: typeof DashboardSettingsIndexRoute
@@ -277,6 +297,7 @@ interface DashboardRouteChildren {
 
 const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardAccountRoute: DashboardAccountRoute,
+  DashboardSettingsRoleRoute: DashboardSettingsRoleRoute,
   DashboardSettingsSandboxRoute: DashboardSettingsSandboxRoute,
   DashboardSettingsUserRoute: DashboardSettingsUserRoute,
   DashboardSettingsIndexRoute: DashboardSettingsIndexRoute,

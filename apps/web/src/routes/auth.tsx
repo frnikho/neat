@@ -1,3 +1,5 @@
+/// <reference types="vite/client" />
+import appCss from '@styles/dashboard.css?url';
 import { createFileRoute, Outlet, Scripts } from "@tanstack/react-router";
 import { Toaster } from "@app/components/ui/sonner";
 
@@ -9,12 +11,12 @@ export const Route = createFileRoute("/auth")({
 				title: "Dashboard",
 			},
 		],
-		/*links: [
+		links: [
             {
                 rel: "stylesheet",
                 href: appCss,
             },
-        ],*/
+        ],
 	}),
 });
 

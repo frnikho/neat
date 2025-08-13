@@ -156,7 +156,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 	});
 
     const onClickEditor = useCallback(() => {
-        return navigate({to: '/editor'});
+        return navigate({to: '/', reloadDocument: true});
     }, []);
 
 	const showCompanyHeader = useCallback(() => {
