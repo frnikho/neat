@@ -10,10 +10,8 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.1.4",
-		"prettier": "^3.6.2",
 		"turbo": "^2.5.5",
-		"typescript": "5.9.2",
-		"ultracite": "5.1.2"
+		"typescript": "5.9.2"
 	},
 	"engines": {
 		"node": ">=18"
@@ -25,15 +23,8 @@
 			"packages/*"
 		],
 		"catalog": {
-			"@typescript/native-preview": "latest",
 			"bun-types": "latest",
-			"@types/bun": "^1.2.19",
 			"typescript": "5.9.2"
 		}
-	},
-	"dependencies": {
-		"@elysiajs/swagger": "^1.3.1",
-		"@paralleldrive/cuid2": "^2.2.2",
-		"jose": "^6.0.12"
 	}
 }

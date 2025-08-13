@@ -1,5 +1,5 @@
 {
-  "name": "web",
+  "name": "@neat/web",
   "module": "index.ts",
   "type": "module",
   "private": true,
@@ -9,7 +9,6 @@
     "build_editor_css": "bunx @tailwindcss/cli -i ./src/styles/dashboard.css -o public/overlay.css --minify --watch"
   },
   "devDependencies": {
-    "@types/bun": "latest",
     "@types/react": "^19.1.9",
     "@types/react-dom": "^19.1.7",
     "@vitejs/plugin-react": "^5.0.0",
@@ -17,7 +16,7 @@
     "vite-tsconfig-paths": "^5.1.4"
   },
   "peerDependencies": {
-    "typescript": "^5.9.2"
+    "typescript": "catalog:"
   },
   "dependencies": {
     "@neat/api-client": "workspace:*",
