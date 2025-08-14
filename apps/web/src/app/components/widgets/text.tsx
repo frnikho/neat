@@ -1,4 +1,5 @@
 import {ComponentProps} from "react";
+import Widget from "@app/components/widgets/widget";
 
 type Props = {
     text: string;
@@ -6,10 +7,13 @@ type Props = {
 }
 
 export default function TextWidget({}: ComponentProps<"text"> & Props) {
+    return (
+        <Widget<string> children={(data) => {
+            return (
+                <div>
 
-
-
-    return (<p>
-
-    </p>)
+                </div>
+            )
+        }}/>
+    )
 }

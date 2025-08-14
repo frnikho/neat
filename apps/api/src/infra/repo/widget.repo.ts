@@ -1,6 +1,6 @@
 import { DbException } from "@infra/exception/db.exception";
 import { op } from "@infra/utils/db.utils";
-import { oneOreResultOption, oneOrOption, oneOrThrow } from "@infra/utils/type.utils";
+import { oneOreResultOption, oneOrThrow } from "@infra/utils/type.utils";
 import type { WidgetInterface } from "@interface/widget.interface";
 import { mapWidget, mapWidgetOption, widget } from "@schema/widget.schema";
 import { eq } from "drizzle-orm";
@@ -62,4 +62,20 @@ export default (client: NodePgDatabase): WidgetInterface => ({
 			.andThen((r) => oneOrThrow(r, new DbException("Widget update failed")))
 			.map(mapWidget);
 	},
+
+    softDelete: (id, deletedBy) => {
+        return op(
+            client
+                .update(widget)
+                .set({
+                    deletedAt: new Date(),
+                    deletedBy: deletedBy,
+                })
+                .where(eq(widget.id, id))
+                .returning(),
+        )
+            .andThen((r) => oneOrThrow(r, new DbException("Widget soft deletion failed")))
+            .map(mapWidget
+        )
+    }
 });

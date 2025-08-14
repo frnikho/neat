@@ -17,6 +17,7 @@ import { Route as DashboardAccountRouteImport } from './routes/dashboard/account
 import { Route as AuthRegisterRouteImport } from './routes/auth/register'
 import { Route as AuthLoginRouteImport } from './routes/auth/login'
 import { Route as PublicAboutRouteImport } from './routes/_public/about'
+import { Route as PublicSlugRouteImport } from './routes/_public/$slug'
 import { Route as DashboardSettingsIndexRouteImport } from './routes/dashboard/settings/index'
 import { Route as DashboardSettingsUserRouteImport } from './routes/dashboard/settings/user'
 import { Route as DashboardSettingsSandboxRouteImport } from './routes/dashboard/settings/sandbox'
@@ -61,6 +62,11 @@ const PublicAboutRoute = PublicAboutRouteImport.update({
   path: '/about',
   getParentRoute: () => PublicRoute,
 } as any)
+const PublicSlugRoute = PublicSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => PublicRoute,
+} as any)
 const DashboardSettingsIndexRoute = DashboardSettingsIndexRouteImport.update({
   id: '/settings/',
   path: '/settings/',
@@ -86,6 +92,7 @@ const DashboardSettingsRoleRoute = DashboardSettingsRoleRouteImport.update({
 export interface FileRoutesByFullPath {
   '/auth': typeof AuthRouteWithChildren
   '/dashboard': typeof DashboardRouteWithChildren
+  '/$slug': typeof PublicSlugRoute
   '/about': typeof PublicAboutRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
@@ -99,6 +106,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/auth': typeof AuthRouteWithChildren
   '/dashboard': typeof DashboardRouteWithChildren
+  '/$slug': typeof PublicSlugRoute
   '/about': typeof PublicAboutRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
@@ -114,6 +122,7 @@ export interface FileRoutesById {
   '/_public': typeof PublicRouteWithChildren
   '/auth': typeof AuthRouteWithChildren
   '/dashboard': typeof DashboardRouteWithChildren
+  '/_public/$slug': typeof PublicSlugRoute
   '/_public/about': typeof PublicAboutRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
@@ -129,6 +138,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/auth'
     | '/dashboard'
+    | '/$slug'
     | '/about'
     | '/auth/login'
     | '/auth/register'
@@ -142,6 +152,7 @@ export interface FileRouteTypes {
   to:
     | '/auth'
     | '/dashboard'
+    | '/$slug'
     | '/about'
     | '/auth/login'
     | '/auth/register'
@@ -156,6 +167,7 @@ export interface FileRouteTypes {
     | '/_public'
     | '/auth'
     | '/dashboard'
+    | '/_public/$slug'
     | '/_public/about'
     | '/auth/login'
     | '/auth/register'
@@ -231,6 +243,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicAboutRouteImport
       parentRoute: typeof PublicRoute
     }
+    '/_public/$slug': {
+      id: '/_public/$slug'
+      path: '/$slug'
+      fullPath: '/$slug'
+      preLoaderRoute: typeof PublicSlugRouteImport
+      parentRoute: typeof PublicRoute
+    }
     '/dashboard/settings/': {
       id: '/dashboard/settings/'
       path: '/settings'
@@ -263,11 +282,13 @@ declare module '@tanstack/react-router' {
 }
 
 interface PublicRouteChildren {
+  PublicSlugRoute: typeof PublicSlugRoute
   PublicAboutRoute: typeof PublicAboutRoute
   PublicIndexRoute: typeof PublicIndexRoute
 }
 
 const PublicRouteChildren: PublicRouteChildren = {
+  PublicSlugRoute: PublicSlugRoute,
   PublicAboutRoute: PublicAboutRoute,
   PublicIndexRoute: PublicIndexRoute,
 }

@@ -2,6 +2,7 @@ import {PropsWithChildren, useEffect, useRef} from "react";
 import {createRoot} from "react-dom/client";
 import {Button} from "@app/components/ui/button";
 import {UserContext, UserContextProvider} from "@app/context/user.context";
+import {Overlay} from "@app/components/overlay/overlay";
 
 type Props = {
     ctx: UserContext
@@ -12,7 +13,7 @@ export default function OverlayWrapper(props: Props) {
     const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        if (!ref.current){
+        if (!ref.current || ref.current.shadowRoot){
             return;
         }
         const shadow = ref.current.attachShadow({ mode: "open" });
@@ -30,22 +31,14 @@ export default function OverlayWrapper(props: Props) {
         const mountPoint = document.createElement("div");
         shadow.appendChild(mountPoint);
         createRoot(mountPoint).render(<Overlay ctx={props.ctx}/>);
+
+        return () => ref.current?.remove();
     }, []);
 
     return (<div ref={ref}/>);
 }
 
-function Overlay(props: Props) {
-    return (
-        <OverlayProvider ctx={props.ctx}>
-            <div className={'m-4'}>
-                <Button>Hello World !</Button>
-            </div>
-        </OverlayProvider>
-    )
-}
-
-function OverlayProvider({ctx, children}: PropsWithChildren<{ctx: UserContext}>) {
+export function OverlayProvider({ctx, children}: PropsWithChildren<{ctx: UserContext}>) {
     return (
         <UserContextProvider ctx={ctx}>
             {children}

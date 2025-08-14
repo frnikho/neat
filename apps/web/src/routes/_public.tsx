@@ -5,6 +5,7 @@ import {createFileRoute, HeadContent, Outlet, Scripts} from "@tanstack/react-rou
 import {lazy} from "react";
 import {match, P} from "ts-pattern";
 import {getAuthFromServer} from "@app/server/user.server";
+import {EditorContextProvider} from "@app/context/editor.context";
 const Overlay = lazy(() => import('@app/components/overlay/overlay-wrapper'));
 
 export const Route = createFileRoute("/_public")({
@@ -28,12 +29,14 @@ function RouteComponent() {
 	return (
 		<>
 			<HeadContent />
-			<Outlet />
-            {match(dataLoader)
-                .with(P.nonNullable, (ctx) => (<div style={{ position: "fixed", bottom: 0, right: 0, zIndex: 9999 }}>
-                    <Overlay ctx={ctx}/>
-                </div>))
-                .otherwise(() => null)}
+			<EditorContextProvider ctx={{enabled: dataLoader !== undefined}}>
+                <Outlet />
+                {match(dataLoader)
+                    .with(P.nonNullable, (ctx) => (<div style={{ position: "fixed", bottom: 0, right: 0, zIndex: 9999 }}>
+                        <Overlay ctx={ctx}/>
+                    </div>))
+                    .otherwise(() => null)}
+            </EditorContextProvider>
             <Scripts/>
 		</>
 	);

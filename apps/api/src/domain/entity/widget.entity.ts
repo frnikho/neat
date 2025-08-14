@@ -2,7 +2,7 @@ export type Widget<T = object> = {
 	id: string;
 	name: string;
 	value: T;
-	layout: string;
+    layout: string;
 	createdAt: Date;
 	createdBy?: string;
 	updatedAt?: Date;
@@ -15,6 +15,6 @@ export type CreateWidget<T = object> = Omit<Widget<T>, "id" | "createdAt" | "upd
 export type UpdateWidget<T = object> = {
 	name?: string;
 	value?: T;
-	layout?: string;
+    layout?: string;
 	updatedBy?: string;
 };
