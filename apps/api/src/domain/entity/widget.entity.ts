@@ -11,7 +11,13 @@ export type Widget<T = object> = {
 	deletedBy?: string;
 };
 
-export type CreateWidget<T = object> = Omit<Widget<T>, "id" | "createdAt" | "updatedAt" | "deletedAt">;
+export type CreateWidget<T = object> = {
+    name: string;
+    value: T;
+    layout: string;
+    createdBy?: string;
+};
+
 export type UpdateWidget<T = object> = {
 	name?: string;
 	value?: T;

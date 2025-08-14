@@ -16,7 +16,6 @@ export default (client: NodePgDatabase): WidgetInterface => ({
 					value: body.value,
 					layout: body.layout,
 					createdBy: body.createdBy,
-					updatedBy: body.updatedBy,
 				})
 				.returning(),
 		)

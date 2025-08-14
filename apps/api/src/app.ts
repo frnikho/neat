@@ -10,6 +10,8 @@ import swagger from "@elysiajs/swagger";
 import { Elysia } from "elysia";
 import createDefaultPages from "@application/page/create-default-pages";
 import pageRoute from "@api/route/page.route";
+import widgetRoute from "@api/route/widget.route";
+import layoutRoute from "@api/route/layout.route";
 
 const app = new Elysia()
 	.use(cors())
@@ -19,6 +21,8 @@ const app = new Elysia()
 	.use(authRoute)
 	.use(settingsRoute)
     .use(pageRoute)
+    .use(widgetRoute)
+    .use(layoutRoute)
 	.get("/", () => "Hello Elysia")
 	.listen(4000, async (srv) => {
 		await createDefaultSettings();

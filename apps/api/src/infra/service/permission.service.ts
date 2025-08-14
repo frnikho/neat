@@ -91,6 +91,81 @@ const permissions = [
 		resource: "dashboard",
 		action: "view",
 	},
+    {
+        name: 'Create widget',
+        resource: 'widget',
+        action: 'create',
+    },
+    {
+        name: 'Read widget',
+        resource: 'widget',
+        action: 'read',
+    },
+    {
+        name: 'Update widget',
+        resource: 'widget',
+        action: 'update',
+    },
+    {
+        name: 'Delete widget',
+        resource: 'widget',
+        action: 'delete',
+    },
+    {
+        name: 'Manage all widget permissions',
+        resource: 'widget',
+        action: '*',
+    },
+    {
+        name: 'Create page',
+        resource: 'page',
+        action: 'create',
+    },
+    {
+        name: 'Read page',
+        resource: 'page',
+        action: 'read',
+    },
+    {
+        name: 'Update page',
+        resource: 'page',
+        action: 'update',
+    },
+    {
+        name: 'Delete page',
+        resource: 'page',
+        action: 'delete',
+    },
+    {
+        name: 'Manage all page permissions',
+        resource: 'page',
+        action: '*',
+    },
+    {
+        name: 'Create Layout',
+        resource: 'layout',
+        action: 'create',
+    },
+    {
+        name: 'Read Layout',
+        resource: 'layout',
+        action: 'read',
+    },
+    {
+        name: 'Update Layout',
+        resource: 'layout',
+        action: 'update',
+    },
+    {
+        name: 'Delete Layout',
+        resource: 'layout',
+        action: 'delete',
+    },
+    {
+        name: 'Manage all layout permissions',
+        resource: 'layout',
+        action: '*',
+    }
 ] as const;
 
 type Permission = (typeof permissions)[number];

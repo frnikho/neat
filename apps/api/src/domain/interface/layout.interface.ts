@@ -16,7 +16,7 @@ export interface LayoutInterface {
     update: (id: string, data: UpdateLayout) => Result<Layout>;
     delete: (id: string) => Result<Layout>;
     list: (page?: number, limit?: number) => Result<Layout[]>;
-    softDelete?: (id: string, deletedBy?: string) => Result<Layout>;
+    softDelete: (id: string, deletedBy?: string) => Result<Layout>;
 }
 
 type ResultCache<T> = ResultAsync<T, CacheException>;
