@@ -23,7 +23,6 @@ const app = new Elysia()
     .use(pageRoute)
     .use(widgetRoute)
     .use(layoutRoute)
-	.get("/", () => "Hello Elysia")
 	.listen(4000, async (srv) => {
 		await createDefaultSettings();
 		await createDefaultPermissions();

@@ -12,8 +12,8 @@ export default new Elysia()
     .model(widgetModels)
     .group('/widget', (app) =>
         app
-            .post('/', ({auth, body}) => response(createWidget({auth, body})), {response: 'widget.response.create', body: 'widget.request.create'})
-            .get('/', ({auth}) => response(listWidget({auth})), {response: 'widget.response.list'})
-            .get('/:id', ({auth, params}) => response(getWidget({id: params.id, auth})), {response: 'widget.response.get'})
-            .put('/:id', ({auth, body, params}) => response(updateWidget({auth, body, id: params.id})), {response: 'widget.response.update', body: 'widget.request.update'})
+            .post('/', ({auth, body}) => response(createWidget({auth, body})), {response: 'widget.response.create', body: 'widget.request.create', tags: ['Widget']})
+            .get('/', ({auth}) => response(listWidget({auth})), {response: 'widget.response.list', tags: ['Widget']})
+            .get('/:id', ({auth, params}) => response(getWidget({id: params.id, auth})), {response: 'widget.response.get', tags: ['Widget']})
+            .put('/:id', ({auth, body, params}) => response(updateWidget({auth, body, id: params.id})), {response: 'widget.response.update', body: 'widget.request.update', tags: ['Widget']})
     )

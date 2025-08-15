@@ -15,7 +15,7 @@ export interface PageInterface {
     update: (id: string, data: UpdatePage) => Result<Page>;
     delete: (id: string) => Result<Page>;
     list: (page?: number, limit?: number) => Result<Page[]>;
-    softDelete?: (id: string, deletedBy?: string) => Result<Page>;
+    softDelete: (id: string, deletedBy?: string) => Result<Page>;
 }
 
 type ResultCache<T> = ResultAsync<T, CacheException>;

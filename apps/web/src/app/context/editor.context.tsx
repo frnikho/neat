@@ -4,8 +4,8 @@ export type EditorContext = {
     enabled: boolean;
 }
 
-export const UserContext = createContext<EditorContext>(undefined as never);
+export const EditorContext = createContext<EditorContext>(undefined as never);
 
 export function EditorContextProvider({ctx, children}: PropsWithChildren<{ctx: EditorContext}>) {
-    return <UserContext.Provider value={ctx}>{children}</UserContext.Provider>;
+    return <EditorContext.Provider value={ctx}>{children}</EditorContext.Provider>;
 }

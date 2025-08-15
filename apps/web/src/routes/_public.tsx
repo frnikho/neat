@@ -13,6 +13,10 @@ export const Route = createFileRoute("/_public")({
 		meta: [],
         links: [
             {
+                rel: 'icon',
+                href: '/favicon.ico',
+            },
+            {
                 rel: 'stylesheet',
                 href: appCss
             }

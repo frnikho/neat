@@ -11,7 +11,6 @@ export const Route = createRootRoute({
 			</body>
 		</html>
 	),
-
 	notFoundComponent: () => (
 		<div>
 			<h1>404 - Not Found</h1>

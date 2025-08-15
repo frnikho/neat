@@ -1,5 +1,4 @@
 import {UserContext} from "@app/context/user.context";
-import {Button} from "@app/components/ui/button";
 import {OverlayProvider} from "@app/components/overlay/overlay-wrapper";
 import {useEditorStore} from "@app/store/editor.store";
 import {match} from "ts-pattern";

@@ -65,8 +65,6 @@ export default new Elysia()
 					body: "auth.request.register",
 					response: {
 						200: "auth.response.register",
-						500: "auth.cookie",
-						400: "auth.request.login",
 					},
 					tags: ["Authentification"],
 				},
@@ -98,7 +96,7 @@ export default new Elysia()
 			.group("", (app) =>
 				app
 					.use(authMiddleware)
-                    .delete("/session/current", ({auth}) => response(deleteSession({auth})))
+                    .delete("/session/current", ({auth}) => response(deleteSession({auth})), { tags: ["Authentification"] })
 					.get("/me", ({ auth }) => response(info({ auth })), { response: "auth.response.info", tags: ["Authentification"] }),
 			),
 	);

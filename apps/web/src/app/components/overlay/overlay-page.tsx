@@ -1,6 +1,10 @@
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@app/components/ui/card";
+import {useEditorStore} from "@app/store/editor.store";
 
 export default function OverlayPage() {
+
+    const {} = useEditorStore();
+
     return (
         <Card className="min-w-xs max-w-md">
             <CardHeader>

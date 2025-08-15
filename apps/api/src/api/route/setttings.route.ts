@@ -18,7 +18,7 @@ export default new Elysia()
 				query: "pagination",
 				tags: ["Settings"],
 			})
-			.post("/invalidate", ({ auth }) => response(invalidateSettings({ auth })))
+			.post("/invalidate", ({ auth }) => response(invalidateSettings({ auth })), {tags: ["Settings"]})
 			.get("/:key", ({ params, auth }) => response(getSettings({ auth, key: params.key })), { params: "settings.key", tags: ["Settings"] })
 			.put("/:key", ({ params, body, auth }) => response(updateSettings({ key: params.key, auth, body })), {
 				body: "settings.update",
