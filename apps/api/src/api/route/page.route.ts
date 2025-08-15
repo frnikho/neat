@@ -13,7 +13,7 @@ export default new Elysia()
     .model(pageModels)
     .model(requestModels)
     .group('/page', (app) =>
-        app.get('/:slug', ({params}) => response(getPageContent({pageSlug: params.slug})), {tags: ['Page']})
+        app.get('/:id', ({params}) => response(getPageContent({pageSlug: params.id})), {tags: ['Page']})
     )
     .use(authMiddleware)
     .group('/page', (app) =>

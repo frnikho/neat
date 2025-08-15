@@ -5,7 +5,7 @@ export const layoutResponse = Type.Object({
     name: Type.String(),
     key: Type.String(),
     page: Type.String(),
-    createdAt: Type.String(Type.Date()),
+    createdAt: Type.Date(),
     createdBy: Type.Optional(Type.String()),
     updatedAt: Type.Optional(Type.Date()),
     updatedBy: Type.Optional(Type.String()),

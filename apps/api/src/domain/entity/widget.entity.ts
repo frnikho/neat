@@ -1,6 +1,7 @@
 export type Widget<T = object> = {
 	id: string;
 	name: string;
+    key: string;
 	value: T;
     layout: string;
 	createdAt: Date;
@@ -13,6 +14,7 @@ export type Widget<T = object> = {
 
 export type CreateWidget<T = object> = {
     name: string;
+    key: string;
     value: T;
     layout: string;
     createdBy?: string;
@@ -20,6 +22,7 @@ export type CreateWidget<T = object> = {
 
 export type UpdateWidget<T = object> = {
 	name?: string;
+    key?: string;
 	value?: T;
     layout?: string;
 	updatedBy?: string;

@@ -11,9 +11,9 @@ type Props = {
 
 export function Overlay(props: Props) {
 
-    const {state, changeState} = useEditorStore();
+    const {state, selectedWidget} = useEditorStore();
 
-    console.log(state);
+    console.log(selectedWidget);
 
     return (
         <OverlayProvider ctx={props.ctx}>

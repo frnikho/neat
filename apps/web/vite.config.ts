@@ -5,6 +5,7 @@ import {defineConfig} from "vite";
 import tsConfigPaths from "vite-tsconfig-paths";
 import { generateSitemap } from "tanstack-router-sitemap";
 import {sitemap} from "./src/sitemap";
+import devtoolsJson from 'vite-plugin-devtools-json';
 
 export default defineConfig({
     server: {
@@ -14,6 +15,7 @@ export default defineConfig({
         tsConfigPaths(),
         tanstackStart({customViteReactPlugin: true, target: "bun"}),
         generateSitemap(sitemap),
+        devtoolsJson(),
         tailwindcss(),
         viteReact()
     ],

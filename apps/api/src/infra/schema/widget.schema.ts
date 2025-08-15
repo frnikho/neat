@@ -10,6 +10,7 @@ import {layout} from "@schema/layout.schema";
 export const widget = p.pgTable("widget", {
 	id: uid().primaryKey(),
 	name: p.varchar({ length: 255 }).notNull(),
+    key: p.varchar({ length: 255 }).notNull().unique(),
 	value: p.jsonb().default({}).notNull(),
     layout: p.varchar().references(() => layout.id, { onDelete: "cascade" }).notNull(),
 	createdAt: p.timestamp("created_at").defaultNow().notNull(),

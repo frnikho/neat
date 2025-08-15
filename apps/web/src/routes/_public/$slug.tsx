@@ -1,30 +1,39 @@
 import {createFileRoute} from '@tanstack/react-router'
 import {apiClient} from "@app/lib/client";
-import {match} from "ts-pattern";
+import {getRouteComponent, registerPage} from "@app/page.registry";
+import { lazy, Suspense } from 'react';
 
 export const Route = createFileRoute('/_public/$slug')({
     component: RouteComponent,
     loader: ({params}) => {
-        return apiClient.page({slug: params.slug}).get().then(({data, error}) => {
-            console.log(`Page loaded: ${params.slug}`);
-            console.log('DATA: ', data);
-            console.log('ERROR: ', error);
+        /*return apiClient.page({slug: params.slug}).get().then(({data, error}) => {
             return data!;
-        })
+        })*/
     },
     head: (ctx) => {
         if (!ctx.loaderData) {
-            console.log('abc');
             return {}
         }
         return {
-            meta: [{
-                title: ctx.loaderData.page.slug,
-            }]
+            /*meta: [{title: ctx.loaderData.page.slug}]*/
         }
     }
-})
+});
+
+/*
+registerPage("home", () => import("../../customer/routes/index"));
+registerPage("profile", () => import("../../customer/routes/profile"));
+registerPage("settings", () => import("../../customer/routes/settings"));
+*/
 
 function RouteComponent() {
-    return <div>Hello "/_public/$slug"!</div>
+
+    const data = Route.useLoaderData();
+   /* const loader = getRouteComponent(data.page.slug);
+    const Page = lazy(loader);*/
+    return (
+        <div>abc</div>
+        /*<Layout>
+            <Page {...data} />
+        </Layout>*/)
 }

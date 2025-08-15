@@ -9,7 +9,8 @@ export type WidgetInterface = {
 	create: <T = object>(widget: CreateWidget) => Result<Widget<T>>;
 	update: <T = object>(id: string, widget: UpdateWidget<T>) => Result<Widget<T>>;
 	delete: <T = object>(id: string) => Result<Widget<T>>;
-	findById: <T = object>(id: string) => Result<Option<Widget<T>>>;
+    findById: <T = object>(id: string) => Result<Option<Widget<T>>>;
+    findByKey: <T = object>(id: string) => Result<Option<Widget<T>>>;
 	findAll: <T = object>() => Result<Widget<T>[]>;
     softDelete: <T = object>(id: string, deletedBy?: string) => Result<Widget<T>>;
 };

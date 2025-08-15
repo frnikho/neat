@@ -13,6 +13,7 @@ export default (client: NodePgDatabase): WidgetInterface => ({
 				.insert(widget)
 				.values({
 					name: body.name,
+                    key: body.key,
 					value: body.value,
 					layout: body.layout,
 					createdBy: body.createdBy,
@@ -34,6 +35,12 @@ export default (client: NodePgDatabase): WidgetInterface => ({
 			.andThen(oneOreResultOption)
 			.map(mapWidgetOption);
 	},
+
+    findByKey: (key) => {
+        return op(client.select().from(widget).where(eq(widget.key, key)).limit(1))
+            .andThen(oneOreResultOption)
+            .map(mapWidgetOption);
+    },
 
 	findAll: (page = 1, limit = 10) => {
 		return op(
