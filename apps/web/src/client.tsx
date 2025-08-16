@@ -7,5 +7,7 @@ const router = createRouter();
 
 hydrateRoot(
     document,
-    <StartClient router={router} />
+    <StrictMode>
+        <StartClient router={router} />
+    </StrictMode>
 )

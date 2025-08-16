@@ -23,24 +23,33 @@ export default (input: RefreshTokenInput): ResultAsync<RefreshTokenOutput, Error
 		return errAsync(appException(apiErrorCodeToStatus.BAD_REQUEST, "Missing tokens"));
 	}
 
+    console.log(input);
+
 	const refresh = verifyToken(input.refreshToken)
-		.mapErr((err) =>
-			appException(apiErrorCodeToStatus.BAD_REQUEST, "Invalid refresh token", {
-				error: err,
-			}),
-		)
+		.mapErr((err) => {
+            console.log('err', err);
+            return appException(apiErrorCodeToStatus.BAD_REQUEST, "Invalid refresh token", {
+                error: err,
+            })
+        })
 		.map((r) => r.payload as Token);
 
 	const client = redisClient();
 
 	const access = verifyToken(input.accessToken, true)
-		.andThen(({ payload }) => tokenRepo(client).get(`refresh:${payload.sessionId}`))
-		.andThen((refresh) => optionToResult(refresh, appException(apiErrorCodeToStatus.BAD_REQUEST, "Invalid refresh token")));
+		.andThen(({ payload }) => {
+            return tokenRepo(client).get(`refresh:${payload.sessionId}`).andThen((refresh) => {
+                return optionToResult(refresh, appException(apiErrorCodeToStatus.BAD_REQUEST, "Invalid refresh token"))
+                    .map(() => payload as Token)
+            })
+        })
 
 	return ResultAsync.combine([access, refresh]).andThen(([accessToken, refreshToken]) => {
-		if (accessToken !== input.refreshToken) {
-			return err(appException(apiErrorCodeToStatus.BAD_REQUEST, "Invalid refresh token, you need to login again"));
-		}
+        if (refreshToken.sessionId !== accessToken.sessionId) {
+            console.log('Session mismatch between access and refresh tokens');
+            return err(appException(apiErrorCodeToStatus.BAD_REQUEST, "Session mismatch between access and refresh tokens"));
+        }
+        console.log('Rotating tokens for session:', refreshToken.sessionId, 'and user:', refreshToken.userId);
 		return tokenService(client).rotateTokens(refreshToken.sessionId, refreshToken.userId);
 	});
 };

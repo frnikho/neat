@@ -3,7 +3,7 @@ import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@app/co
 export default function OverlayPage() {
 
     return (
-        <Card className="min-w-xs max-w-md">
+        <Card className="min-w-sm max-w-md">
             <CardHeader>
                 <CardTitle>Page Settings</CardTitle>
                 <CardDescription>
@@ -11,9 +11,6 @@ export default function OverlayPage() {
                 </CardDescription>
             </CardHeader>
             <CardContent>
-                <div className="text-gray-500">
-                    This is where you can manage your page settings. Use the options available to modify the layout and add widgets as needed.
-                </div>
             </CardContent>
         </Card>
     );

@@ -6,7 +6,7 @@ import { AppSidebar } from "@app/components/app-sidebar";
 import { SidebarInset, SidebarProvider } from "@app/components/ui/sidebar";
 import { Toaster } from "@app/components/ui/sonner";
 import { UserContextProvider } from "@app/context/user.context";
-import { getAuthUserFromServer } from "@app/server/user.server";
+import {authFromServer} from "@app/server/user.server";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 export const Route = createFileRoute("/dashboard")({
@@ -24,7 +24,7 @@ export const Route = createFileRoute("/dashboard")({
         ],
 	}),
 	component: RouteComponent,
-	loader: () => getAuthUserFromServer(),
+	loader: () => authFromServer(),
 });
 
 const queryClient = new QueryClient();

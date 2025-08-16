@@ -1,5 +1,5 @@
 import {AuthContext} from "@entity/auth-context.entity";
-import {hasPermission} from "@service/permission.service";
+import {hasAnyPermission, hasPermission} from "@service/permission.service";
 import {errAsync} from "neverthrow";
 import {appException} from "@application/app.exception";
 import {apiErrorCodeToStatus} from "@api/api.exception";
@@ -11,7 +11,7 @@ type Input = {
 }
 
 export default ({auth}: Input) => {
-    if (!hasPermission(auth.roles, 'widget.read')) {
+    if (!hasAnyPermission(auth.roles, ['widget.read', 'widget.*'])) {
         return errAsync(appException(apiErrorCodeToStatus.FORBIDDEN, "You don't have permission to list widgets"));
     }
 

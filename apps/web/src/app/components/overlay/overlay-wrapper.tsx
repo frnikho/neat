@@ -1,6 +1,5 @@
 import {PropsWithChildren, useEffect, useRef} from "react";
 import {createRoot} from "react-dom/client";
-import {Button} from "@app/components/ui/button";
 import {UserContext, UserContextProvider} from "@app/context/user.context";
 import {Overlay} from "@app/components/overlay/overlay";
 

@@ -16,7 +16,7 @@ type Input = {
 
 export default ({body, auth}: Input) => {
 
-    if (!canCreateWidget(auth)) {
+    if (!hasAnyPermission(auth.roles, ['widget.create', 'widget.*'])) {
         return errAsync(appException(apiErrorCodeToStatus.FORBIDDEN, "You don't have permission to create widgets"));
     }
     return widgetRepo(db).create({
@@ -26,7 +26,3 @@ export default ({body, auth}: Input) => {
         return layoutCacheRepo(redisClient()).delete(`layout:${body.layout}`).map(() => widget);
     });
 }
-
-const canCreateWidget = ({ roles }: AuthContext): boolean => {
-    return hasAnyPermission(roles, ['widget.create', 'widget.*']);
-};

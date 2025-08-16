@@ -5,11 +5,14 @@ import type { TokenServiceInterface } from "@interface/token.interface";
 import type { RedisClient } from "bun";
 import { err, ResultAsync } from "neverthrow";
 
+const ACCESS_TOKEN_TTL = '12h';
+const REFRESH_TOKEN_TTL = '30d';
+
 export default (client: RedisClient): TokenServiceInterface =>
 	<TokenServiceInterface>{
 		createTokenPair: (sessionId: string, userId: string) => {
-			const accessToken = createToken({ sessionId, userId }, "12h");
-			const refreshToken = createToken({ sessionId, userId }, "30d");
+			const accessToken = createToken({ sessionId, userId }, ACCESS_TOKEN_TTL);
+			const refreshToken = createToken({ sessionId, userId }, REFRESH_TOKEN_TTL);
 
 			return ResultAsync.combine([accessToken, refreshToken]).andThen(([access, refresh]) => {
 				return tokenRepo(client)
@@ -27,15 +30,15 @@ export default (client: RedisClient): TokenServiceInterface =>
 						return err(new CacheException("Refresh token not found"));
 					}
 					const payload = { sessionId, userId };
-					const newAccessToken = createToken(payload, "12h");
-					const newRefreshToken = createToken(payload, "30d");
+					const newAccessToken = createToken(payload, ACCESS_TOKEN_TTL);
+					const newRefreshToken = createToken(payload, REFRESH_TOKEN_TTL);
 
 					return tokenRepo(client)
 						.delete(`refresh:${sessionId}`)
 						.andThen(() => ResultAsync.combine([newAccessToken, newRefreshToken]))
 						.andThen(([access, refresh]) => {
 							return tokenRepo(client)
-								.insert(`session:${userId}:${sessionId}`, "active")
+								.insert(`session:${userId}:${sessionId}`, "active", 7 * 24 * 60 * 60)
 								.andThen(() =>
 									tokenRepo(client)
 										.insert(`refresh:${sessionId}`, refresh)

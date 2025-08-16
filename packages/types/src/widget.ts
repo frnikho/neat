@@ -6,7 +6,7 @@ export const widgetResponse = Type.Object({
     key: Type.String(),
     value: Type.Any(),
     layout: Type.String(),
-    createdAt: Type.String(Type.Date()),
+    createdAt: Type.Date(),
     createdBy: Type.Optional(Type.String()),
     updatedAt: Type.Optional(Type.Date()),
     updatedBy: Type.Optional(Type.String()),
@@ -21,17 +21,15 @@ export const createWidgetRequest = Type.Object({
     key: Type.String(),
     value: Type.Any(),
     layout: Type.String(),
-    createdBy: Type.Optional(Type.String()),
 });
 
 export type CreateWidgetRequest = Static<typeof createWidgetRequest>;
 
 export const updateWidgetRequest = Type.Object({
     name: Type.Optional(Type.String()),
-    key: Type.String(),
+    key: Type.Optional(Type.String()),
     value: Type.Optional(Type.Any()),
     layout: Type.Optional(Type.String()),
-    updatedBy: Type.Optional(Type.String()),
 });
 
 export type UpdateWidgetRequest = Static<typeof updateWidgetRequest>;

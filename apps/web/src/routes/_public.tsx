@@ -2,9 +2,9 @@
 import appCss from '@styles/app.css?url';
 
 import {createFileRoute, HeadContent, Outlet, Scripts} from "@tanstack/react-router";
-import {lazy, useEffect, useState} from "react";
+import {lazy} from "react";
 import {match, P} from "ts-pattern";
-import {getAuthFromServer} from "@app/server/user.server";
+import {authFromServer, getAuthFromServer} from "@app/server/user.server";
 import {EditorContextProvider} from "@app/context/editor.context";
 import {apiClient} from "@app/lib/client";
 import {useWidgetStore} from "@app/store/widget.store";
@@ -34,9 +34,7 @@ export const Route = createFileRoute("/_public")({
              return null;
          });
     },
-    loader: () => {
-        return getAuthFromServer()
-    }
+    loader: () => getAuthFromServer()
 });
 
 const queryClient = new QueryClient()
@@ -44,6 +42,7 @@ const queryClient = new QueryClient()
 function RouteComponent() {
     const pageData = Route.useRouteContext()
     const dataLoader = Route.useLoaderData();
+    console.log(dataLoader);
     const registerLayouts = useWidgetStore((s) => s.registerLayouts);
 
     registerLayouts(pageData!.page.layouts);
@@ -51,23 +50,21 @@ function RouteComponent() {
 	return (
 		<>
 			<HeadContent />
-            <QueryClientProvider client={queryClient}>
-                <EditorContextProvider ctx={{enabled: dataLoader !== undefined}}>
-                    <ClientLayout/>
-                    {match(dataLoader)
-                        .with(P.nonNullable, (ctx) => (<div style={{ position: "fixed", bottom: 0, right: 0, zIndex: 9999 }}>
-                            <Overlay ctx={ctx}/>
-                        </div>))
-                        .otherwise(() => null)}
+                <EditorContextProvider ctx={{enabled: dataLoader !== null}}>
+                    <QueryClientProvider client={queryClient}>
+                        <ClientLayout/>
+                        {match(dataLoader)
+                            .with(P.nonNullable, (ctx) => (<div style={{ position: "fixed", bottom: 0, right: 0, zIndex: 9999 }}>
+                                <Overlay ctx={ctx}/>
+                            </div>))
+                            .otherwise(() => null)}
+                    </QueryClientProvider>
                 </EditorContextProvider>
-            </QueryClientProvider>
             <Scripts/>
 		</>
 	);
 }
 
 function ClientLayout() {
-    return (
-        <Outlet />
-    )
+    return (<Outlet />)
 }

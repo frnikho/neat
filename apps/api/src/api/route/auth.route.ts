@@ -50,13 +50,17 @@ export default new Elysia()
 					return response(register({ body }), ({ user, accessToken, refreshToken }) => {
 						cookie.access_token.set({
 							value: accessToken,
-							secure: true,
-							httpOnly: true,
+                            secure: true,
+                            httpOnly: true,
+                            path: "/",
+                            sameSite: true,
 						});
 						cookie.refresh_token.set({
 							value: refreshToken,
-							secure: true,
-							httpOnly: true,
+                            secure: true,
+                            httpOnly: true,
+                            path: "/",
+                            sameSite: true,
 						});
 						return user;
 					});
@@ -80,18 +84,22 @@ export default new Elysia()
 						({ accessToken, refreshToken }) => {
 							cookie.access_token.set({
 								value: accessToken,
-								secure: true,
-								httpOnly: true,
+                                secure: true,
+                                httpOnly: true,
+                                path: "/",
+                                sameSite: true,
 							});
 							cookie.refresh_token.set({
 								value: refreshToken,
-								secure: true,
-								httpOnly: true,
+                                secure: true,
+                                httpOnly: true,
+                                path: "/",
+                                sameSite: true,
 							});
 						},
 					);
 				},
-				{ cookie: "auth.cookie", tags: ["Authentification"] },
+				{ cookie: 'auth.cookie', tags: ["Authentification"] },
 			)
 			.group("", (app) =>
 				app

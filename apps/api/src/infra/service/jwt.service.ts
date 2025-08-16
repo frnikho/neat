@@ -22,7 +22,6 @@ export const verifyToken = (token: string, ignoreExpiration = false): ResultAsyn
 			if (err instanceof errors.JWTInvalid || err instanceof errors.JWTExpired || err instanceof errors.JWSInvalid) {
 				return new JwtException("Invalid jwt token !");
 			}
-            console.log(err);
 			return new JwtException("Error while verifying jwt token !");
 		},
 	);

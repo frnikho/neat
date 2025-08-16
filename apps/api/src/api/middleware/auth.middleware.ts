@@ -19,6 +19,7 @@ export default new Elysia().derive({ as: "scoped" }, ({ cookie }) => {
     const cache = redisClient();
 
 	const result = verifyToken(accessToken)
+        .mapErr(() => apiError(ApiErrorCode.UNAUTHORIZED, "User not logged !"))
         .andThen(({payload}) =>
             tokenRepo(cache).get(`session:${payload.userId}:${payload.sessionId}`).andThen((r) => optionToResult(r, apiError(ApiErrorCode.UNAUTHORIZED, "Session not found !")))
                 .map(() => ({payload}))
@@ -48,7 +49,6 @@ export default new Elysia().derive({ as: "scoped" }, ({ cookie }) => {
             if (error instanceof JwtException) {
                 throw new ApiError(ApiErrorCode.BAD_REQUEST, error.message);
             }
-            console.log(error);
 			throw error;
 		},
 	);
