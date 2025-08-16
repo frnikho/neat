@@ -2,13 +2,14 @@
 import appCss from '@styles/app.css?url';
 
 import {createFileRoute, HeadContent, Outlet, Scripts} from "@tanstack/react-router";
-import {lazy} from "react";
+import {lazy, useRef} from "react";
 import {match, P} from "ts-pattern";
-import {authFromServer, getAuthFromServer} from "@app/server/user.server";
+import {getAuthFromServer} from "@app/server/user.server";
 import {EditorContextProvider} from "@app/context/editor.context";
 import {apiClient} from "@app/lib/client";
-import {useWidgetStore} from "@app/store/widget.store";
+import {createWidgetStore} from "@app/store/widget.store";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import {WidgetContextProvider} from "@app/context/widget.context";
 const Overlay = lazy(() => import('@app/components/overlay/overlay-wrapper'));
 
 export const Route = createFileRoute("/_public")({
@@ -28,13 +29,13 @@ export const Route = createFileRoute("/_public")({
 	component: RouteComponent,
     beforeLoad: ({location}) => {
         const pageId = location.pathname === '/' ? 'home' : location.pathname.slice(1);
-         return apiClient.page({id: pageId}).get().then((({data, error}) => {
+         return apiClient.page({id: pageId}).get().then((({data}) => {
              return data!;
          })).catch((err) => {
              return null;
          });
     },
-    loader: () => getAuthFromServer()
+    loader: () => getAuthFromServer(),
 });
 
 const queryClient = new QueryClient()
@@ -42,29 +43,23 @@ const queryClient = new QueryClient()
 function RouteComponent() {
     const pageData = Route.useRouteContext()
     const dataLoader = Route.useLoaderData();
-    console.log(dataLoader);
-    const registerLayouts = useWidgetStore((s) => s.registerLayouts);
 
-    registerLayouts(pageData!.page.layouts);
+    const store = useRef(createWidgetStore(pageData!.page.layouts)).current
 
-	return (
-		<>
+    return (
+		<WidgetContextProvider ctx={store}>
 			<HeadContent />
                 <EditorContextProvider ctx={{enabled: dataLoader !== null}}>
                     <QueryClientProvider client={queryClient}>
-                        <ClientLayout/>
+                        <Outlet />
                         {match(dataLoader)
                             .with(P.nonNullable, (ctx) => (<div style={{ position: "fixed", bottom: 0, right: 0, zIndex: 9999 }}>
-                                <Overlay ctx={ctx}/>
+                                <Overlay widget={store} ctx={ctx}/>
                             </div>))
                             .otherwise(() => null)}
                     </QueryClientProvider>
                 </EditorContextProvider>
             <Scripts/>
-		</>
+		</WidgetContextProvider>
 	);
-}
-
-function ClientLayout() {
-    return (<Outlet />)
 }

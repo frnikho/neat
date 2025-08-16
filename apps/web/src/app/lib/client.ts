@@ -9,6 +9,10 @@ type Error<T> = {
     value: T;
 }
 
+export const api = <T, Z, E>(fn: (data: Z) => Promise<{data: T | null; error: Error<E> | null}>, params: Z, headers?: HeadersInit) => {
+  return query(apiRequest(fn, params, headers))
+};
+
 export const apiRequest = <T, Z, E>(fn: (data: Z) => Promise<{data: T | null; error: Error<E> | null}>, params: Z, headers?: HeadersInit) => {
     return fn(params).then(({data, error}) => {
         return match({data, error})

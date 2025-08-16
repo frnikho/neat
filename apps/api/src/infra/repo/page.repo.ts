@@ -10,6 +10,7 @@ import {okAsync} from "neverthrow";
 import {none, some} from "fp-ts/Option";
 import {PageCache} from "@entity/page.entity";
 import {Layout, layout, mapLayout} from "@schema/layout.schema";
+import listPage from "@application/page/list-page";
 
 const PAGE_TTL = 60 * 60 * 24; // 1 day
 
@@ -74,13 +75,18 @@ export const pageRepo =  (db: NodePgDatabase): PageInterface => ({
             .map(mapPageOption);
     },
 
-    list: (p = 1, limit = 20) => {
+    list: (p = 0, limit = 20) => {
+        console.log(p, limit)
         return op(db
             .select()
             .from(page)
             .limit(limit)
-            .offset((p) * (limit))
-        ).map((rows) => rows.map(mapPage));
+            .offset(p * limit)
+        ).map((rows) => rows.map(mapPage))
+            .map((a) => {
+                console.log(a);
+                return a;
+            });
     },
 
     softDelete: (id, deletedBy) => {

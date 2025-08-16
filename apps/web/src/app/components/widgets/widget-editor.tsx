@@ -1,21 +1,19 @@
 import { useMutation } from '@tanstack/react-query'
 import { apiClient } from '@app/lib/client'
 import {ReactNode, useEffect} from 'react'
-import { useWidgetStore } from '@app/store/widget.store'
 import {WidgetProps} from "@app/components/widgets/widget";
 import {useEditorStore} from "@app/store/editor.store";
+import useWidget from "@app/hooks/use-widget";
 
 export default function WidgetEditor<T>({ wkey, children, defaultData, Editor }: WidgetProps<T> & {
     children: (data: T) => ReactNode
 }) {
-    const getWidgetByKey = useWidgetStore(e => e.getWidgetByKey)
+    const widget = useWidget((s) => s.layouts.flatMap(l => l.widgets).find(w => wkey === w.key));
     const setWidgetFocus = useEditorStore((s) => s.setWidgetFocus);
 
     const {mutate: createWidget} = useMutation({
         mutationFn: () => apiClient.widget.post({key: wkey, value: defaultData, name: `${wkey}`, layout: 'nzaherlfdhbedh'})
     })
-
-    const widget = getWidgetByKey(wkey)
 
     useEffect(() => {
         if (!widget) {

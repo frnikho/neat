@@ -2,9 +2,14 @@ import {PropsWithChildren, useEffect, useRef} from "react";
 import {createRoot} from "react-dom/client";
 import {UserContext, UserContextProvider} from "@app/context/user.context";
 import {Overlay} from "@app/components/overlay/overlay";
+import {WidgetContextProvider} from "@app/context/widget.context";
+import {WidgetState} from "@app/store/widget.store";
+import {StoreApi} from "zustand";
+import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 
 type Props = {
-    ctx: UserContext
+    ctx: UserContext;
+    widget: StoreApi<WidgetState>;
 }
 
 export default function OverlayWrapper(props: Props) {
@@ -29,7 +34,7 @@ export default function OverlayWrapper(props: Props) {
 
         const mountPoint = document.createElement("div");
         shadow.appendChild(mountPoint);
-        createRoot(mountPoint).render(<Overlay ctx={props.ctx}/>);
+        createRoot(mountPoint).render(<Overlay widget={props.widget} ctx={props.ctx}/>);
 
         return () => ref.current?.remove();
     }, []);
@@ -37,10 +42,16 @@ export default function OverlayWrapper(props: Props) {
     return (<div ref={ref}/>);
 }
 
-export function OverlayProvider({ctx, children}: PropsWithChildren<{ctx: UserContext}>) {
+const client = new QueryClient();
+
+export function OverlayProvider({ctx, children, widget}: PropsWithChildren<{ctx: UserContext, widget: StoreApi<WidgetState>}>) {
     return (
-        <UserContextProvider ctx={ctx}>
-            {children}
-        </UserContextProvider>
+        <QueryClientProvider client={client}>
+            <WidgetContextProvider ctx={widget}>
+                <UserContextProvider ctx={ctx}>
+                    {children}
+                </UserContextProvider>
+            </WidgetContextProvider>
+        </QueryClientProvider>
     )
 }

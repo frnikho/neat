@@ -2,13 +2,13 @@ import type { Pagination } from "@entity/pagination.entity";
 import { type Static, t } from "elysia";
 
 export const defaultPagination: Pagination = {
-	page: 1,
-	limit: 10,
+	page: 0,
+	limit: 50,
 };
 
 const pagination = t.Object({
-	page: t.Optional(t.Number({ minimum: 1, maximum: 200 })),
-	limit: t.Optional(t.Number({ minimum: 1, maximum: 200 })),
+	page: t.Optional(t.Number({ minimum: 0, maximum: 2000 })),
+	limit: t.Optional(t.Number({ minimum: 0, maximum: 200 })),
 });
 
 export type PaginationQuery = Static<typeof pagination>;
