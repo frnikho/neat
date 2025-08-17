@@ -3,7 +3,7 @@ import { op } from "@infra/utils/db.utils";
 import { oneOreResultOption, oneOrThrow } from "@infra/utils/type.utils";
 import type { WidgetInterface } from "@interface/widget.interface";
 import { mapWidget, mapWidgetOption, widget } from "@schema/widget.schema";
-import { eq } from "drizzle-orm";
+import {eq, sql} from "drizzle-orm";
 import type { NodePgDatabase } from "drizzle-orm/node-postgres";
 
 export default (client: NodePgDatabase): WidgetInterface => ({
@@ -45,11 +45,19 @@ export default (client: NodePgDatabase): WidgetInterface => ({
 	findAll: (page = 1, limit = 10) => {
 		return op(
 			client
-				.select()
+				.select({
+                    widget,
+                    total: sql<number>`count(*) over()`
+                })
 				.from(widget)
 				.limit(limit)
 				.offset((page - 1) * limit),
-		).map((rows) => rows.map(mapWidget));
+		).map((rows) => {
+            return {
+                widgets: rows.map((e) => mapWidget(e.widget)),
+                total: rows.length > 0 ? Number(rows[0].total) : 0
+            }
+        })
 	},
 
 	update: (id, body) => {

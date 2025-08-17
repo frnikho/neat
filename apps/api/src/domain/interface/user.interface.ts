@@ -1,12 +1,12 @@
 import type { FileMetadata } from "@entity/file.entity";
-import type { CreateUser, PublicUser, UpdateUser, UpdateUserProfilePicture, User } from "@entity/user.entity";
+import type {CreateUser, ListUsers, PublicUser, UpdateUser, UpdateUserProfilePicture, User} from "@entity/user.entity";
 import type { DbException } from "@infra/exception/db.exception";
 import type { Option } from "fp-ts/Option";
 import type { ResultAsync } from "neverthrow";
 
 export type UserInterface = {
 	create: (body: CreateUser) => ResultAsync<User, DbException>;
-	list: (page: number, limit: number) => ResultAsync<[User, Option<FileMetadata>][], DbException>;
+	list: (page: number, limit: number) => ResultAsync<ListUsers, DbException>;
 	findUserById: (id: string) => ResultAsync<Option<User>, DbException>;
 	findUserByIdWithProfilePicture: (id: string) => ResultAsync<Option<[User, Option<FileMetadata>]>, DbException>;
 	findUserByEmail: (email: string) => ResultAsync<Option<User>, DbException>;

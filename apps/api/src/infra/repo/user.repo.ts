@@ -4,7 +4,7 @@ import { oneOreResultOption, oneOrThrow } from "@infra/utils/type.utils";
 import type { UserInterface } from "@interface/user.interface";
 import { file, mapFileMetadataOption } from "@schema/file.schema";
 import { mapUserOption, mapUsersToEntities, mapUserToEntity, user } from "@schema/user.schema";
-import { eq } from "drizzle-orm";
+import {eq, sql} from "drizzle-orm";
 import type { NodePgDatabase } from "drizzle-orm/node-postgres";
 import { inArray } from "drizzle-orm/sql/expressions/conditions";
 import { fromNullable, isNone, none, some } from "fp-ts/Option";
@@ -36,16 +36,27 @@ export default (db: NodePgDatabase): UserInterface => ({
 	list: (page, limit) => {
 		return op(
 			db
-				.select()
+				.select({
+                    user,
+                    file,
+                    total: sql<number>`count(*) over()`
+                })
 				.from(user)
 				.leftJoin(file, eq(user.profilePictureFile, file.id))
 				.limit(limit)
 				.offset((page) * limit),
 		).map((e) => {
-			return e.map((row) => {
-				return [mapUserToEntity(row.user), mapFileMetadataOption(fromNullable(row.file))];
+			const users = e.map((row) => {
+                return {
+                    user: mapUserToEntity(row.user),
+                    file: mapFileMetadataOption(fromNullable(row.file))
+                }
 			});
-		});
+            return {
+                users,
+                total: 1
+            }
+		})
 	},
 
 	create(body) {

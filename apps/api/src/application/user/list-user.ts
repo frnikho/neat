@@ -26,37 +26,26 @@ export default ({ pag, auth }: Input, repo: UserInterface = userRepo(db)): Resul
 		return errAsync(appException(apiErrorCodeToStatus.FORBIDDEN, "You don't have permission to list users"));
 	}
 
-	return repo.list(pag.page, pag.limit).andThen((users) => {
+	return repo.list(pag.page, pag.limit).andThen(({users, total}) => {
 		return ResultAsync.combine(
-			users.map(([user, profilePicture]) => {
-				if (isNone(profilePicture)) {
+			users.map((user) => {
+				if (isNone(user.file)) {
 					return okAsync({ user, url: undefined });
 				}
-				return buildPublicUrl(db, profilePicture.value, "user").map((url) => ({
+				return buildPublicUrl(db, user.file.value, "user").map((url) => ({
 					user,
 					url,
 				}));
 			}),
-		).map((users) =>
-			users.map(({ user, url }) => {
-				return {
-					...user,
-					profilePicture: url,
-				};
-			}),
-		).map((a) => {
-            return {
-                users: [
-                    {
-                        id: "1",
-                        firstname: "John",
-                        lastname: "Doe",
-                        email: "",
-                        createdAt: new Date(),
-                    }
-                ],
-                total: 200,
-            };
-        });
+		).map((users) => ({
+            total: total,
+                users: users.map(({ user, url }) => {
+                    return {
+                        ...user,
+                        profilePicture: url,
+                    };
+                }),
+            })
+        );
 	});
 };

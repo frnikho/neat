@@ -35,3 +35,8 @@ export type RoleWithPermissions = {
 	role: Role;
 	permissions: Permission[];
 };
+
+export type ListRoles = {
+    roles: Role[];
+    total: number;
+};

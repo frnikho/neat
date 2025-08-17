@@ -27,3 +27,8 @@ export type UpdateWidget<T = object> = {
     layout?: string;
 	updatedBy?: string;
 };
+
+export type ListWidgets<T = object> = {
+    widgets: Widget<T>[];
+    total: number;
+}

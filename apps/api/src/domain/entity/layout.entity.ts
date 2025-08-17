@@ -36,3 +36,8 @@ export type LayoutCache = {
     layout: Layout;
     widgets: Widget[];
 }
+
+export type ListLayouts = {
+    layouts: Layout[];
+    total: number;
+}

@@ -27,3 +27,8 @@ export type UpdateSettings<T> = {
 	description?: string;
 	updatedBy?: string;
 };
+
+export type ListSettings<T = object> = {
+    settings: Settings<T>[];
+    total: number;
+}

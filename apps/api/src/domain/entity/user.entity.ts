@@ -1,3 +1,6 @@
+import {Option} from "fp-ts/Option";
+import {FileMetadata} from "@entity/file.entity";
+
 export type User = {
 	id: string;
 	email: string;
@@ -31,6 +34,14 @@ export type UpdateUser = {
 	lastname?: string;
 	updatedBy?: string;
 };
+
+export type ListUsers = {
+    users: {
+        user: PublicUser;
+        file: Option<FileMetadata>;
+    }[];
+    total: number;
+}
 
 export type UpdateUserProfilePicture = {
 	profilePictureFile?: string;

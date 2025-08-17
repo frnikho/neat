@@ -1,4 +1,4 @@
-import type { CreateWidget, UpdateWidget, Widget } from "@entity/widget.entity";
+import type {CreateWidget, ListWidgets, UpdateWidget, Widget} from "@entity/widget.entity";
 import type { DbException } from "@infra/exception/db.exception";
 import type { Option } from "fp-ts/Option";
 import type { ResultAsync } from "neverthrow";
@@ -11,6 +11,6 @@ export type WidgetInterface = {
 	delete: <T = object>(id: string) => Result<Widget<T>>;
     findById: <T = object>(id: string) => Result<Option<Widget<T>>>;
     findByKey: <T = object>(id: string) => Result<Option<Widget<T>>>;
-	findAll: <T = object>() => Result<Widget<T>[]>;
+	findAll: <T = object>() => Result<ListWidgets>;
     softDelete: <T = object>(id: string, deletedBy?: string) => Result<Widget<T>>;
 };

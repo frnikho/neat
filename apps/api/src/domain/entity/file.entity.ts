@@ -31,3 +31,8 @@ export type UpdateFileMetadata = {
 	description?: string;
 	updatedBy?: string;
 };
+
+export type ListFileMetadata = {
+    files: FileMetadata[];
+    total: number;
+};
