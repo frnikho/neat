@@ -5,7 +5,7 @@
 		"build": "turbo run build",
 		"dev": "turbo run dev build_editor_css",
 		"lint": "turbo run lint",
-		"format": "prettier --write \"**/*.{ts,tsx,md}\"",
+        "start": "turbo run start --env-mode=loose",
 		"check-types": "turbo run check-types"
 	},
 	"devDependencies": {
@@ -13,6 +13,9 @@
 		"turbo": "^2.5.5",
 		"typescript": "5.9.2"
 	},
+    "overrides": {
+      "@sinclair/typebox": "^0.34.40"
+    },
 	"engines": {
 		"node": ">=18"
 	},

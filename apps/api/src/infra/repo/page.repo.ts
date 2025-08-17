@@ -76,17 +76,12 @@ export const pageRepo =  (db: NodePgDatabase): PageInterface => ({
     },
 
     list: (p = 0, limit = 20) => {
-        console.log(p, limit)
         return op(db
             .select()
             .from(page)
             .limit(limit)
             .offset(p * limit)
         ).map((rows) => rows.map(mapPage))
-            .map((a) => {
-                console.log(a);
-                return a;
-            });
     },
 
     softDelete: (id, deletedBy) => {

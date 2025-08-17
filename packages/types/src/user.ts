@@ -1,4 +1,5 @@
 import { type Static, Type } from "@sinclair/typebox";
+import {IsoDate} from "./date";
 
 const createUserRequest = Type.Object({
 	firstname: Type.String(),
@@ -21,11 +22,16 @@ export const userResponse = Type.Object({
 	firstname: Type.String(),
 	lastname: Type.String(),
 	email: Type.String(),
-	createdAt: Type.Date(),
+	createdAt: IsoDate,
 	createdBy: Type.Optional(Type.String()),
 	profilePicture: Type.Optional(Type.String()),
-	updatedAt: Type.Optional(Type.Date()),
+	updatedAt: Type.Optional(IsoDate),
 	updatedBy: Type.Optional(Type.String()),
+});
+
+export const userListResponse = Type.Object({
+    users: Type.Array(userResponse),
+    total: Type.Integer(),
 });
 
 export type UserResponse = Static<typeof userResponse>;
@@ -39,7 +45,7 @@ export const UserRequest = {
 
 export const UserResponse = {
 	"user.response.get": userResponse,
-	"user.response.list": Type.Array(userResponse),
+	"user.response.list": userListResponse,
 	"user.response.delete": userResponse,
 	"user.response.update": userResponse,
 };

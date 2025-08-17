@@ -16,7 +16,10 @@ type Input = {
 	pag: Pagination;
 };
 
-type Output = User[];
+type Output = {
+    users: User[];
+    total: number;
+};
 
 export default ({ pag, auth }: Input, repo: UserInterface = userRepo(db)): ResultAsync<Output, Error> => {
 	if (!hasAnyPermission(auth.roles, ["user.read.all", "user.*"])) {
@@ -41,6 +44,19 @@ export default ({ pag, auth }: Input, repo: UserInterface = userRepo(db)): Resul
 					profilePicture: url,
 				};
 			}),
-		);
+		).map((a) => {
+            return {
+                users: [
+                    {
+                        id: "1",
+                        firstname: "John",
+                        lastname: "Doe",
+                        email: "",
+                        createdAt: new Date(),
+                    }
+                ],
+                total: 200,
+            };
+        });
 	});
 };

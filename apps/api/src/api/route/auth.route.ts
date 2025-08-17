@@ -105,6 +105,6 @@ export default new Elysia()
 				app
 					.use(authMiddleware)
                     .delete("/session/current", ({auth}) => response(deleteSession({auth})), { tags: ["Authentification"] })
-					.get("/me", ({ auth }) => response(info({ auth })), { response: "auth.response.info", tags: ["Authentification"] }),
+					.get("/me", ({ auth }) => response(info({ auth })), { response: {200: 'auth.response.info'}, tags: ["Authentification"] }),
 			),
 	);

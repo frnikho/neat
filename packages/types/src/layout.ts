@@ -1,15 +1,16 @@
 import {Static, Type} from "@sinclair/typebox";
+import {IsoDate} from "./date";
 
 export const layoutResponse = Type.Object({
     id: Type.String(),
     name: Type.String(),
     key: Type.String(),
     page: Type.String(),
-    createdAt: Type.Date(),
+    createdAt: IsoDate,
     createdBy: Type.Optional(Type.String()),
-    updatedAt: Type.Optional(Type.Date()),
+    updatedAt: Type.Optional(IsoDate),
     updatedBy: Type.Optional(Type.String()),
-    deletedAt: Type.Optional(Type.Date()),
+    deletedAt: Type.Optional(IsoDate),
     deletedBy: Type.Optional(Type.String()),
 });
 

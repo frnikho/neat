@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
+    "start": "bun .output/server/index.mjs",
     "build_editor_css": "bunx @tailwindcss/cli -i ./src/styles/dashboard.css -o public/overlay.css --minify --watch"
   },
   "devDependencies": {
@@ -16,9 +17,6 @@
     "tw-animate-css": "^1.3.6",
     "vite-plugin-devtools-json": "^1.0.0",
     "vite-tsconfig-paths": "^5.1.4"
-  },
-  "peerDependencies": {
-    "typescript": "catalog:"
   },
   "dependencies": {
     "@neat/api-client": "workspace:*",
@@ -31,7 +29,7 @@
     "@radix-ui/react-separator": "^1.1.7",
     "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-tooltip": "^1.2.7",
-    "@sinclair/typebox": "^0.34.38",
+    "@sinclair/typebox": "^0.34.40",
     "@tailwindcss/cli": "^4.1.11",
     "@tailwindcss/postcss": "^4.1.11",
     "@tailwindcss/vite": "^4.1.11",

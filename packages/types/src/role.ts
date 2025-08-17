@@ -1,4 +1,5 @@
 import { type Static, Type } from "@sinclair/typebox";
+import {IsoDate} from "./date";
 
 export const createRoleRequest = Type.Object({
 	name: Type.String({ maxLength: 256 }),
@@ -20,14 +21,17 @@ export const roleResponse = Type.Object({
 	id: Type.String(),
 	name: Type.String({ maxLength: 256 }),
 	description: Type.Optional(Type.String({ maxLength: 4096 })),
-	createdAt: Type.Optional(Type.Date()),
-	updatedAt: Type.Optional(Type.Date()),
+	createdAt: IsoDate,
 	createdBy: Type.Optional(Type.String()),
+    updatedAt: Type.Optional(IsoDate),
 	updatedBy: Type.Optional(Type.String()),
 	permissions: Type.Optional(Type.Array(Type.String())),
 });
 
-export const rolesResponse = Type.Array(roleResponse);
+export const rolesResponse = Type.Object({
+    roles: Type.Array(roleResponse),
+    total: Type.Integer(),
+});
 
 export type RolesResponse = Static<typeof rolesResponse>;
 

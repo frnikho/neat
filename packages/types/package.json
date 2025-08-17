@@ -16,10 +16,7 @@
     "build": "tsc --project tsconfig.json",
     "dev": "tsc --project tsconfig.json --watch"
   },
-  "peerDependencies": {
-    "@sinclair/typebox": "^0.34.33"
-  },
   "devDependencies": {
-    "@sinclair/typebox": "^0.34.33"
+    "@sinclair/typebox": "^0.34.40"
   }
 }

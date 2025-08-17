@@ -1,17 +1,34 @@
 import {Static, Type} from "@sinclair/typebox";
+import {layoutResponse} from "./layout";
+import {widgetResponse} from "./widget";
+import {IsoDate} from "./date";
 
 export const pageResponse = Type.Object({
     id: Type.String(),
     name: Type.String(),
     description: Type.String(),
     slug: Type.String(),
-    createdAt: Type.String(Type.Date()),
+    createdAt: IsoDate,
     createdBy: Type.Optional(Type.String()),
-    updatedAt: Type.Optional(Type.Date()),
+    updatedAt: Type.Optional(IsoDate),
     updatedBy: Type.Optional(Type.String()),
-    deletedAt: Type.Optional(Type.Date()),
+    deletedAt: Type.Optional(IsoDate),
     deletedBy: Type.Optional(Type.String()),
 });
+
+const layout = Type.Object({
+    layout: layoutResponse,
+    widgets: Type.Array(widgetResponse),
+});
+
+export const pageContentResponse = Type.Object({
+    id: Type.String(),
+    name: Type.String(),
+    description: Type.String(),
+    slug: Type.String(),
+    createdAt: IsoDate,
+    layouts: Type.Array(layout)
+})
 
 export type PageResponse = Static<typeof pageResponse>;
 
@@ -29,11 +46,16 @@ export const updatePageRequest = Type.Object({
     slug: Type.String(),
 });
 
+export const listPageResponse = Type.Object({
+    pages: Type.Array(pageResponse),
+    total: Type.Integer(),
+})
+
 export type UpdatePageRequest = Static<typeof updatePageRequest>;
 
 export const pageModels = {
-    'page.response.get': pageResponse,
-    'page.response.list': Type.Array(pageResponse),
+    'page.response.get': pageContentResponse,
+    'page.response.list': listPageResponse,
     'page.response.delete': pageResponse,
     'page.response.update': pageResponse,
     'page.response.create': pageResponse,

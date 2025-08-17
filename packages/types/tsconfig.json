@@ -5,6 +5,7 @@
 		"declarationDir": "dist",
 		"emitDeclarationOnly": false,
 		"module": "ESNext",
+        "target": "es6",
 		"moduleResolution": "Bundler",
 		"skipLibCheck": true
 	},

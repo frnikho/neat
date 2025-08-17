@@ -15,7 +15,7 @@ export default new Elysia()
     .group('/layout', (app) =>
         app
             .post('/', ({auth, body}) => response(createLayout({auth, body})), {response: 'layout.response.create', body: 'layout.request.create', tags: ['Layout']})
-            .get('/', ({auth, query}) => response(listLayout({auth, pag: extractFromQuery(query)})), {response: 'layout.response.list', query: 'pagination', tags: ['Layout']})
-            .get('/:id', ({auth, params}) => response(getLayout({id: params.id, auth})), {response: 'layout.response.get', tags: ['Layout']})
-            .put('/:id', ({auth, body, params}) => response(updateLayout({auth, body, id: params.id})), {response: 'layout.response.update', body: 'layout.request.update', tags: ['Layout']})
+            .get('/', ({auth, query}) => response(listLayout({auth, pag: extractFromQuery(query)})), {response: {200: 'layout.response.list'}, query: 'pagination', tags: ['Layout']})
+            .get('/:id', ({auth, params}) => response(getLayout({id: params.id, auth})), {response: {200: 'layout.response.get'}, tags: ['Layout']})
+            .put('/:id', ({auth, body, params}) => response(updateLayout({auth, body, id: params.id})), {response: {200: 'layout.response.update'}, body: 'layout.request.update', tags: ['Layout']})
     )

@@ -52,13 +52,13 @@ export default (client: NodePgDatabase): RoleInterface => ({
 			.map(mapRoleOption);
 	},
 
-	list: (page = 1, limit = 10) => {
+	list: (page = 0, limit = 50) => {
 		return op(
 			client
 				.select()
 				.from(role)
 				.limit(limit)
-				.offset((page - 1) * limit)
+				.offset((page) * limit)
 				.where(isNull(role.deletedAt)),
 		).map((a) => a.map(mapRole));
 	},

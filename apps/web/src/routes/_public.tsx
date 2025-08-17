@@ -44,7 +44,7 @@ function RouteComponent() {
     const pageData = Route.useRouteContext()
     const dataLoader = Route.useLoaderData();
 
-    const store = useRef(createWidgetStore(pageData!.page.layouts)).current
+    const store = useRef(createWidgetStore(pageData!.layouts)).current
 
     return (
 		<WidgetContextProvider ctx={store}>
@@ -53,7 +53,7 @@ function RouteComponent() {
                     <QueryClientProvider client={queryClient}>
                         <Outlet />
                         {match(dataLoader)
-                            .with(P.nonNullable, (ctx) => (<div style={{ position: "fixed", bottom: 0, right: 0, zIndex: 9999 }}>
+                            .with(P.nonNullable, (ctx) => (<div style={{ position: "fixed", top: 0, right: 0, zIndex: 9999 }}>
                                 <Overlay widget={store} ctx={ctx}/>
                             </div>))
                             .otherwise(() => null)}

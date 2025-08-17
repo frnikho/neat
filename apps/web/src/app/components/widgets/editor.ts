@@ -3,7 +3,6 @@ import {useMutation} from "@tanstack/react-query";
 import {apiClient, apiRequest} from "@app/lib/client";
 import {WidgetResponse} from "@neat/types/widget";
 import {match, P} from "ts-pattern";
-import {useEditorStore} from "@app/store/editor.store";
 import useWidget from "@app/hooks/use-widget";
 
 type ChildrenProps<T> = {
@@ -24,9 +23,11 @@ export function Editor<T>({widget, children}: {widget: WidgetResponse, children:
             match({data, error})
                 .with({data: P.nonNullable}, ({data}) => {
                     console.log('registerPage');
-                    registerLayout(data.page.layouts);
+                    registerLayout(data.layouts);
                 })
-                .otherwise(() => {});
+                .otherwise(({error}) => {
+                    console.log(error);
+                });
         })
     }
 
@@ -37,7 +38,7 @@ export function Editor<T>({widget, children}: {widget: WidgetResponse, children:
                     await reloadData()
                 })
                 .otherwise(({error}) => {
-                    console.log(error);
+                    console.log(JSON.stringify(error));
                 })
         })
     }

@@ -14,7 +14,7 @@ export const authFromServer = createServerFn({ method: "GET" }).handler(() => {
                     return match(refreshData)
                         .with({data: P.nonNullable}, ({response}) => {
                             return apiClient.auth.me.get({fetch: {headers: {'cookie': response.headers.get('set-cookie') ?? ''}}})
-                                .then(({data}) => {
+                                .then(({data, response, error}) => {
                                     setHeader('set-cookie', response.headers.get('set-cookie'));
                                     return data!
                                 })
@@ -28,11 +28,13 @@ export const authFromServer = createServerFn({ method: "GET" }).handler(() => {
                 }).catch(() => {
                     throw new Error('Failed to refresh session');
                 });
-            }).otherwise(({data}) => data!);
+            }).otherwise(({data, error}) => {
+                return data!;
+            });
     }).catch((err) => {
         console.error('Error fetching auth data:', err);
         throw redirect({ to: "/auth/login" });
-    })
+    });
 });
 
 export const getAuthFromServer = createServerFn({ method: "GET" }).handler(() => {

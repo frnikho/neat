@@ -10,8 +10,14 @@ type Input = {
 	pag: Pagination;
 };
 
-type Output = Role[];
+type Output = {
+    roles: Role[]
+    total: number;
+};
 
 export default ({ pag }: Input): ResultAsync<Output, Error> => {
-	return roleRepo(db).list(pag.page, pag.limit);
+	return roleRepo(db).list(pag.page, pag.limit).map((roles) => ({
+        roles,
+        total: 200
+    }));
 };

@@ -1,4 +1,5 @@
 import {Static, Type} from "@sinclair/typebox";
+import {IsoDate} from "./date";
 
 export const widgetResponse = Type.Object({
     id: Type.String(),
@@ -6,11 +7,11 @@ export const widgetResponse = Type.Object({
     key: Type.String(),
     value: Type.Any(),
     layout: Type.String(),
-    createdAt: Type.Date(),
+    createdAt: IsoDate,
     createdBy: Type.Optional(Type.String()),
-    updatedAt: Type.Optional(Type.Date()),
+    updatedAt: Type.Optional(IsoDate),
     updatedBy: Type.Optional(Type.String()),
-    deletedAt: Type.Optional(Type.Date()),
+    deletedAt: Type.Optional(IsoDate),
     deletedBy: Type.Optional(Type.String()),
 });
 

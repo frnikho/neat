@@ -32,6 +32,8 @@ const queryClient = new QueryClient();
 function RouteComponent() {
 	const ctxData = Route.useLoaderData();
 
+    console.log('ctxData', ctxData);
+
 	return (
 		<QueryClientProvider client={queryClient}>
 			<UserContextProvider ctx={ctxData}>

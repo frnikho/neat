@@ -17,8 +17,5 @@ export default ({auth, pag}: Input) => {
         return errAsync(appException(apiErrorCodeToStatus.FORBIDDEN, "You don't have permission to read layout"));
     }
 
-    return layoutRepo(db).list(pag.page, pag.limit).map((res) => {
-        console.log(res);
-        return res;
-    });
+    return layoutRepo(db).list(pag.page, pag.limit);
 }

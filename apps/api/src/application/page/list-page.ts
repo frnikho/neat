@@ -17,5 +17,8 @@ export default ({auth, pag}: Input) => {
         return errAsync(appException(apiErrorCodeToStatus.FORBIDDEN, "You don't have permission to read page"));
     }
 
-    return pageRepo(db).list(pag.page, pag.limit);
+    return pageRepo(db).list(pag.page, pag.limit).map((pages) => ({
+        pages,
+        total: pages.length, // Assuming the repo returns the total count as well
+    }));
 }

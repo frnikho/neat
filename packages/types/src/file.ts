@@ -1,4 +1,5 @@
-import { type Static, Type } from "@sinclair/typebox";
+import { Type } from "@sinclair/typebox";
+import {IsoDate} from "./date";
 
 export const fileResponse = Type.Object({
 	id: Type.String(),
@@ -6,9 +7,9 @@ export const fileResponse = Type.Object({
 	size: Type.Number(),
 	type: Type.String(),
 	url: Type.String(),
-	createdAt: Type.Date(),
+	createdAt: IsoDate,
 	createdBy: Type.Optional(Type.String()),
-	updatedAt: Type.Optional(Type.Date()),
+	updatedAt: Type.Optional(IsoDate),
 	updatedBy: Type.Optional(Type.String()),
 });
 

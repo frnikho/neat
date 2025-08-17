@@ -39,11 +39,12 @@ export default ({pageSlug}: Input) => {
             });
 
         return layoutsCache.map((layoutWithWidget) => {
+            layoutWithWidget.map((a) => {
+                console.log(a.widgets)
+            })
             return {
-                page: {
-                    ...page,
-                    layouts: layoutWithWidget
-                }
+                ...page,
+                layouts: layoutWithWidget
             }
         });
     })

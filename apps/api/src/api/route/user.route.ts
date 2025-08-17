@@ -66,7 +66,7 @@ export default new Elysia()
 						}),
 					),
 				{
-					response: "user.response.list",
+					response: {200: "user.response.list"},
 					query: "pagination",
 					detail: { tags: ["User"] },
 				},
