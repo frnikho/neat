@@ -1,6 +1,6 @@
 import {AuthContext} from "@entity/auth-context.entity";
-import {CreateLayout, UpdateLayout} from "@entity/layout.entity";
-import {hasPermission} from "@service/permission.service";
+import {UpdateLayout} from "@entity/layout.entity";
+import {hasAnyPermission} from "@service/permission.service";
 import {errAsync} from "neverthrow";
 import {appException} from "@application/app.exception";
 import {apiErrorCodeToStatus} from "@api/api.exception";
@@ -14,7 +14,7 @@ type Input = {
 }
 
 export default ({auth, body, id}: Input) => {
-    if (!hasPermission(auth.roles, 'layout.update')) {
+    if (!hasAnyPermission(auth.roles, ['layout.update', 'layout.*'])) {
         return errAsync(appException(apiErrorCodeToStatus.FORBIDDEN, "You don't have permission to update layout"));
     }
 

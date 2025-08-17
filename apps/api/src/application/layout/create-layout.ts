@@ -1,6 +1,6 @@
 import {AuthContext} from "@entity/auth-context.entity";
 import {CreateLayout} from "@entity/layout.entity";
-import {hasPermission} from "@service/permission.service";
+import {hasAnyPermission} from "@service/permission.service";
 import {errAsync} from "neverthrow";
 import {appException} from "@application/app.exception";
 import {apiErrorCodeToStatus} from "@api/api.exception";
@@ -13,7 +13,7 @@ type Input = {
 }
 
 export default ({auth, body}: Input) => {
-    if (!hasPermission(auth.roles, 'layout.read')) {
+    if (!hasAnyPermission(auth.roles, ['layout.create', 'layout.*'])) {
         return errAsync(appException(apiErrorCodeToStatus.FORBIDDEN, "You don't have permission to create layout"));
     }
 

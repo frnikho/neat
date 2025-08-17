@@ -6,7 +6,7 @@ import {Spinner} from "@app/components/ui/shadcn-io/spinner";
 
 export default function OverlayPage() {
 
-    const {data, error, isPending} = useQuery({queryKey: ['pages'], queryFn: () => api(apiClient.page.get, {query: {page: 1}})});
+    const {data, error, isPending} = useQuery({queryKey: ['pages'], queryFn: () => api(apiClient.page.get, {query: {page: 0}})});
 
     const component = match({data, isPending, error})
         .with({isPending: true} ,() => <Spinner variant={'default'}/>)

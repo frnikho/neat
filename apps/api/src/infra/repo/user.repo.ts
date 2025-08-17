@@ -40,7 +40,7 @@ export default (db: NodePgDatabase): UserInterface => ({
 				.from(user)
 				.leftJoin(file, eq(user.profilePictureFile, file.id))
 				.limit(limit)
-				.offset((page - 1) * limit),
+				.offset((page) * limit),
 		).map((e) => {
 			return e.map((row) => {
 				return [mapUserToEntity(row.user), mapFileMetadataOption(fromNullable(row.file))];
