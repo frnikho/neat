@@ -9,13 +9,14 @@ import {
 	DropdownMenuTrigger,
 } from "@app/components/ui/dropdown-menu";
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@app/components/ui/sidebar";
-import { BadgeCheck, ChevronsUpDown, LogOut } from "lucide-react";
+import {BadgeCheck, ChevronsUpDown, LogOut, Paintbrush, Paintbrush2, User} from "lucide-react";
 import {apiClient} from "@app/lib/client";
 import {useCallback} from "react";
 import {match, P} from "ts-pattern";
 import {toast} from "sonner";
 import {useNavigate} from "@tanstack/react-router";
 import {useMutation, useQuery} from "@tanstack/react-query";
+import {useTheme} from "@app/components/providers/theme.provider";
 
 type Props = {
     firstname: string;
@@ -27,6 +28,7 @@ type Props = {
 export function NavUser({firstname, lastname, email, profilePicture}: Props) {
 	const { isMobile } = useSidebar();
     const navigate = useNavigate();
+    const { setTheme, theme } = useTheme()
 
     const logout = () => {
         return apiClient.auth.session.current.delete().then(({data, error}) => {
@@ -39,6 +41,17 @@ export function NavUser({firstname, lastname, email, profilePicture}: Props) {
                     throw navigate({to: '/auth/login'});
                 });
         })
+    }
+
+    const onClickAccount = () => {
+        return navigate({to: '/dashboard/account'})
+    }
+
+    const onClickTheme = () => {
+        match(theme)
+            .with('light', () => setTheme('dark'))
+            .with('dark', () => setTheme('light'))
+            .otherwise(() => setTheme('light'));
     }
 
     const {mutate: callLogout, isPending: logoutPending} = useMutation({
@@ -90,10 +103,17 @@ export function NavUser({firstname, lastname, email, profilePicture}: Props) {
 						</DropdownMenuLabel>
 						<DropdownMenuSeparator />
 						<DropdownMenuGroup>
-							<DropdownMenuItem className={'cursor-pointer'}>
-								<BadgeCheck />
-								Account
+							<DropdownMenuItem className={'cursor-pointer'} onClick={onClickAccount}>
+								<User />
+								Mon compte
 							</DropdownMenuItem>
+                            <DropdownMenuItem className={'cursor-pointer'} onClick={(e) => {
+                                e.preventDefault();
+                                onClickTheme();
+                            }}>
+                                <Paintbrush2 />
+                                Thème
+                            </DropdownMenuItem>
 						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
 						<DropdownMenuItem className={'cursor-pointer'} onClick={() => callLogout()}>

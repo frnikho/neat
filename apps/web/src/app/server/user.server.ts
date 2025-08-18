@@ -3,7 +3,19 @@ import { redirect } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { getWebRequest, setHeader } from "@tanstack/start-server-core";
 import {match, P} from "ts-pattern";
+import {hasPermissions} from "@app/lib/permision";
 
+export const getAuth = createServerFn({method: 'GET'}).handler(() => {
+    return authFromServer().then((data) => {
+        if (!hasPermissions(data, 'dashboard.view')) {
+            throw new Error('You do not have permission to view the dashboard');
+        }
+        return data;
+    }).catch((err) => {
+        console.error('Error fetching auth data:', err);
+        throw redirect({ to: "/auth/login" });
+    })
+})
 export const authFromServer = createServerFn({ method: "GET" }).handler(() => {
     const { headers } = getWebRequest();
 
@@ -31,9 +43,6 @@ export const authFromServer = createServerFn({ method: "GET" }).handler(() => {
             }).otherwise(({data, error}) => {
                 return data!;
             });
-    }).catch((err) => {
-        console.error('Error fetching auth data:', err);
-        throw redirect({ to: "/auth/login" });
     });
 });
 

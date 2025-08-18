@@ -26,6 +26,8 @@ export type UserContext = {
 			id: string;
 			name: string;
 			description?: string | undefined;
+            resource: string;
+            action: string;
 		}[];
 	}[];
 };

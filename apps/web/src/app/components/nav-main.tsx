@@ -12,34 +12,27 @@ import {
 	SidebarMenuSubButton,
 	SidebarMenuSubItem,
 } from "@app/components/ui/sidebar";
-import { ChevronRight, type LucideIcon } from "lucide-react";
+import { ChevronRight } from "lucide-react";
+import {Link} from "@tanstack/react-router";
+import {PrimaryItem} from "@app/components/app-sidebar";
 
 export function NavMain({
 	items,
 }: {
-	items: {
-		title: string;
-		url: string;
-		icon: LucideIcon;
-		isActive?: boolean;
-		items?: {
-			title: string;
-			url: string;
-		}[];
-	}[];
+	items: PrimaryItem[];
 }) {
 	return (
 		<SidebarGroup>
 			<SidebarGroupLabel>Platform</SidebarGroupLabel>
 			<SidebarMenu>
 				{items.map((item) => (
-					<Collapsible asChild defaultOpen={item.isActive ?? false} key={item.title}>
+					<Collapsible asChild defaultOpen={true} key={item.title}>
 						<SidebarMenuItem>
 							<SidebarMenuButton asChild tooltip={item.title}>
-								<a href={item.url}>
-									<item.icon />
+								<Link to={item.url}>
+                                    {item.icon ? <item.icon /> : null}
 									<span>{item.title}</span>
-								</a>
+								</Link>
 							</SidebarMenuButton>
 							{item.items?.length ? (
 								<>

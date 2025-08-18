@@ -6,9 +6,10 @@ import {hasAnyPermission, hasPermission} from "@service/permission.service";
 import {errAsync, okAsync} from "neverthrow";
 import {appException} from "@application/app.exception";
 import {apiErrorCodeToStatus} from "@api/api.exception";
-import {layoutCacheRepo} from "@repo/layout.repo";
+import {layoutCacheRepo, layoutRepo} from "@repo/layout.repo";
 import {redisClient} from "@service/cache.service";
 import {isSome} from "fp-ts/Option";
+import {optionToResult} from "@infra/utils/type.utils";
 
 type Input = {
     auth: AuthContext;
@@ -31,8 +32,11 @@ export default ({body, auth}: Input) => {
         return widgetRepo(db).create({
             ...body,
             createdBy: auth.user.id,
-        }).andThen((widget) =>
-            layoutCacheRepo(redisClient()).delete(`layout:${body.layout}`).map(() => widget)
-        )
+        })
+    }).andThen((widget) => {
+        return layoutRepo(db).findById(widget.layout)
+            .andThen((layout) => optionToResult(layout, appException(apiErrorCodeToStatus.NOT_FOUND, `Layout with id ${widget.layout} not found`)))
+            .andThen((layout) => layoutCacheRepo(redisClient()).delete(layout.key))
+            .map(() => widget);
     });
 }

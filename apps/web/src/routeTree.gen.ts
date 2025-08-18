@@ -13,14 +13,16 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as PublicRouteImport } from './routes/_public'
 import { Route as PublicIndexRouteImport } from './routes/_public/index'
+import { Route as DashboardUserRouteImport } from './routes/dashboard/user'
+import { Route as DashboardRoleRouteImport } from './routes/dashboard/role'
+import { Route as DashboardLibraryRouteImport } from './routes/dashboard/library'
 import { Route as DashboardAccountRouteImport } from './routes/dashboard/account'
+import { Route as DashboardAboutRouteImport } from './routes/dashboard/about'
 import { Route as AuthRegisterRouteImport } from './routes/auth/register'
 import { Route as AuthLoginRouteImport } from './routes/auth/login'
 import { Route as PublicAboutRouteImport } from './routes/_public/about'
 import { Route as DashboardSettingsIndexRouteImport } from './routes/dashboard/settings/index'
-import { Route as DashboardSettingsUserRouteImport } from './routes/dashboard/settings/user'
 import { Route as DashboardSettingsSandboxRouteImport } from './routes/dashboard/settings/sandbox'
-import { Route as DashboardSettingsRoleRouteImport } from './routes/dashboard/settings/role'
 
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
@@ -41,9 +43,29 @@ const PublicIndexRoute = PublicIndexRouteImport.update({
   path: '/',
   getParentRoute: () => PublicRoute,
 } as any)
+const DashboardUserRoute = DashboardUserRouteImport.update({
+  id: '/user',
+  path: '/user',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardRoleRoute = DashboardRoleRouteImport.update({
+  id: '/role',
+  path: '/role',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardLibraryRoute = DashboardLibraryRouteImport.update({
+  id: '/library',
+  path: '/library',
+  getParentRoute: () => DashboardRoute,
+} as any)
 const DashboardAccountRoute = DashboardAccountRouteImport.update({
   id: '/account',
   path: '/account',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardAboutRoute = DashboardAboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => DashboardRoute,
 } as any)
 const AuthRegisterRoute = AuthRegisterRouteImport.update({
@@ -66,22 +88,12 @@ const DashboardSettingsIndexRoute = DashboardSettingsIndexRouteImport.update({
   path: '/settings/',
   getParentRoute: () => DashboardRoute,
 } as any)
-const DashboardSettingsUserRoute = DashboardSettingsUserRouteImport.update({
-  id: '/settings/user',
-  path: '/settings/user',
-  getParentRoute: () => DashboardRoute,
-} as any)
 const DashboardSettingsSandboxRoute =
   DashboardSettingsSandboxRouteImport.update({
     id: '/settings/sandbox',
     path: '/settings/sandbox',
     getParentRoute: () => DashboardRoute,
   } as any)
-const DashboardSettingsRoleRoute = DashboardSettingsRoleRouteImport.update({
-  id: '/settings/role',
-  path: '/settings/role',
-  getParentRoute: () => DashboardRoute,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/auth': typeof AuthRouteWithChildren
@@ -89,11 +101,13 @@ export interface FileRoutesByFullPath {
   '/about': typeof PublicAboutRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
+  '/dashboard/about': typeof DashboardAboutRoute
   '/dashboard/account': typeof DashboardAccountRoute
+  '/dashboard/library': typeof DashboardLibraryRoute
+  '/dashboard/role': typeof DashboardRoleRoute
+  '/dashboard/user': typeof DashboardUserRoute
   '/': typeof PublicIndexRoute
-  '/dashboard/settings/role': typeof DashboardSettingsRoleRoute
   '/dashboard/settings/sandbox': typeof DashboardSettingsSandboxRoute
-  '/dashboard/settings/user': typeof DashboardSettingsUserRoute
   '/dashboard/settings': typeof DashboardSettingsIndexRoute
 }
 export interface FileRoutesByTo {
@@ -102,11 +116,13 @@ export interface FileRoutesByTo {
   '/about': typeof PublicAboutRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
+  '/dashboard/about': typeof DashboardAboutRoute
   '/dashboard/account': typeof DashboardAccountRoute
+  '/dashboard/library': typeof DashboardLibraryRoute
+  '/dashboard/role': typeof DashboardRoleRoute
+  '/dashboard/user': typeof DashboardUserRoute
   '/': typeof PublicIndexRoute
-  '/dashboard/settings/role': typeof DashboardSettingsRoleRoute
   '/dashboard/settings/sandbox': typeof DashboardSettingsSandboxRoute
-  '/dashboard/settings/user': typeof DashboardSettingsUserRoute
   '/dashboard/settings': typeof DashboardSettingsIndexRoute
 }
 export interface FileRoutesById {
@@ -117,11 +133,13 @@ export interface FileRoutesById {
   '/_public/about': typeof PublicAboutRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
+  '/dashboard/about': typeof DashboardAboutRoute
   '/dashboard/account': typeof DashboardAccountRoute
+  '/dashboard/library': typeof DashboardLibraryRoute
+  '/dashboard/role': typeof DashboardRoleRoute
+  '/dashboard/user': typeof DashboardUserRoute
   '/_public/': typeof PublicIndexRoute
-  '/dashboard/settings/role': typeof DashboardSettingsRoleRoute
   '/dashboard/settings/sandbox': typeof DashboardSettingsSandboxRoute
-  '/dashboard/settings/user': typeof DashboardSettingsUserRoute
   '/dashboard/settings/': typeof DashboardSettingsIndexRoute
 }
 export interface FileRouteTypes {
@@ -132,11 +150,13 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth/login'
     | '/auth/register'
+    | '/dashboard/about'
     | '/dashboard/account'
+    | '/dashboard/library'
+    | '/dashboard/role'
+    | '/dashboard/user'
     | '/'
-    | '/dashboard/settings/role'
     | '/dashboard/settings/sandbox'
-    | '/dashboard/settings/user'
     | '/dashboard/settings'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -145,11 +165,13 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth/login'
     | '/auth/register'
+    | '/dashboard/about'
     | '/dashboard/account'
+    | '/dashboard/library'
+    | '/dashboard/role'
+    | '/dashboard/user'
     | '/'
-    | '/dashboard/settings/role'
     | '/dashboard/settings/sandbox'
-    | '/dashboard/settings/user'
     | '/dashboard/settings'
   id:
     | '__root__'
@@ -159,11 +181,13 @@ export interface FileRouteTypes {
     | '/_public/about'
     | '/auth/login'
     | '/auth/register'
+    | '/dashboard/about'
     | '/dashboard/account'
+    | '/dashboard/library'
+    | '/dashboard/role'
+    | '/dashboard/user'
     | '/_public/'
-    | '/dashboard/settings/role'
     | '/dashboard/settings/sandbox'
-    | '/dashboard/settings/user'
     | '/dashboard/settings/'
   fileRoutesById: FileRoutesById
 }
@@ -203,11 +227,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicIndexRouteImport
       parentRoute: typeof PublicRoute
     }
+    '/dashboard/user': {
+      id: '/dashboard/user'
+      path: '/user'
+      fullPath: '/dashboard/user'
+      preLoaderRoute: typeof DashboardUserRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/role': {
+      id: '/dashboard/role'
+      path: '/role'
+      fullPath: '/dashboard/role'
+      preLoaderRoute: typeof DashboardRoleRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/library': {
+      id: '/dashboard/library'
+      path: '/library'
+      fullPath: '/dashboard/library'
+      preLoaderRoute: typeof DashboardLibraryRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/dashboard/account': {
       id: '/dashboard/account'
       path: '/account'
       fullPath: '/dashboard/account'
       preLoaderRoute: typeof DashboardAccountRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/about': {
+      id: '/dashboard/about'
+      path: '/about'
+      fullPath: '/dashboard/about'
+      preLoaderRoute: typeof DashboardAboutRouteImport
       parentRoute: typeof DashboardRoute
     }
     '/auth/register': {
@@ -238,25 +290,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardSettingsIndexRouteImport
       parentRoute: typeof DashboardRoute
     }
-    '/dashboard/settings/user': {
-      id: '/dashboard/settings/user'
-      path: '/settings/user'
-      fullPath: '/dashboard/settings/user'
-      preLoaderRoute: typeof DashboardSettingsUserRouteImport
-      parentRoute: typeof DashboardRoute
-    }
     '/dashboard/settings/sandbox': {
       id: '/dashboard/settings/sandbox'
       path: '/settings/sandbox'
       fullPath: '/dashboard/settings/sandbox'
       preLoaderRoute: typeof DashboardSettingsSandboxRouteImport
-      parentRoute: typeof DashboardRoute
-    }
-    '/dashboard/settings/role': {
-      id: '/dashboard/settings/role'
-      path: '/settings/role'
-      fullPath: '/dashboard/settings/role'
-      preLoaderRoute: typeof DashboardSettingsRoleRouteImport
       parentRoute: typeof DashboardRoute
     }
   }
@@ -288,18 +326,22 @@ const AuthRouteChildren: AuthRouteChildren = {
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 interface DashboardRouteChildren {
+  DashboardAboutRoute: typeof DashboardAboutRoute
   DashboardAccountRoute: typeof DashboardAccountRoute
-  DashboardSettingsRoleRoute: typeof DashboardSettingsRoleRoute
+  DashboardLibraryRoute: typeof DashboardLibraryRoute
+  DashboardRoleRoute: typeof DashboardRoleRoute
+  DashboardUserRoute: typeof DashboardUserRoute
   DashboardSettingsSandboxRoute: typeof DashboardSettingsSandboxRoute
-  DashboardSettingsUserRoute: typeof DashboardSettingsUserRoute
   DashboardSettingsIndexRoute: typeof DashboardSettingsIndexRoute
 }
 
 const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardAboutRoute: DashboardAboutRoute,
   DashboardAccountRoute: DashboardAccountRoute,
-  DashboardSettingsRoleRoute: DashboardSettingsRoleRoute,
+  DashboardLibraryRoute: DashboardLibraryRoute,
+  DashboardRoleRoute: DashboardRoleRoute,
+  DashboardUserRoute: DashboardUserRoute,
   DashboardSettingsSandboxRoute: DashboardSettingsSandboxRoute,
-  DashboardSettingsUserRoute: DashboardSettingsUserRoute,
   DashboardSettingsIndexRoute: DashboardSettingsIndexRoute,
 }
 

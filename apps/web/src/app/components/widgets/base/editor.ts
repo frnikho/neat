@@ -11,6 +11,11 @@ type ChildrenProps<T> = {
 
 type ChildrenFn<T> = ({update}: ChildrenProps<T>) => ReactNode;
 
+export type EditorProps<T> = {
+    widget: WidgetResponse;
+    data: T
+}
+
 export function Editor<T>({widget, children}: {widget: WidgetResponse, children: ChildrenFn<T>}) {
 
     const {mutateAsync} = useMutation({mutationFn: (v: T) => apiRequest(apiClient.widget({id: widget.id}).put, {value: v})});

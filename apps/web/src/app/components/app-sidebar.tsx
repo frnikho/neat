@@ -1,5 +1,4 @@
 import { NavMain } from "@app/components/nav-main";
-import { NavProjects } from "@app/components/nav-projects";
 import { NavSecondary } from "@app/components/nav-secondary";
 import { NavUser } from "@app/components/nav-user";
 import {
@@ -11,7 +10,16 @@ import {
 	SidebarMenuButton,
 	SidebarMenuItem,
 } from "@app/components/ui/sidebar";
-import { BookOpen, Bot, Command, Frame, LifeBuoy, Map, PieChart, Send, Settings2, SquareTerminal } from "lucide-react";
+import {
+    AppWindowIcon,
+    Boxes,
+    Command, Cuboid, File,
+    Library,
+    LifeBuoy, LucideIcon,
+    NotebookText,
+    Settings,
+    User
+} from "lucide-react";
 import type * as React from "react";
 import { useAuth } from "@app/hooks/use-auth";
 import { useServerFn } from "@tanstack/react-start";
@@ -21,127 +29,82 @@ import { useCallback } from "react";
 import { match, P } from "ts-pattern";
 import { Skeleton } from "@app/components/ui/skeleton";
 import {useNavigate} from "@tanstack/react-router";
+import {AllPermissions} from "@neat/types/permission";
 
-const data = {
-	navMain: [
-		{
-			title: "Playground",
-			url: "#",
-			icon: SquareTerminal,
-			items: [
-				{
-					title: "History",
-					url: "#",
-				},
-				{
-					title: "Starred",
-					url: "#",
-				},
-				{
-					title: "Settings",
-					url: "#",
-				},
-			],
-		},
-		{
-			title: "Models",
-			url: "#",
-			icon: Bot,
-			items: [
-				{
-					title: "Genesis",
-					url: "#",
-				},
-				{
-					title: "Explorer",
-					url: "#",
-				},
-				{
-					title: "Quantum",
-					url: "#",
-				},
-			],
-		},
-		{
-			title: "Documentation",
-			url: "#",
-			icon: BookOpen,
-			items: [
-				{
-					title: "Introduction",
-					url: "#",
-				},
-				{
-					title: "Get Started",
-					url: "#",
-				},
-				{
-					title: "Tutorials",
-					url: "#",
-				},
-				{
-					title: "Changelog",
-					url: "#",
-				},
-			],
-		},
-		{
-			title: "Settings",
-			url: "#",
-			icon: Settings2,
-			items: [
-				{
-					title: "General",
-					url: "#",
-				},
-				{
-					title: "Team",
-					url: "#",
-				},
-				{
-					title: "Billing",
-					url: "#",
-				},
-				{
-					title: "Limits",
-					url: "#",
-				},
-			],
-		},
-	],
-	navSecondary: [
-		{
-			title: "Support",
-			url: "#",
-			icon: LifeBuoy,
-		},
-		{
-			title: "Feedback",
-			url: "#",
-			icon: Send,
-		},
-	],
-	projects: [
-		{
-			name: "Design Engineering",
-			url: "#",
-			icon: Frame,
-		},
-		{
-			name: "Sales & Marketing",
-			url: "#",
-			icon: PieChart,
-		},
-		{
-			name: "Travel",
-			url: "#",
-			icon: Map,
-		},
-	],
-};
+type SecondaryItem = {
+    title: string;
+    url: string;
+    icon?: LucideIcon;
+    isActive?: boolean;
+    permissions?: AllPermissions[];
+}
 
+export type PrimaryItem = {
+    title: string;
+    url: string;
+    icon?: LucideIcon;
+    items?: SecondaryItem[];
+    permissions?: AllPermissions[];
+}
+
+
+const navSecondary: SecondaryItem[] = [
+    {
+        title: 'Paramètre',
+        url: '/dashboard/settings',
+        icon: Settings,
+        permissions: ['settings.*'],
+    },
+    {
+        title: 'Support',
+        url: '/dashboard/about',
+        icon: LifeBuoy,
+    }
+]
+
+const adminItems: PrimaryItem[] = [
+    {
+        title: 'Page',
+        url: '/dashboard/page',
+        icon: File,
+        permissions: ['page.*'],
+    },
+    {
+        title: 'Bibliothèque',
+        url: '/dashboard/library',
+        icon: Library,
+        permissions: ['file.*']
+    },
+    {
+        title: 'Utilisateurs',
+        icon: User,
+        url: '/dashboard/user',
+        permissions: ['user.*']
+    },
+    {
+        title: 'Roles et permissions',
+        icon: NotebookText,
+        url: '/dashboard/role',
+        permissions: ['role.*']
+    },
+    {
+        title: 'Application',
+        icon: AppWindowIcon,
+        url: '/dashboard/settings/company',
+    },
+    {
+        title: 'Environnements',
+        icon: Boxes,
+        url: '/dashboard/env/'
+    },
+    {
+        title: 'Modules',
+        icon: Cuboid,
+        url: '/dashboard/modules/',
+    }
+];
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-	const { user } = useAuth();
+	const { user, roles } = useAuth();
     const navigate = useNavigate();
 
 	const getSettingsFn = useServerFn(getCompanySettings);
@@ -198,9 +161,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 				</SidebarMenu>
 			</SidebarHeader>
 			<SidebarContent>
-				<NavMain items={data.navMain} />
-				<NavProjects projects={data.projects} />
-				<NavSecondary className="mt-auto" items={data.navSecondary} />
+                <NavMain items={adminItems} />
+				<NavSecondary ctx={{roles, user}} className="mt-auto" items={navSecondary} />
 			</SidebarContent>
 			<SidebarFooter>
 				<NavUser {...user} />

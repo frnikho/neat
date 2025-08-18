@@ -13,7 +13,7 @@ import { match } from "ts-pattern";
 
 type Item = {
 	title: string;
-	url: string;
+	url?: string;
 };
 
 type Props = {
@@ -24,7 +24,7 @@ export default ({ items }: Props) => {
 	const router = useNavigate();
 
 	return (
-		<header className="flex shrink-0 items-center gap-2">
+		<header className="flex shrink-0 items-center gap-2 mb-4">
 			<div className="flex items-center gap-2">
 				<SidebarTrigger className="-ml-1" />
 				<Separator className="mr-2 data-[orientation=vertical]:h-4" orientation="vertical" />
@@ -38,7 +38,11 @@ export default ({ items }: Props) => {
 									.exhaustive()}
 								{match(items.length - 1 === index)
 									.with(false, () => (
-										<BreadcrumbLink className={"cursor-pointer"} onClick={() => router({ to: item.url })}>
+										<BreadcrumbLink className={"cursor-pointer"} onClick={() => {
+                                            if (item.url) {
+                                                return router({ to: item.url })
+                                            }
+                                        }}>
 											{item.title}
 										</BreadcrumbLink>
 									))

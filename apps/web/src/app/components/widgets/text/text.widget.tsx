@@ -1,6 +1,6 @@
 import {ComponentProps, lazy} from "react";
-import {WidgetProps} from "@app/components/widgets/widget";
-import {WidgetLoader} from "@app/components/widgets/widget-provider";
+import {WidgetProps} from "@app/components/widgets/base/widget";
+import {WidgetLoader} from "@app/components/widgets/base/widget-provider";
 
 const TextWidgetEditor = lazy(() => import('./text.editor'));
 

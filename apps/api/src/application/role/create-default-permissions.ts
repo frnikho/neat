@@ -1,7 +1,7 @@
 import permissionRepo from "@infra/repo/permission.repo";
 import { db } from "@infra/service/db.service";
-import { getAllPermission } from "@infra/service/permission.service";
 import { ok } from "neverthrow";
+import {getAllPermission} from "@neat/types/permission";
 
 export default () => {
 	return permissionRepo(db)

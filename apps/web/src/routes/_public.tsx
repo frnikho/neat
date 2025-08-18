@@ -44,6 +44,8 @@ function RouteComponent() {
     const pageData = Route.useRouteContext()
     const dataLoader = Route.useLoaderData();
 
+    console.log(pageData!.layouts);
+
     const store = useRef(createWidgetStore(pageData!.layouts)).current
 
     return (

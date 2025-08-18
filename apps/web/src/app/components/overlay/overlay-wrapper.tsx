@@ -6,6 +6,7 @@ import {WidgetContextProvider} from "@app/context/widget.context";
 import {WidgetState} from "@app/store/widget.store";
 import {StoreApi} from "zustand";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import {ThemeProvider} from "next-themes";
 
 type Props = {
     ctx: UserContext;
@@ -47,11 +48,13 @@ const client = new QueryClient();
 export function OverlayProvider({ctx, children, widget}: PropsWithChildren<{ctx: UserContext, widget: StoreApi<WidgetState>}>) {
     return (
         <QueryClientProvider client={client}>
-            <WidgetContextProvider ctx={widget}>
-                <UserContextProvider ctx={ctx}>
-                    {children}
-                </UserContextProvider>
-            </WidgetContextProvider>
+            <ThemeProvider storageKey={'dashboard-theme'} defaultTheme={'system'}>
+                <WidgetContextProvider ctx={widget}>
+                    <UserContextProvider ctx={ctx}>
+                        {children}
+                    </UserContextProvider>
+                </WidgetContextProvider>
+            </ThemeProvider>
         </QueryClientProvider>
     )
 }

@@ -1,10 +1,9 @@
-import {TextWidgetProps} from "@app/components/widgets/text.widget";
+import {TextWidgetProps} from "@app/components/widgets/text/text.widget";
 import { useAppForm } from "@app/components/ui/tanstack-form";
 import {Type} from "@sinclair/typebox";
 import {TypeCompiler} from "@sinclair/typebox/compiler";
 import {typeBoxValidator} from "@app/lib/validation";
-import {Editor} from "@app/components/widgets/editor";
-import {WidgetResponse} from "@neat/types/widget";
+import {Editor, EditorProps} from "@app/components/widgets/base/editor";
 import {Input} from "@app/components/ui/input";
 import {FormEvent, useCallback} from "react";
 import {Button} from "@app/components/ui/button";
@@ -16,11 +15,7 @@ const textWidgetSchema = Type.Object({
 
 const compiler = TypeCompiler.Compile(textWidgetSchema);
 
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-export default function TextWidgetEditor({data, widget}: {data: TextWidgetProps, widget: WidgetResponse}) {
+export default function TextWidgetEditor({data, widget}: EditorProps<TextWidgetProps>) {
 
     return (
         <Editor<TextWidgetProps> widget={widget} children={({update}) => {
