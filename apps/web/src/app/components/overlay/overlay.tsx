@@ -7,6 +7,7 @@ import OverlayWidget from "@app/components/overlay/overlay-widget";
 import {StoreApi} from "zustand";
 import {WidgetState} from "@app/store/widget.store";
 import OverlaySettings from "@app/components/overlay/overlay-settings";
+import OverlayLayout from "@app/components/overlay/overlay-layout";
 
 type Props = {
     ctx: UserContext;
@@ -23,6 +24,7 @@ export function Overlay(props: Props) {
                 {match(state)
                     .with('page', () => <OverlayPage/>)
                     .with('widget', () => <OverlayWidget/>)
+                    .with('layout', () => <OverlayLayout/>)
                     .exhaustive()}
                 <OverlaySettings/>
             </div>

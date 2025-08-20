@@ -1,5 +1,5 @@
-import {WidgetLoader} from "@app/components/widgets/base/widget-provider";
-import CardEditor from "@app/components/widgets/card/card.editor";
+import {WidgetLoader} from "@app/components/core/widget/base/widget-provider";
+import CardEditor from "@app/components/core/widget/card/card.editor";
 import {ComponentProps} from "react";
 
 export type CardWidgetProps = {

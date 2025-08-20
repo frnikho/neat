@@ -12,7 +12,7 @@ type Input = {
 
 export default ({auth}: Input) => {
     if (!hasAnyPermission(auth.roles, ['widget.read', 'widget.*'])) {
-        return errAsync(appException(apiErrorCodeToStatus.FORBIDDEN, "You don't have permission to list widgets"));
+        return errAsync(appException(apiErrorCodeToStatus.FORBIDDEN, "You don't have permission to list widget"));
     }
 
     return widgetRepo(db).findAll()

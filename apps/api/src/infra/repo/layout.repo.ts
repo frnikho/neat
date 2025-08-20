@@ -58,7 +58,7 @@ export const layoutRepo = (client: NodePgDatabase): LayoutInterface => ({
             .groupBy(layout.id));
 
         return result
-            .andThen((result) => oneOrThrow(result, new DbException("Layout with widgets not found")))
+            .andThen((result) => oneOrThrow(result, new DbException("Layout with widget not found")))
             .map(({ layout, widgets }) => ({
                 layout: mapLayout(layout),
                 widgets: (widgets as Widget[]).map(mapWidget)

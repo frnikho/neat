@@ -6,6 +6,9 @@ import {appException} from "@application/app.exception";
 import {apiErrorCodeToStatus} from "@api/api.exception";
 import {layoutRepo} from "@repo/layout.repo";
 import {db} from "@service/db.service";
+import {pageCacheRepo, pageRepo} from "@repo/page.repo";
+import {optionToResult} from "@infra/utils/type.utils";
+import {redisClient} from "@service/cache.service";
 
 type Input = {
     auth: AuthContext;
@@ -21,5 +24,10 @@ export default ({auth, body, id}: Input) => {
     return layoutRepo(db).update(id, {
         ...body,
         updatedBy: auth.user.id
-    });
+    }).andThen((layout) => {
+        return pageRepo(db).findById(layout.page)
+            .andThen((page) => optionToResult(page, appException(apiErrorCodeToStatus.NOT_FOUND, `Page with id ${layout.page} not found`)))
+            .andThen((page) => pageCacheRepo(redisClient()).delete(page.slug))
+            .map(() => layout);
+    });;
 }

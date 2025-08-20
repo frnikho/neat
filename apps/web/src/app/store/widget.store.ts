@@ -2,7 +2,7 @@ import {createStore} from "zustand";
 import {LayoutResponse} from "@neat/types/layout";
 import {WidgetResponse} from "@neat/types/widget";
 
-type LayoutWithWidgets = {
+export type LayoutWithWidgets = {
     layout: LayoutResponse,
     widgets: WidgetResponse[]
 }

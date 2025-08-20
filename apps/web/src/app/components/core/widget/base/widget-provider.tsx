@@ -1,5 +1,5 @@
 import {lazy, ReactNode, Suspense, useContext} from 'react'
-import {Widget, WidgetProps} from "@app/components/widgets/base/widget";
+import {Widget, WidgetProps} from "@app/components/core/widget/base/widget";
 import {EditorContext} from "@app/context/editor.context";
 
 const WidgetEditor = lazy(() => import('./widget-editor'))

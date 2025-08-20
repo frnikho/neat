@@ -1,4 +1,4 @@
-import {TextWidget} from "@app/components/widgets/text/text.widget";
+import {TextWidget} from "@app/components/core/widget/text/text.widget";
 
 export default function HomePage() {
 

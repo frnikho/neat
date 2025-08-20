@@ -1,9 +1,9 @@
-import {TextWidgetProps} from "@app/components/widgets/text/text.widget";
+import {TextWidgetProps} from "@app/components/core/widget/text/text.widget";
 import { useAppForm } from "@app/components/ui/tanstack-form";
 import {Type} from "@sinclair/typebox";
 import {TypeCompiler} from "@sinclair/typebox/compiler";
 import {typeBoxValidator} from "@app/lib/validation";
-import {Editor, EditorProps} from "@app/components/widgets/base/editor";
+import {Editor, EditorProps} from "@app/components/core/widget/base/editor";
 import {Input} from "@app/components/ui/input";
 import {FormEvent, useCallback} from "react";
 import {Button} from "@app/components/ui/button";

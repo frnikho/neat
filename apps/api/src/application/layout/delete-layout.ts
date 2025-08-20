@@ -5,6 +5,9 @@ import {errAsync} from "neverthrow";
 import {apiErrorCodeToStatus} from "@api/api.exception";
 import {layoutRepo} from "@repo/layout.repo";
 import {db} from "@service/db.service";
+import {pageCacheRepo, pageRepo} from "@repo/page.repo";
+import {optionToResult} from "@infra/utils/type.utils";
+import {redisClient} from "@service/cache.service";
 
 type Input = {
     id: string;
@@ -16,5 +19,10 @@ export default ({auth, id}: Input) => {
         return errAsync(appException(apiErrorCodeToStatus.FORBIDDEN, "You don't have permission to delete layout"));
     }
 
-    return layoutRepo(db).softDelete(id, auth.user.id);
+    return layoutRepo(db).softDelete(id, auth.user.id).andThen((layout) => {
+        return pageRepo(db).findById(layout.page)
+            .andThen((page) => optionToResult(page, appException(apiErrorCodeToStatus.NOT_FOUND, `Page with id ${layout.page} not found`)))
+            .andThen((page) => pageCacheRepo(redisClient()).delete(page.slug))
+            .map(() => layout);
+    });
 }

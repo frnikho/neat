@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query'
 import { apiClient } from '@app/lib/client'
 import {cloneElement, isValidElement, ReactElement, ReactNode, useEffect} from 'react'
-import {WidgetProps} from "@app/components/widgets/base/widget";
+import {WidgetProps} from "@app/components/core/widget/base/widget";
 import {useEditorStore} from "@app/store/editor.store";
 import useWidget from "@app/hooks/use-widget";
 

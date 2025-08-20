@@ -1,5 +1,5 @@
-import {Editor, EditorProps} from "@app/components/widgets/base/editor";
-import {CardWidgetProps} from "@app/components/widgets/card/card.widget";
+import {Editor, EditorProps} from "@app/components/core/widget/base/editor";
+import {CardWidgetProps} from "@app/components/core/widget/card/card.widget";
 
 export default function CardEditor({data, widget}: EditorProps<CardWidgetProps>) {
     return (

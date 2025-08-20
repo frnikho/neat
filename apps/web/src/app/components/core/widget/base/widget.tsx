@@ -8,7 +8,7 @@ export type WidgetProps<T> = {
     wkey: string,
     defaultData: T,
     dev?: boolean,
-    Editor: FC<{wkey: string, data: T, widget: WidgetResponse}>;
+    Editor?: FC<{wkey: string, data: T, widget: WidgetResponse}>;
 }
 
 export function Widget<T>({wkey, children, defaultData, dev}: WidgetProps<T> & {children: (data: T) => ReactNode}) {

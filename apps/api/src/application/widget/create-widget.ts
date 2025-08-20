@@ -18,7 +18,7 @@ type Input = {
 
 export default ({body, auth}: Input) => {
     if (!hasAnyPermission(auth.roles, ['widget.create', 'widget.*'])) {
-        return errAsync(appException(apiErrorCodeToStatus.FORBIDDEN, "You don't have permission to create widgets"));
+        return errAsync(appException(apiErrorCodeToStatus.FORBIDDEN, "You don't have permission to create widget"));
     }
 
     const repo = widgetRepo(db);

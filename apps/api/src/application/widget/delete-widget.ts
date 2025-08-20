@@ -16,7 +16,7 @@ type Input = {
 
 export default ({id, auth}: Input) => {
     if (!hasAnyPermission(auth.roles, ['widget.delete', 'widget.*'])) {
-        return errAsync(appException(apiErrorCodeToStatus.FORBIDDEN, "You don't have permission to delete widgets"));
+        return errAsync(appException(apiErrorCodeToStatus.FORBIDDEN, "You don't have permission to delete widget"));
     }
 
     return widgetRepo(db).softDelete(id, auth.user.id)
