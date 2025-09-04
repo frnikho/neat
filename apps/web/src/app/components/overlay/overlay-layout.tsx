@@ -14,15 +14,13 @@ export default function OverlayLayout() {
         </Card>
     }
 
-    console.log(getWidgetRegistry());
-
     return (
         <div className={'flex flex-col gap-4'}>
             <Card className="min-w-xs max-w-md">
                 <CardHeader>
                     <CardTitle>Paramètre de la section {section.layout.key}</CardTitle>
                     <CardDescription className={'text-xs'}>widgets: {section.widgets.length}</CardDescription>
-                </CardHeader>
+                </CardHeader>https://www.chess.com/game/142142651618
                 <CardContent>
 
                 </CardContent>
@@ -33,7 +31,7 @@ export default function OverlayLayout() {
                 </CardHeader>
                 <CardContent className={'grid grid-cols-2 gap-4'}>
                     {getWidgetRegistry().map((wr) => (
-                        <Card>
+                        <Card key={wr.key}>
                             <CardContent onClick={() => {
                                 wr.component
                             }}>{wr.label}</CardContent>

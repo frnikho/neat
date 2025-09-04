@@ -16,5 +16,5 @@ export function SectionLoader<T>(props: SectionProps & {
         )
     }
 
-    return <Section {...props} />
+    return props.children('' as T);
 }

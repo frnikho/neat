@@ -5,6 +5,7 @@ import {CardSim, Pencil} from "lucide-react";
 
 type WidgetRegistryEntry = {
     component: FC;
+    props?: any;
     key: string;
     label: string;
     description?: string;
@@ -18,6 +19,7 @@ type Registry = {
 const widgetRegistry: Registry = {
     text: {
         component: TextWidget,
+        props: {},
         key: 'text',
         icon: Pencil,
         label: 'Text widget'

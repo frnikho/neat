@@ -38,7 +38,11 @@ export const fileMetadataRepo = (client: NodePgDatabase): FileMetadataInterface 
 	},
 
 	findByBucket: (bucket) => {
-		return op(client.select().from(file).where(eq(file.bucket, bucket))).map(mapFilesMetadata);
+		return op(client.select().from(file).where(eq(file.bucket, bucket)))
+            .map((rows) => ({
+                files: mapFilesMetadata(rows),
+                total: 0,
+            }));
 	},
 
 	update: (id, data) => {
@@ -71,7 +75,10 @@ export const fileMetadataRepo = (client: NodePgDatabase): FileMetadataInterface 
 				.limit(limit)
 				.offset(page * limit)
 				.where(isNotNull(file.deletedAt)),
-		).map(mapFilesMetadata);
+		).map((rows) => ({
+            files: mapFilesMetadata(rows),
+            total: 0,
+        }));
 	},
 
 	softDelete: (id, deletedBy) => {

@@ -38,10 +38,11 @@ export default ({ pag, auth }: Input, repo: UserInterface = userRepo(db)): Resul
 				}));
 			}),
 		).map((users) => ({
-            total: total,
+                total: total,
                 users: users.map(({ user, url }) => {
+
                     return {
-                        ...user,
+                        ...user.user,
                         profilePicture: url,
                     };
                 }),

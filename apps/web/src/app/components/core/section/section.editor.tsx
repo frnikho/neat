@@ -32,13 +32,11 @@ export function SectionEditor(props: SectionProps & {dev?: boolean}) {
 
     return (
         <div className={'hover:outline-2 hover:outline-dashed hover:outline-blue-500 cursor-pointer'} onClick={onClick}>
-
             {layout?.widgets.map((w) => (
                 <div>
                     {w.key}
                 </div>
             ))}
-
             {layout?.layout.key}
         </div>
     )

@@ -1,8 +1,8 @@
 import { DbException } from "@infra/exception/db.exception";
 import permissionRepo from "@infra/repo/permission.repo";
-import type { AllPermissions } from "@service/permission.service";
 import type { NodePgDatabase } from "drizzle-orm/node-postgres";
 import { err, ok } from "neverthrow";
+import {AllPermissions} from "@neat/types/permission";
 
 type Role = {
 	name: string;
